@@ -33,7 +33,7 @@ class StoreIssueBlock extends Component {
     return (
       <div>
         <div>
-          Issue certificates with the Merkel root hash
+          Issue certificates with the Merkle root hash
           <HashColorInput
             type="hash"
             hashee={this.state.certificateHash}
