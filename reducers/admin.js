@@ -24,6 +24,7 @@ export const types = {
   LOADING_ADMIN_ADDRESS_FAILURE: "LOADING_ADMIN_ADDRESS_FAILURE",
 
   DEPLOYING_STORE: "DEPLOYING_STORE",
+  DEPLOYING_STORE_TX_SUBMITTED: "DEPLOYING_STORE_TX_SUBMITTED",
   DEPLOYING_STORE_SUCCESS: "DEPLOYING_STORE_SUCCESS",
   DEPLOYING_STORE_FAILURE: "DEPLOYING_STORE_FAILURE",
 
@@ -63,6 +64,8 @@ export default function reducer(state = initialState, action) {
         ...state,
         deploying: true
       };
+    case types.DEPLOYING_STORE_TX_SUBMITTED:
+      return state;
     case types.DEPLOYING_STORE_SUCCESS:
       return {
         ...state,

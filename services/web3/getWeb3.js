@@ -1,6 +1,11 @@
 import Web3 from "web3";
 import ProviderEngine from "web3-provider-engine";
 import FetchSubprovider from "web3-provider-engine/subproviders/fetch";
+import CacheSubprovider from "web3-provider-engine/subproviders/cache";
+import FilterSubprovider from "web3-provider-engine/subproviders/filters";
+import SubscriptionSubprovider from "web3-provider-engine/subproviders/subscriptions";
+import NonceSubprovider from "web3-provider-engine/subproviders/nonce-tracker";
+import VmSubprovider from "web3-provider-engine/subproviders/vm";
 import HookedWalletSubprovider from "web3-provider-engine/subproviders/hooked-wallet";
 import LedgerWallet from "ledger-wallet-provider/lib/LedgerWallet";
 
@@ -26,6 +31,19 @@ async function loadWeb3Ledger(mainnet = true) {
   const engine = new ProviderEngine();
   web3 = new Web3(engine);
 
+  // cache layer
+// engine.addProvider(new CacheSubprovider())
+
+// // filters
+// engine.addProvider(new FilterSubprovider())
+// engine.addProvider(new SubscriptionSubprovider());
+
+// // pending nonce
+// engine.addProvider(new NonceSubprovider())
+
+// // vm
+// engine.addProvider(new VmSubprovider())
+
   const fetchProvider = new FetchSubprovider({ rpcUrl });
 
   const ledger = new LedgerWallet(() => networkId, defaultDerivativePath);
@@ -33,6 +51,14 @@ async function loadWeb3Ledger(mainnet = true) {
 
   engine.addProvider(new HookedWalletSubprovider(ledger));
   engine.addProvider(fetchProvider);
+
+
+  // engine.on('block', function (block) {
+  //   // console.log('================================')
+  //   // console.log('BLOCK CHANGED:', '#' + block.number.toString('hex'), '0x' + block.hash.toString('hex'))
+  //   // console.log('================================')
+  //   console.log(block)
+  // })
 
   engine.start();
 

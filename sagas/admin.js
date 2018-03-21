@@ -29,6 +29,8 @@ export function* loadAdminAddress() {
   }
 }
 
+function* pollTxStatus(txHash) {}
+
 export function* deployStore({ payload }) {
   try {
     const { fromAddress, name } = payload;
@@ -42,27 +44,61 @@ export function* deployStore({ payload }) {
       data: bytecode,
       arguments: [name]
     });
-    const gasPrice = yield web3.eth.getGasPrice();
+    const gasPrice = (yield web3.eth.getGasPrice()) * 5;
 
-    const tx = yield deployment.send({
-      from: fromAddress,
-      gas: DEFAULT_GAS,
-      gasPrice
+    const txHash = yield new Promise((resolve, reject) => {
+      deployment.send(
+        {
+          from: fromAddress,
+          gas: DEFAULT_GAS,
+          gasPrice
+        },
+        function(err, res) {
+          if (err) {
+            reject(err);
+          }
+          resolve(res);
+        }
+      );
     });
-
-    // eslint-disable-next-line no-underscore-dangle
-    const deployedStoreAddress = tx._address;
 
     yield put({
-      type: types.DEPLOYING_STORE_SUCCESS,
-      payload: deployedStoreAddress
+      type: types.DEPLOYING_STORE_TX_SUBMITTED,
+      payload: txHash
     });
+
+    // const tx = yield deployment.send({
+    //   from: fromAddress,
+    //   gas: DEFAULT_GAS,
+    //   gasPrice
+    // })
+    // .on("transactionHash", txHash => {
+    //     pollTxStatus(txHash);
+    //     console.log("txhash event", txHash);
+    // })
+    // .on("confirmation", function(confirmationNumber, receipt) {
+    //   console.log("cfm no", confirmationNumber)
+    //   console.log("receipt", receipt)
+    // });
+
+    // eslint-disable-next-line no-underscore-dangle
+    // const deployedStoreAddress = tx._address;
+
+    // yield put({
+    //   type: types.DEPLOYING_STORE_SUCCESS,
+    //   payload: deployedStoreAddress
+    // });
   } catch (e) {
     yield put({
       type: types.DEPLOYING_STORE_FAILURE,
       payload: e.message
     });
   }
+}
+
+export function* pollDeployStoreStatus({ payload }) {
+  console.log(payload);
+  yield "heh";
 }
 
 export function* issueCertificate({ payload }) {
