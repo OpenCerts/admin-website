@@ -15,14 +15,25 @@ class ValidatedInput extends Component {
     const correct = validatorFn(this.state.value);
 
     return (
-      <input
-        className="w-100 bn pointer"
-        onChange={e => {
-          this.setState({ value: e.target.value });
-        }}
-        placeholder={placeholder}
+      <div
+        className="w-100 flex flex-direction-row bn items-center"
         style={{ color: correct ? "green" : "red" }}
-      />
+      >
+        <div
+          style={{ width: "16px", textAlign: "center", cursor: "default" }}
+          title={correct ? "Identity matched" : "Identity mismatch"}
+        >
+          {correct ? "✓" : "!"}
+        </div>
+        <input
+          className="ml2 w-100"
+          style={{ color: correct ? "green" : "red" }}
+          onChange={e => {
+            this.setState({ value: e.target.value });
+          }}
+          placeholder={placeholder}
+        />
+      </div>
     );
   }
 }
