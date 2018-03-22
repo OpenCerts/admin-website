@@ -1,3 +1,4 @@
+import { omit } from "lodash";
 import { types as Web3Types } from "../services/web3/getWeb3";
 
 export const initialState = {
@@ -71,7 +72,8 @@ export default function reducer(state = initialState, action) {
       };
     case types.TX_POLLING_REMOVE:
       return {
-        ...state
+        ...state,
+        txPollingList: omit(state.txPollingList, action.payload.txHash)
       };
 
     case types.TRANSACTION_MINED:
@@ -121,6 +123,13 @@ export function announceMinedTransaction(payload) {
   };
 }
 
+export function removeTxFromPollingList(payload) {
+  return {
+    type: types.TX_POLLING_REMOVE,
+    payload
+  };
+}
+
 // Selectors
 export function getNetwork(store) {
   return store.application.network;
@@ -148,4 +157,11 @@ export function getNetworkPollingTask(store) {
 
 export function getCurrentBlockNumber(store) {
   return store.application.currentBlockNumber;
+}
+
+export function getTransactionReceipt(store, txHash) {
+  if (store.application.minedTransactions[txHash]) {
+    return store.application.minedTransactions[txHash];
+  }
+  return undefined;
 }

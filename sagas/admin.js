@@ -1,5 +1,9 @@
-import { put } from "redux-saga/effects";
+import { put, take, select } from "redux-saga/effects";
 import { types } from "../reducers/admin";
+import {
+  types as applicationTypes,
+  getTransactionReceipt
+} from "../reducers/application";
 
 import getAccounts from "../services/web3/getAccounts";
 import CertificateStoreDefinition from "../services/contracts/CertificateStore.json";
@@ -29,7 +33,24 @@ export function* loadAdminAddress() {
   }
 }
 
-function* pollTxStatus(txHash) {}
+function sendTxWrapper(txObject, gasPrice, fromAddress) {
+  return new Promise((resolve, reject) => {
+    txObject.send(
+      {
+        from: fromAddress,
+        gas: DEFAULT_GAS,
+        gasPrice
+      },
+      (err, res) => {
+        // callback passed into eth.contract.send() to get the txhash
+        if (err) {
+          reject(err);
+        }
+        resolve(res);
+      }
+    );
+  });
+}
 
 export function* deployStore({ payload }) {
   try {
@@ -46,59 +67,30 @@ export function* deployStore({ payload }) {
     });
     const gasPrice = (yield web3.eth.getGasPrice()) * 5;
 
-    const txHash = yield new Promise((resolve, reject) => {
-      deployment.send(
-        {
-          from: fromAddress,
-          gas: DEFAULT_GAS,
-          gasPrice
-        },
-        function(err, res) {
-          if (err) {
-            reject(err);
-          }
-          resolve(res);
-        }
-      );
-    });
+    const txHash = yield sendTxWrapper(deployment, gasPrice, fromAddress);
 
     yield put({
       type: types.DEPLOYING_STORE_TX_SUBMITTED,
       payload: txHash
     });
 
-    // const tx = yield deployment.send({
-    //   from: fromAddress,
-    //   gas: DEFAULT_GAS,
-    //   gasPrice
-    // })
-    // .on("transactionHash", txHash => {
-    //     pollTxStatus(txHash);
-    //     console.log("txhash event", txHash);
-    // })
-    // .on("confirmation", function(confirmationNumber, receipt) {
-    //   console.log("cfm no", confirmationNumber)
-    //   console.log("receipt", receipt)
-    // });
+    let txReceipt;
 
-    // eslint-disable-next-line no-underscore-dangle
-    // const deployedStoreAddress = tx._address;
+    while (!txReceipt) {
+      yield take(applicationTypes.TRANSACTION_MINED);
+      txReceipt = yield select(getTransactionReceipt, txHash); // this returns undefined if the transaction mined doesn't match the txHash we're waiting for
+    }
 
-    // yield put({
-    //   type: types.DEPLOYING_STORE_SUCCESS,
-    //   payload: deployedStoreAddress
-    // });
+    yield put({
+      type: types.DEPLOYING_STORE_SUCCESS,
+      payload: txReceipt.contractAddress
+    });
   } catch (e) {
     yield put({
       type: types.DEPLOYING_STORE_FAILURE,
       payload: e.message
     });
   }
-}
-
-export function* pollDeployStoreStatus({ payload }) {
-  console.log(payload);
-  yield "heh";
 }
 
 export function* issueCertificate({ payload }) {

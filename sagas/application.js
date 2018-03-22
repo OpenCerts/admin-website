@@ -1,3 +1,4 @@
+import { intersection } from "lodash";
 import { put, select, take, call, fork, cancel, all } from "redux-saga/effects";
 import { delay } from "redux-saga";
 import {
@@ -8,11 +9,10 @@ import {
   getCurrentBlockNumber,
   getNetworkPollingTask,
   foundNewBlock,
-  announceMinedTransaction
+  announceMinedTransaction,
+  removeTxFromPollingList
 } from "../reducers/application";
 import { setNewWeb3, getCurrentWeb3 } from "../services/web3/getWeb3";
-
-import { intersection, find } from "lodash";
 
 const POLLING_INTERVAL = 4000; // milliseconds
 
@@ -28,20 +28,16 @@ export function* getSelectedWeb3(getNew = false) {
 }
 
 export function* startNetworkPolling() {
-  const network = yield select(getNetwork);
   let init = true;
-  console.log("starting polling for ", network);
   while (true) {
     const web3 = yield getCurrentWeb3();
     const currentBlockNumber = yield select(getCurrentBlockNumber);
     const newBlockNumber = yield web3.eth.getBlockNumber();
-    console.log("blockno", newBlockNumber);
     if (init || newBlockNumber > currentBlockNumber) {
       let numberOfNewBlocks = newBlockNumber - currentBlockNumber; // sometimes blocks are skipped
       if (init) {
         numberOfNewBlocks = 1; // if we're init-ing then only fetch one
       }
-      console.log("newblockcount", numberOfNewBlocks);
       let fetchBlockNumber = newBlockNumber - numberOfNewBlocks + 1; // get the block after our most recent
       while (fetchBlockNumber <= newBlockNumber) {
         const newBlockContents = yield web3.eth.getBlock(
@@ -50,21 +46,21 @@ export function* startNetworkPolling() {
         );
 
         // sometimes web3.eth.getblock() comes up null... do-over when that happens
-        if (newBlockContents !== null) {
+        if (newBlockContents === null) {
+          // eslint-disable-next-line
+          console.error(
+            "web3.eth.getblock() gave null for ",
+            fetchBlockNumber,
+            ". Retrying"
+          );
+        } else {
           yield put(
             foundNewBlock({
               blockNumber: fetchBlockNumber,
               blockContents: newBlockContents
             })
           );
-
           fetchBlockNumber += 1;
-        } else {
-          console.error(
-            "web3.eth.getblock() gave null for ",
-            fetchBlockNumber,
-            ". Retrying"
-          );
         }
         init = false;
       }
@@ -76,7 +72,6 @@ export function* startNetworkPolling() {
 export function* updateNetworkId() {
   try {
     const networkPollingTask = yield select(getNetworkPollingTask);
-    console.log(networkPollingTask);
     if (networkPollingTask) {
       yield cancel(networkPollingTask);
     }
@@ -114,7 +109,7 @@ export function* updateNetworkId() {
       }
     });
   } catch (e) {
-    console.error(e);
+    console.error(e); // eslint-disable-line
     yield put({
       type: types.UPDATE_NETWORK_ID_FAILURE,
       payload: e
@@ -131,6 +126,10 @@ export function* addTxHashToPolling({ payload }) {
   });
 }
 
+export function* removeTxHashFromPolling({ payload }) {
+  yield put(removeTxFromPollingList(payload));
+}
+
 export function* checkNewBlockForTxPollList({ payload }) {
   const { transactions } = payload.blockContents;
   if (transactions && transactions.length) {
@@ -138,41 +137,40 @@ export function* checkNewBlockForTxPollList({ payload }) {
       transactionObj => transactionObj.hash
     );
 
-    console.log(blockTransactionHashList);
-
     const txPollingList = yield select(getTxPollingList);
 
-    console.log("polling list", Object.keys(txPollingList));
     const ourTransactions = intersection(
       Object.keys(txPollingList),
       blockTransactionHashList
     );
 
+    // found our transactions in new block
     if (ourTransactions.length) {
-      // found our transactions in new block
+      const announcementObjects = [];
 
-      const announcementActions = ourTransactions.map(ourTx =>
-        put(
-          announceMinedTransaction({
-            txHash: ourTx,
-            txReceipt: find(transactions, ["hash", ourTx])
-          })
-        )
-      );
+      /* eslint-disable */
+      // disabling eslint for this because it wants me to use .map but
+      // i can't yield from inside .map so i need to use a for loop instead
+      for (let transaction of ourTransactions) {
+        announcementObjects.push(yield makeAnnouncement(transaction));
+      }
+      /* eslint-enable */
 
-      yield all(announcementActions);
+      yield all(announcementObjects);
     }
   }
-
-  yield "moo";
 }
 
-/*
-Polling state machine:
-init: do not poll, init txlist[] with empty
+function* makeAnnouncement(txHash) {
+  const web3 = yield getCurrentWeb3();
+  // retrieving the tx receipts because the tx receipts in the block contents doesn't have contract address
+  const txReceipt = yield web3.eth.getTransactionReceipt(txHash);
+  yield put(
+    announceMinedTransaction({
+      txHash,
+      txReceipt
+    })
+  );
+}
 
-receive tx to poll: add txhash to txlist if not already in it, start polling if not already polling
-remove tx from poll: remove txhash from txlist, if txlist empty stop polling
-
-*/
 export default updateNetworkId;
