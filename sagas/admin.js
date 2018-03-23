@@ -83,7 +83,10 @@ export function* deployStore({ payload }) {
 
     yield put({
       type: types.DEPLOYING_STORE_SUCCESS,
-      payload: txReceipt.contractAddress
+      payload: {
+        contractAddress: txReceipt.contractAddress,
+        txHash: txReceipt.transactionHash
+      }
     });
   } catch (e) {
     yield put({

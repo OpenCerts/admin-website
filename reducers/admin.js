@@ -4,6 +4,7 @@ export const initialState = {
 
   deploying: false,
   deploymentError: null,
+  deployedTx: null,
 
   issuedTx: "",
   issuingCertificate: false,
@@ -71,7 +72,8 @@ export default function reducer(state = initialState, action) {
         ...state,
         deploying: false,
         deploymentError: null,
-        storeAddress: action.payload
+        storeAddress: action.payload.contractAddress,
+        deployedTx: action.payload.txHash
       };
     case types.DEPLOYING_STORE_FAILURE:
       return {
@@ -172,4 +174,20 @@ export function getIssuedTx(store) {
 
 export function getRevokedTx(store) {
   return store.admin.revokedTx;
+}
+
+export function getDeploying(store) {
+  return store.admin.deploying;
+}
+
+export function getDeployedTx(store) {
+  return store.admin.deployedTx;
+}
+
+export function getIssuingCertificate(store) {
+  return store.admin.issuingCertificate;
+}
+
+export function getrevokingCertificate(store) {
+  return store.admin.revokingCertificate;
 }
