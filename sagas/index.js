@@ -50,6 +50,5 @@ export default function* rootSaga() {
       applicationType.TRANSACTION_MINED,
       applicationSaga.removeTxHashFromPolling
     )
-    // takeEvery(applicationType.UPDATE_NETWORK_ID_SUCCESS, applicationSaga.startLedgerProviderPolling)
   ]);
 }
