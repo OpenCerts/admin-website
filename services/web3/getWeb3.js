@@ -1,8 +1,9 @@
 import Web3 from "web3";
 import ProviderEngine from "web3-provider-engine";
-import FetchSubprovider from "web3-provider-engine/subproviders/fetch";
-import HookedWalletSubprovider from "web3-provider-engine/subproviders/hooked-wallet";
-import LedgerWallet from "ledger-wallet-provider/lib/LedgerWallet";
+import SubscriptionSubprovider from "web3-provider-engine/subproviders/subscriptions";
+import TransportU2F from "@ledgerhq/hw-transport-u2f";
+import createLedgerSubprovider from "@ledgerhq/web3-subprovider";
+import WebsocketSubProvider from "web3-provider-engine/subproviders/websocket";
 
 export const types = {
   INJECTED: "INJECTED",
@@ -19,23 +20,24 @@ async function loadWeb3Ledger(mainnet = true) {
   let { web3 } = window;
   const networkId = mainnet ? 1 : 3;
   const rpcUrl = mainnet
-    ? "https://mainnet.infura.io/GcUmThrFdoO47u9xsEXq"
-    : "https://ropsten.infura.io/GcUmThrFdoO47u9xsEXq";
-  const defaultDerivativePath = "44'/60'/0'/0";
+    ? "wss://mainnet.infura.io/ws/GcUmThrFdoO47u9xsEXq"
+    : "wss://ropsten.infura.io/ws/GcUmThrFdoO47u9xsEXq";
 
   const engine = new ProviderEngine();
-  web3 = new Web3(engine);
-
-  const fetchProvider = new FetchSubprovider({ rpcUrl });
-
-  const ledger = new LedgerWallet(() => networkId, defaultDerivativePath);
-  await ledger.init();
-
-  engine.addProvider(new HookedWalletSubprovider(ledger));
+  const getTransport = () => TransportU2F.create();
+  const ledger = createLedgerSubprovider(getTransport, {
+    networkId,
+    accountsLength: 5
+  });
+  engine.addProvider(ledger);
+  const fetchProvider = new WebsocketSubProvider({ rpcUrl });
   engine.addProvider(fetchProvider);
 
-  engine.start();
+  const filterAndSubsSubprovider = new SubscriptionSubprovider();
+  engine.addProvider(filterAndSubsSubprovider);
 
+  engine.start();
+  web3 = new Web3(engine);
   return web3;
 }
 
