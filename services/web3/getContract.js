@@ -1,4 +1,5 @@
 import initContract from "truffle-contract";
+// TODO: see if we can remove this dependency
 
 const getContract = async (web3, contractDefinition) => {
   const contract = initContract(contractDefinition);
