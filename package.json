@@ -28,7 +28,7 @@
     "redux-saga": "^0.16.0",
     "truffle-contract": "^3.0.4",
     "web3": "^1.0.0-beta.33",
-    "web3-provider-engine": "rjchow/provider-engine"
+    "web3-provider-engine": "14.0.6"
   },
   "license": "ISC",
   "devDependencies": {
