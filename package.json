@@ -12,7 +12,6 @@
     "deploy:prebuilt": "touch out/.nojekyll && cp docs/exampleIssuers.json out/exampleIssuers.json && gh-pages --dotfiles --dist out"
   },
   "dependencies": {
-    "@govtechsg/open-certificate": "^1.1.0",
     "@ledgerhq/hw-transport-u2f": "^4.21.0",
     "@ledgerhq/web3-subprovider": "^4.23.0",
     "eslint-plugin-react": "^7.7.0",
