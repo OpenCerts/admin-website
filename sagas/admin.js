@@ -6,12 +6,12 @@ import {
 } from "../reducers/application";
 
 import getAccounts from "../services/web3/getAccounts";
-import CertificateStoreDefinition from "../services/contracts/CertificateStore.json";
+import DocumentStoreDefinition from "../services/contracts/DocumentStore.json";
 
 import { getSelectedWeb3 } from "./application";
 
 // TODO do a better estimate
-const DEFAULT_GAS = 1000000;
+const DEFAULT_GAS = 3000000;
 
 export function* loadAdminAddress() {
   try {
@@ -33,12 +33,12 @@ export function* loadAdminAddress() {
   }
 }
 
-function sendTxWrapper(txObject, gasPrice, fromAddress) {
+function sendTxWrapper({ txObject, gasPrice, gasLimit, fromAddress }) {
   return new Promise((resolve, reject) => {
     txObject.send(
       {
         from: fromAddress,
-        gas: DEFAULT_GAS,
+        gas: gasLimit,
         gasPrice
       },
       (err, res) => {
@@ -57,7 +57,7 @@ export function* deployStore({ payload }) {
     const { fromAddress, name } = payload;
     const web3 = yield getSelectedWeb3();
 
-    const { abi, bytecode } = CertificateStoreDefinition;
+    const { abi, bytecode } = DocumentStoreDefinition;
 
     const proxyContract = new web3.eth.Contract(abi);
     const deployment = proxyContract.deploy({
@@ -66,8 +66,14 @@ export function* deployStore({ payload }) {
       arguments: [name]
     });
     const gasPrice = (yield web3.eth.getGasPrice()) * 5;
+    const gasLimit = (yield deployment.estimateGas()) * 2;
 
-    const txHash = yield sendTxWrapper(deployment, gasPrice, fromAddress);
+    const txHash = yield sendTxWrapper({
+      txObject: deployment,
+      gasPrice,
+      gasLimit,
+      fromAddress
+    });
 
     yield put({
       type: types.DEPLOYING_STORE_TX_SUBMITTED,
@@ -93,6 +99,7 @@ export function* deployStore({ payload }) {
       type: types.DEPLOYING_STORE_FAILURE,
       payload: e.message
     });
+    throw e;
   }
 }
 
@@ -101,13 +108,13 @@ export function* issueCertificate({ payload }) {
     const { fromAddress, storeAddress, certificateHash } = payload;
     const web3 = yield getSelectedWeb3();
 
-    const { abi } = CertificateStoreDefinition;
+    const { abi } = DocumentStoreDefinition;
     const contract = new web3.eth.Contract(abi, storeAddress, {
       from: fromAddress
     });
 
-    const gasPrice = yield web3.eth.getGasPrice();
-    const issueMsg = contract.methods.issueCertificate(certificateHash);
+    const gasPrice = (yield web3.eth.getGasPrice()) * 5;
+    const issueMsg = contract.methods.issue(certificateHash);
 
     const tx = yield issueMsg.send({
       from: fromAddress,
@@ -134,15 +141,15 @@ export function* revokeCertificate({ payload }) {
     const { fromAddress, storeAddress, certificateHash } = payload;
     const web3 = yield getSelectedWeb3();
 
-    const { abi } = CertificateStoreDefinition;
+    const { abi } = DocumentStoreDefinition;
     const contract = new web3.eth.Contract(abi, storeAddress, {
       from: fromAddress
     });
 
-    const gasPrice = yield web3.eth.getGasPrice();
-    const issueMsg = contract.methods.revokeCertificate(certificateHash);
+    const gasPrice = (yield web3.eth.getGasPrice()) * 5;
+    const revokeMsg = contract.methods.revoke(certificateHash);
 
-    const tx = yield issueMsg.send({
+    const tx = yield revokeMsg.send({
       from: fromAddress,
       gas: DEFAULT_GAS,
       gasPrice
