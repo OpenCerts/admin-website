@@ -22,6 +22,14 @@ export default function* rootSaga() {
       adminType.DEPLOYING_STORE_TX_SUBMITTED,
       applicationSaga.addTxHashToPolling
     ),
+    takeEvery(
+      adminType.ISSUING_CERTIFICATE_TX_SUBMITTED,
+      applicationSaga.addTxHashToPolling
+    ),
+    takeEvery(
+      adminType.REVOKING_CERTIFICATE_TX_SUBMITTED,
+      applicationSaga.addTxHashToPolling
+    ),
     takeEvery(adminType.DEPLOYING_STORE, adminSaga.deployStore),
     takeEvery(adminType.ISSUING_CERTIFICATE, adminSaga.issueCertificate),
     takeEvery(adminType.REVOKING_CERTIFICATE, adminSaga.revokeCertificate),
