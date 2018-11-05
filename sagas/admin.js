@@ -10,9 +10,6 @@ import DocumentStoreDefinition from "../services/contracts/DocumentStore.json";
 
 import { getSelectedWeb3 } from "./application";
 
-// TODO do a better estimate
-const DEFAULT_GAS = 3000000;
-
 export function* loadAdminAddress() {
   try {
     const web3 = yield getSelectedWeb3();
@@ -113,20 +110,32 @@ export function* issueCertificate({ payload }) {
       from: fromAddress
     });
 
-    const gasPrice = (yield web3.eth.getGasPrice()) * 5;
     const issueMsg = contract.methods.issue(certificateHash);
+    const gasPrice = (yield web3.eth.getGasPrice()) * 5;
+    const gasLimit = (yield issueMsg.estimateGas()) * 2;
 
-    const tx = yield issueMsg.send({
-      from: fromAddress,
-      gas: DEFAULT_GAS,
-      gasPrice
+    const txHash = yield sendTxWrapper({
+      txObject: issueMsg,
+      gasPrice,
+      gasLimit,
+      fromAddress
     });
 
-    const txHash = tx.blockHash;
+    yield put({
+      type: types.ISSUING_CERTIFICATE_TX_SUBMITTED,
+      payload: txHash
+    });
+
+    let txReceipt;
+
+    while (!txReceipt) {
+      yield take(applicationTypes.TRANSACTION_MINED);
+      txReceipt = yield select(getTransactionReceipt, txHash); // this returns undefined if the transaction mined doesn't match the txHash we're waiting for
+    }
 
     yield put({
       type: types.ISSUING_CERTIFICATE_SUCCESS,
-      payload: txHash
+      payload: txReceipt.transactionHash
     });
   } catch (e) {
     yield put({
@@ -145,21 +154,31 @@ export function* revokeCertificate({ payload }) {
     const contract = new web3.eth.Contract(abi, storeAddress, {
       from: fromAddress
     });
-
-    const gasPrice = (yield web3.eth.getGasPrice()) * 5;
     const revokeMsg = contract.methods.revoke(certificateHash);
+    const gasPrice = (yield web3.eth.getGasPrice()) * 5;
+    const gasLimit = (yield revokeMsg.estimateGas()) * 2;
 
-    const tx = yield revokeMsg.send({
-      from: fromAddress,
-      gas: DEFAULT_GAS,
-      gasPrice
+    const txHash = yield sendTxWrapper({
+      txObject: revokeMsg,
+      gasPrice,
+      gasLimit,
+      fromAddress
     });
 
-    const txHash = tx.blockHash;
+    yield put({
+      type: types.REVOKING_CERTIFICATE_TX_SUBMITTED,
+      payload: txHash
+    });
 
+    let txReceipt;
+
+    while (!txReceipt) {
+      yield take(applicationTypes.TRANSACTION_MINED);
+      txReceipt = yield select(getTransactionReceipt, txHash); // this returns undefined if the transaction mined doesn't match the txHash we're waiting for
+    }
     yield put({
       type: types.REVOKING_CERTIFICATE_SUCCESS,
-      payload: txHash
+      payload: txReceipt.transactionHash
     });
   } catch (e) {
     yield put({

@@ -30,11 +30,13 @@ export const types = {
   DEPLOYING_STORE_FAILURE: "DEPLOYING_STORE_FAILURE",
 
   ISSUING_CERTIFICATE: "ISSUING_CERTIFICATE",
+  ISSUING_CERTIFICATE_TX_SUBMITTED: "ISSUING_CERTIFICATE_TX_SUBMITTED",
   ISSUING_CERTIFICATE_SUCCESS: "ISSUING_CERTIFICATE_SUCCESS",
   ISSUING_CERTIFICATE_FAILURE: "ISSUING_CERTIFICATE_FAILURE",
 
   REVOKING_CERTIFICATE: "REVOKING_CERTIFICATE",
   REVOKING_CERTIFICATE_SUCCESS: "REVOKING_CERTIFICATE_SUCCESS",
+  REVOKING_CERTIFICATE_TX_SUBMITTED: "REVOKING_CERTIFICATE_TX_SUBMITTED",
   REVOKING_CERTIFICATE_FAILURE: "REVOKING_CERTIFICATE_FAILURE"
 };
 
@@ -86,6 +88,8 @@ export default function reducer(state = initialState, action) {
         ...state,
         issuingCertificate: true
       };
+    case types.ISSUING_CERTIFICATE_TX_SUBMITTED:
+      return state;
     case types.ISSUING_CERTIFICATE_SUCCESS:
       return {
         ...state,
@@ -105,6 +109,8 @@ export default function reducer(state = initialState, action) {
         ...state,
         revokingCertificate: true
       };
+    case types.REVOKING_CERTIFICATE_TX_SUBMITTED:
+      return state;
     case types.REVOKING_CERTIFICATE_SUCCESS:
       return {
         ...state,
