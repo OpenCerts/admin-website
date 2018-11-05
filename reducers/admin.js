@@ -67,8 +67,6 @@ export default function reducer(state = initialState, action) {
         ...state,
         deploying: true
       };
-    case types.DEPLOYING_STORE_TX_SUBMITTED:
-      return state;
     case types.DEPLOYING_STORE_SUCCESS:
       return {
         ...state,
@@ -88,8 +86,6 @@ export default function reducer(state = initialState, action) {
         ...state,
         issuingCertificate: true
       };
-    case types.ISSUING_CERTIFICATE_TX_SUBMITTED:
-      return state;
     case types.ISSUING_CERTIFICATE_SUCCESS:
       return {
         ...state,
@@ -109,8 +105,6 @@ export default function reducer(state = initialState, action) {
         ...state,
         revokingCertificate: true
       };
-    case types.REVOKING_CERTIFICATE_TX_SUBMITTED:
-      return state;
     case types.REVOKING_CERTIFICATE_SUCCESS:
       return {
         ...state,
