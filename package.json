@@ -9,7 +9,8 @@
     "build:static": "next build && next export",
     "start": "next build && next start",
     "cname": "echo 'admin.opencerts.io' > out/CNAME",
-    "deploy": "yarn deploy:prebuilt && gh-pages --dotfiles --dist out",
+    "deploy": "rm -rf out && npm run build:static",
+    "deploy:legacy": "yarn deploy:prebuilt && gh-pages --dotfiles --dist out",
     "deploy:prebuilt": "rm -rf out && yarn build:static && touch out/.nojekyll && yarn cname"
   },
   "dependencies": {
