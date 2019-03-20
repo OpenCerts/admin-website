@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import {isAddress} from "web3-utils";
+import { isAddress } from "web3-utils";
 import HashColor from "./HashColor";
 
 const VALIDATIONS = {

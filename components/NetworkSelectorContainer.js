@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { updateWeb3, getNetwork, getCustomRpc } from "../reducers/application";
-import { NETWORK_TYPES, INFURA_PROJECT_ID } from "../config";
+import { NETWORK_TYPES } from "../config";
 
 class AdminContainer extends Component {
   constructor(props) {
