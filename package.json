@@ -10,8 +10,8 @@
     "start": "next build && next start",
     "cname": "echo 'admin.opencerts.io' > out/CNAME",
     "deploy": "rm -rf out && npm run build:static",
-    "deploy:legacy": "yarn deploy:prebuilt && gh-pages --dotfiles --dist out",
-    "deploy:prebuilt": "rm -rf out && yarn build:static && touch out/.nojekyll && yarn cname"
+    "deploy:legacy": "npm run deploy:prebuilt && gh-pages --dotfiles --dist out",
+    "deploy:prebuilt": "rm -rf out && npm run build:static && touch out/.nojekyll && npm run cname"
   },
   "dependencies": {
     "@ledgerhq/hw-transport-u2f": "^4.21.0",
