@@ -4,14 +4,7 @@ import SubscriptionSubprovider from "web3-provider-engine/subproviders/subscript
 import TransportU2F from "@ledgerhq/hw-transport-u2f";
 import createLedgerSubprovider from "@ledgerhq/web3-subprovider";
 import WebsocketSubProvider from "web3-provider-engine/subproviders/websocket";
-
-export const types = {
-  INJECTED: "INJECTED",
-  LEDGER_MAIN: "LEDGER_MAIN",
-  LEDGER_ROPSTEN: "LEDGER_ROPSTEN",
-  CUSTOM: "CUSTOM",
-  MOCK: "MOCK"
-};
+import { NETWORK_TYPES, INFURA_PROJECT_ID } from "../../config";
 
 let web3Instance;
 let web3InstanceType;
@@ -20,8 +13,8 @@ async function loadWeb3Ledger(mainnet = true) {
   let { web3 } = window;
   const networkId = mainnet ? 1 : 3;
   const rpcUrl = mainnet
-    ? "wss://mainnet.infura.io/ws/GcUmThrFdoO47u9xsEXq"
-    : "wss://ropsten.infura.io/ws/GcUmThrFdoO47u9xsEXq";
+    ? `wss://mainnet.infura.io/ws/v3/${INFURA_PROJECT_ID}`
+    : `wss://ropsten.infura.io/ws/v3/${INFURA_PROJECT_ID}`;
 
   const engine = new ProviderEngine();
   const getTransport = () => TransportU2F.create();
@@ -70,22 +63,27 @@ async function loadWeb3Mock() {
   };
 }
 
-async function resolveWeb3(resolve, reject, t = types.INJECTED, config) {
+async function resolveWeb3(
+  resolve,
+  reject,
+  t = NETWORK_TYPES.INJECTED,
+  config
+) {
   try {
     switch (t) {
-      case types.INJECTED:
+      case NETWORK_TYPES.INJECTED:
         web3Instance = await loadWeb3Injected();
         break;
-      case types.LEDGER_MAIN:
+      case NETWORK_TYPES.LEDGER_MAIN:
         web3Instance = await loadWeb3Ledger(true);
         break;
-      case types.LEDGER_ROPSTEN:
+      case NETWORK_TYPES.LEDGER_ROPSTEN:
         web3Instance = await loadWeb3Ledger(false);
         break;
-      case types.CUSTOM:
+      case NETWORK_TYPES.CUSTOM:
         web3Instance = await loadWeb3CustomRpc(config);
         break;
-      case types.MOCK:
+      case NETWORK_TYPES.MOCK:
         web3Instance = await loadWeb3Mock();
         break;
       default:
@@ -100,8 +98,8 @@ async function resolveWeb3(resolve, reject, t = types.INJECTED, config) {
 
 export function setNewWeb3(t, config) {
   if (
-    web3InstanceType === types.LEDGER_MAIN ||
-    web3InstanceType === types.LEDGER_ROPSTEN
+    web3InstanceType === NETWORK_TYPES.LEDGER_MAIN ||
+    web3InstanceType === NETWORK_TYPES.LEDGER_ROPSTEN
   ) {
     // we need to kill the engine if the previous web3 instance has a ledger subprovider
     web3Instance.currentProvider.stop();

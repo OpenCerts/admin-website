@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { types as networkTypes } from "../services/web3/getWeb3";
 import { updateWeb3, getNetwork, getCustomRpc } from "../reducers/application";
+import { NETWORK_TYPES, INFURA_PROJECT_ID } from "../config";
 
 class AdminContainer extends Component {
   constructor(props) {
@@ -18,7 +18,7 @@ class AdminContainer extends Component {
   }
 
   render() {
-    const { INJECTED, LEDGER_MAIN, LEDGER_ROPSTEN } = networkTypes;
+    const { INJECTED, LEDGER_MAIN, LEDGER_ROPSTEN } = NETWORK_TYPES;
 
     return (
       <div className="fr ba">

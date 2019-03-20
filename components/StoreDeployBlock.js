@@ -75,7 +75,7 @@ StoreDeployBlock.propTypes = {
   storeAddress: PropTypes.string,
   deploying: PropTypes.bool,
   deployedTx: PropTypes.string,
-  networkId: PropTypes.string,
+  networkId: PropTypes.number,
   loadAdminAddress: PropTypes.func,
   handleStoreDeploy: PropTypes.func
 };
