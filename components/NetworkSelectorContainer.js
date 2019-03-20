@@ -50,7 +50,10 @@ const mapDispatchToProps = dispatch => ({
   updateWeb3: payload => dispatch(updateWeb3(payload))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(AdminContainer);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AdminContainer);
 
 AdminContainer.propTypes = {
   network: PropTypes.string,

@@ -58,12 +58,14 @@ class AdminContainer extends Component {
     };
   }
 
-  componentWillMount() {
+  // eslint-disable-next-line camelcase
+  UNSAFE_componentWillMount() {
     this.props.updateNetworkId();
     this.props.loadAdminAddress();
   }
 
-  componentWillReceiveProps(nextProps) {
+  // eslint-disable-next-line camelcase
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.storeAddress !== this.state.localStoreAddress) {
       this.setState({ localStoreAddress: nextProps.storeAddress });
     }
@@ -242,7 +244,10 @@ const mapDispatchToProps = dispatch => ({
   updateStoreAddress: payload => dispatch(updateStoreAddress(payload))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(AdminContainer);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AdminContainer);
 
 AdminContainer.propTypes = {
   deploying: PropTypes.bool,
