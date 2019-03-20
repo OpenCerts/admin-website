@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { types as networkTypes } from "../services/web3/getWeb3";
 import { updateWeb3, getNetwork, getCustomRpc } from "../reducers/application";
+import { NETWORK_TYPES } from "../config";
 
 class AdminContainer extends Component {
   constructor(props) {
@@ -18,7 +18,7 @@ class AdminContainer extends Component {
   }
 
   render() {
-    const { INJECTED, LEDGER_MAIN, LEDGER_ROPSTEN } = networkTypes;
+    const { INJECTED, LEDGER_MAIN, LEDGER_ROPSTEN } = NETWORK_TYPES;
 
     return (
       <div className="fr ba">
@@ -50,7 +50,10 @@ const mapDispatchToProps = dispatch => ({
   updateWeb3: payload => dispatch(updateWeb3(payload))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(AdminContainer);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AdminContainer);
 
 AdminContainer.propTypes = {
   network: PropTypes.string,

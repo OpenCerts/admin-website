@@ -49,7 +49,8 @@ class StoreRevokeBlock extends Component {
           />
         </div>
         <button className="mt4 danger" onClick={this.onRevokeClick}>
-          <i className="fas fa-exclamation-triangle" />&nbsp;
+          <i className="fas fa-exclamation-triangle" />
+          &nbsp;
           {this.props.revokingCertificate ? "Revoking…" : "Revoke"}
         </button>
 

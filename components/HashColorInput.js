@@ -1,9 +1,9 @@
 import PropTypes from "prop-types";
-import Web3 from "web3";
+import { isAddress } from "web3-utils";
 import HashColor from "./HashColor";
 
 const VALIDATIONS = {
-  address: { size: 42, maxLength: 50, validityFn: Web3.utils.isAddress },
+  address: { size: 42, maxLength: 50, validityFn: isAddress },
   hash: {
     size: 66,
     maxLength: 80,

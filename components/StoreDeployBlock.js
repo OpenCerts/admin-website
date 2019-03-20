@@ -32,7 +32,8 @@ class StoreDeployBlock extends Component {
       <div className="w-100">
         <div className="mb4">
           <div>
-            Issuer Name<br />
+            Issuer Name
+            <br />
             <input
               type="text"
               onChange={this.onNameChange}
@@ -75,7 +76,7 @@ StoreDeployBlock.propTypes = {
   storeAddress: PropTypes.string,
   deploying: PropTypes.bool,
   deployedTx: PropTypes.string,
-  networkId: PropTypes.string,
+  networkId: PropTypes.number,
   loadAdminAddress: PropTypes.func,
   handleStoreDeploy: PropTypes.func
 };

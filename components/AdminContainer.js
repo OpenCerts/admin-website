@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import web3 from "web3";
+import { isAddress } from "web3-utils";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import {
   loadAdminAddress,
@@ -58,12 +58,14 @@ class AdminContainer extends Component {
     };
   }
 
-  componentWillMount() {
+  // eslint-disable-next-line camelcase
+  UNSAFE_componentWillMount() {
     this.props.updateNetworkId();
     this.props.loadAdminAddress();
   }
 
-  componentWillReceiveProps(nextProps) {
+  // eslint-disable-next-line camelcase
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.storeAddress !== this.state.localStoreAddress) {
       this.setState({ localStoreAddress: nextProps.storeAddress });
     }
@@ -72,7 +74,7 @@ class AdminContainer extends Component {
   storeAddressOnChange(event) {
     const address = event.target.value;
     this.setState({ localStoreAddress: address });
-    if (web3.utils.isAddress(address)) {
+    if (isAddress(address)) {
       this.props.updateStoreAddress(address);
     }
   }
@@ -242,7 +244,10 @@ const mapDispatchToProps = dispatch => ({
   updateStoreAddress: payload => dispatch(updateStoreAddress(payload))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(AdminContainer);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AdminContainer);
 
 AdminContainer.propTypes = {
   deploying: PropTypes.bool,

@@ -9,12 +9,13 @@
     "build:static": "next build && next export",
     "start": "next build && next start",
     "cname": "echo 'admin.opencerts.io' > out/CNAME",
-    "deploy": "yarn deploy:prebuilt && gh-pages --dotfiles --dist out",
-    "deploy:prebuilt": "rm -rf out && yarn build:static && touch out/.nojekyll && yarn cname"
+    "deploy": "rm -rf out && npm run build:static",
+    "deploy:legacy": "npm run deploy:prebuilt && gh-pages --dotfiles --dist out",
+    "deploy:prebuilt": "rm -rf out && npm run build:static && touch out/.nojekyll && npm run cname"
   },
   "dependencies": {
-    "@ledgerhq/hw-transport-u2f": "^4.21.0",
-    "@ledgerhq/web3-subprovider": "^4.23.0",
+    "@ledgerhq/hw-transport-u2f": "4.21.0",
+    "@ledgerhq/web3-subprovider": "4.23.0",
     "eslint-plugin-react": "^7.7.0",
     "lodash": "^4.17.5",
     "next": "^5.0.0",
@@ -28,8 +29,9 @@
     "redux-devtools-extension": "^2.13.2",
     "redux-saga": "^0.16.0",
     "truffle-contract": "^3.0.4",
-    "web3": "^1.0.0-beta.33",
-    "web3-provider-engine": "14.0.6"
+    "web3": "1.0.0-beta.36",
+    "web3-provider-engine": "14.0.6",
+    "web3-utils": "^1.0.0-beta.36"
   },
   "license": "ISC",
   "devDependencies": {
@@ -43,6 +45,6 @@
     "eslint-plugin-prettier": "^2.6.0",
     "gh-pages": "^1.1.0",
     "prettier": "^1.10.2",
-    "webpack": "^4.0.1"
+    "webpack": "^4.29.6"
   }
 }
