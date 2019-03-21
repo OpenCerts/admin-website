@@ -13,4 +13,5 @@ addons:
       - libusb-1.0-0-dev
 script:
   - yarn lint
+  - yarn test
   - yarn build
