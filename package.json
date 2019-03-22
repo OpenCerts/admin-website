@@ -31,12 +31,16 @@
     "redux-devtools-extension": "^2.13.2",
     "redux-saga": "^0.16.0",
     "truffle-contract": "^3.0.4",
-    "web3": "1.0.0-beta.36",
+    "web3": "1.0.0-beta.33",
     "web3-provider-engine": "14.0.6",
-    "web3-utils": "^1.0.0-beta.36"
+    "web3-utils": "^1.0.0-beta.33"
   },
   "license": "ISC",
   "devDependencies": {
+    "babel-core": "7.0.0-bridge.0",
+    "babel-plugin-module-resolver": "^3.2.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
     "eslint": "^4.17.0",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-config-prettier": "^2.9.0",
@@ -48,6 +52,6 @@
     "gh-pages": "^1.1.0",
     "jest": "^24.5.0",
     "prettier": "^1.10.2",
-    "webpack": "^4.29.6"
+    "webpack": "4.20.2"
   }
 }
