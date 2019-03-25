@@ -1,12 +1,12 @@
+// polyfill is required to fix regeneratorRuntime issue for ledgerhq u2f
+// see: https://github.com/LedgerHQ/ledgerjs/issues/218
+import "@babel/polyfill";
+
 import withRedux from "next-redux-wrapper";
 import initStore from "../store";
 import Meta from "../components/Meta";
 import AdminContainer from "../components/AdminContainer";
 import NetworkSelectorContainer from "../components/NetworkSelectorContainer";
-
-// polyfill is required to fix regeneratorRuntime issue for ledgerhq u2f
-// see: https://github.com/LedgerHQ/ledgerjs/issues/218
-import '@babel/polyfill';
 
 const VerifierPage = props => (
   <div className="min-vh-100 pv5">
