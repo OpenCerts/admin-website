@@ -14,6 +14,7 @@
     "deploy:prebuilt": "rm -rf out && npm run build:static && touch out/.nojekyll && npm run cname"
   },
   "dependencies": {
+    "@babel/polyfill": "7.4.0",
     "@ledgerhq/hw-transport-u2f": "4.24.0",
     "@ledgerhq/web3-subprovider": "4.23.0",
     "eslint-plugin-react": "^7.7.0",
@@ -35,7 +36,6 @@
   },
   "license": "ISC",
   "devDependencies": {
-    "@babel/polyfill": "7.4.0",
     "eslint": "^4.17.0",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-config-prettier": "^2.9.0",
