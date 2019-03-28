@@ -1,9 +1,5 @@
 {
-  "extends": [
-    "plugin:react/recommended",
-    "airbnb-base",
-    "prettier"
-  ],
+  "extends": ["plugin:react/recommended", "airbnb-base", "prettier"],
   "env": {
     "mocha": true
   },
@@ -11,16 +7,10 @@
     "ecmaVersion": 2017,
     "sourceType": "module",
     "ecmaFeatures": {
-        "jsx": true,
+      "jsx": true
     }
   },
-  "plugins": [
-    "react",
-    "prettier",
-    "chai-friendly",
-    "chai-expect",
-    "mocha"
-  ],
+  "plugins": ["react", "prettier", "chai-friendly", "chai-expect", "mocha"],
   "globals": {
     "artifacts": false,
     "contract": false,
@@ -30,16 +20,14 @@
     "document": true
   },
   "rules": {
+    "no-console": "off",
     "no-unused-vars": [
       "error",
       {
         "argsIgnorePattern": "^_"
       }
     ],
-    "func-names": [
-      "error",
-      "as-needed"
-    ],
+    "func-names": ["error", "as-needed"],
     "react/react-in-jsx-scope": "off",
     "prettier/prettier": "error",
     "no-unused-expressions": "off",

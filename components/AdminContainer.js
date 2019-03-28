@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { isValidAddress } from "./utils";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
+import { isValidAddress } from "./utils";
 import {
   loadAdminAddress,
   getAdminAddress,
