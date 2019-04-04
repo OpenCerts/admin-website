@@ -1,4 +1,5 @@
 import Web3 from "web3";
+import Portis from "@portis/web3";
 import ProviderEngine from "web3-provider-engine";
 import SubscriptionSubprovider from "web3-provider-engine/subproviders/subscriptions";
 import TransportU2F from "@ledgerhq/hw-transport-u2f";
@@ -31,6 +32,12 @@ async function loadWeb3Ledger(mainnet = true) {
 
   engine.start();
   web3 = new Web3(engine);
+  return web3;
+}
+
+async function loadPortisRopsten() {
+  const portis = new Portis("5dadb9f9-e6a8-42aa-be4b-1f8edd789b1a", "ropsten");
+  let web3 = new Web3(portis.provider);
   return web3;
 }
 
@@ -73,6 +80,9 @@ async function resolveWeb3(
     switch (t) {
       case NETWORK_TYPES.INJECTED:
         web3Instance = await loadWeb3Injected();
+        break;
+      case NETWORK_TYPES.PORTIS_ROPSTEN:
+        web3Instance = await loadPortisRopsten();
         break;
       case NETWORK_TYPES.LEDGER_MAIN:
         web3Instance = await loadWeb3Ledger(true);

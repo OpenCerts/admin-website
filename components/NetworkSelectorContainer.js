@@ -18,7 +18,12 @@ class AdminContainer extends Component {
   }
 
   render() {
-    const { INJECTED, LEDGER_MAIN, LEDGER_ROPSTEN } = NETWORK_TYPES;
+    const {
+      INJECTED,
+      LEDGER_MAIN,
+      LEDGER_ROPSTEN,
+      PORTIS_ROPSTEN
+    } = NETWORK_TYPES;
 
     return (
       <div className="fr ba">
@@ -35,6 +40,7 @@ class AdminContainer extends Component {
           <option value={INJECTED}>Metamask</option>
           <option value={LEDGER_MAIN}>Ledger Nano (Mainnet)</option>
           <option value={LEDGER_ROPSTEN}>Ledger Nano (Ropsten)</option>
+          <option value={PORTIS_ROPSTEN}>Portis (Ropsten)</option>
         </select>
       </div>
     );
