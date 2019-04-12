@@ -92,6 +92,7 @@ async function resolveWeb3(
     web3InstanceType = t;
     resolve(web3Instance);
   } catch (e) {
+    console.error(e);
     reject(e);
   }
 }

@@ -119,7 +119,7 @@ export default class HashColor extends React.Component {
   }
 
   static color(addr) {
-    return `hsl(${Math.abs(HashColor.toHashCode(addr) % 360)}, 90%, 35%)`;
+    return `hsl(${Math.abs(HashColor.toHashCode(addr) % 190) + 80}, 90%, 35%)`; // random colour excluding reds
   }
 
   static toHashCode(str) {

@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { isAddress } from "web3-utils";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
+import { isValidAddress } from "./utils";
 import {
   loadAdminAddress,
   getAdminAddress,
@@ -74,7 +74,7 @@ class AdminContainer extends Component {
   storeAddressOnChange(event) {
     const address = event.target.value;
     this.setState({ localStoreAddress: address });
-    if (isAddress(address)) {
+    if (isValidAddress(address)) {
       this.props.updateStoreAddress(address);
     }
   }

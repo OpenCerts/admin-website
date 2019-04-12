@@ -27,6 +27,7 @@ export function* loadAdminAddress() {
       type: types.LOADING_ADMIN_ADDRESS_FAILURE,
       payload: e.message
     });
+    console.error(e);
   }
 }
 
@@ -142,6 +143,7 @@ export function* issueCertificate({ payload }) {
       type: types.ISSUING_CERTIFICATE_FAILURE,
       payload: e.message
     });
+    console.error(e);
   }
 }
 
@@ -185,6 +187,7 @@ export function* revokeCertificate({ payload }) {
       type: types.REVOKING_CERTIFICATE_FAILURE,
       payload: e.message
     });
+    console.error(e);
   }
 }
 

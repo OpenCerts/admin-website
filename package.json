@@ -3,6 +3,8 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "next",
+    "test": "jest",
+    "test:watch": "jest --watchAll",
     "lint": "eslint . --ext .js --max-warnings 0",
     "lint:fix": "eslint . --ext .js --fix",
     "build": "next build",
@@ -14,9 +16,9 @@
     "deploy:prebuilt": "rm -rf out && npm run build:static && touch out/.nojekyll && npm run cname"
   },
   "dependencies": {
-    "@babel/polyfill": "7.4.0",
-    "@ledgerhq/hw-transport-u2f": "4.24.0",
-    "@ledgerhq/web3-subprovider": "4.23.0",
+    "@babel/polyfill": "^7.4.0",
+    "@ledgerhq/hw-transport-u2f": "4.48.0",
+    "@ledgerhq/web3-subprovider": "4.48.0",
     "eslint-plugin-react": "^7.7.0",
     "lodash": "^4.17.5",
     "next": "^8.0.0",
@@ -45,6 +47,7 @@
     "eslint-plugin-mocha": "^4.11.0",
     "eslint-plugin-prettier": "^2.6.0",
     "gh-pages": "^1.1.0",
+    "jest": "^24.5.0",
     "prettier": "^1.10.2",
     "webpack": "^4.29.6"
   }
