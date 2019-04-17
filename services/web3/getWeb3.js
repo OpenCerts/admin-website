@@ -13,8 +13,7 @@ async function getPermission() {
   try {
     // Request for account access if required
     await window.ethereum.enable();
-  }
-  catch (error) {
+  } catch (error) {
     console.error(error);
     console.error(`Refresh the page to provide authorization again`);
     window.web3 = null;
