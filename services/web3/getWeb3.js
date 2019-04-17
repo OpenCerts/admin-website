@@ -64,7 +64,7 @@ async function loadWeb3CustomRpc(rpc = "http://localhost:8545") {
 
   const provider = new Web3.providers.HttpProvider(rpc);
   web3 = new Web3(provider);
-  getPermission();
+  await getPermission();
 
   return web3;
 }
