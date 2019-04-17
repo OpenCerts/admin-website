@@ -31,6 +31,7 @@ async function loadWeb3Ledger(mainnet = true) {
 
   engine.start();
   web3 = new Web3(engine);
+
   return web3;
 }
 
@@ -41,6 +42,7 @@ async function loadWeb3Injected() {
   if (!alreadyInjected) throw new Error("Metamask cannot be found");
 
   web3 = new Web3(web3.currentProvider);
+  await getPermission();
 
   return web3;
 }
@@ -50,6 +52,7 @@ async function loadWeb3CustomRpc(rpc = "http://localhost:8545") {
 
   const provider = new Web3.providers.HttpProvider(rpc);
   web3 = new Web3(provider);
+  getPermission();
 
   return web3;
 }
@@ -118,6 +121,18 @@ export function setNewWeb3(t, config) {
       }
     }
   });
+}
+
+async function getPermission() {
+  try {
+    // Request for account access if required
+    await ethereum.enable();
+  }
+  catch (error) {
+    console.error(error);
+    console.error(`Refresh the page to provide authorization again`);
+    window.web3 = null;
+  }
 }
 
 export function getCurrentWeb3(t, config) {
