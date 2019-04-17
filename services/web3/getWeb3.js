@@ -9,6 +9,18 @@ import { NETWORK_TYPES, INFURA_PROJECT_ID } from "../../config";
 let web3Instance;
 let web3InstanceType;
 
+async function getPermission() {
+  try {
+    // Request for account access if required
+    await window.ethereum.enable();
+  }
+  catch (error) {
+    console.error(error);
+    console.error(`Refresh the page to provide authorization again`);
+    window.web3 = null;
+  }
+}
+
 async function loadWeb3Ledger(mainnet = true) {
   let { web3 } = window;
   const networkId = mainnet ? 1 : 3;
@@ -121,18 +133,6 @@ export function setNewWeb3(t, config) {
       }
     }
   });
-}
-
-async function getPermission() {
-  try {
-    // Request for account access if required
-    await ethereum.enable();
-  }
-  catch (error) {
-    console.error(error);
-    console.error(`Refresh the page to provide authorization again`);
-    window.web3 = null;
-  }
 }
 
 export function getCurrentWeb3(t, config) {
