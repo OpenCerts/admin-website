@@ -9,17 +9,6 @@ import { NETWORK_TYPES, INFURA_PROJECT_ID } from "../../config";
 let web3Instance;
 let web3InstanceType;
 
-async function getPermission() {
-  try {
-    // Request for account access if required
-    await window.ethereum.enable();
-  } catch (error) {
-    console.error(error);
-    console.error(`Refresh the page to provide authorization again`);
-    window.web3 = null;
-  }
-}
-
 async function loadWeb3Ledger(mainnet = true) {
   let { web3 } = window;
   const networkId = mainnet ? 1 : 3;
@@ -48,12 +37,14 @@ async function loadWeb3Ledger(mainnet = true) {
 
 async function loadWeb3Injected() {
   let { web3 } = window;
-  const alreadyInjected = typeof web3 !== "undefined";
+  const alreadyInjected = typeof window !== "undefined";
 
   if (!alreadyInjected) throw new Error("Metamask cannot be found");
-
-  web3 = new Web3(web3.currentProvider);
-  await getPermission();
+  web3 = new Web3(window.ethereum);
+  if (window.ethereum) {
+    // Request for account access if required
+    await window.ethereum.enable();
+  }
 
   return web3;
 }
@@ -63,7 +54,6 @@ async function loadWeb3CustomRpc(rpc = "http://localhost:8545") {
 
   const provider = new Web3.providers.HttpProvider(rpc);
   web3 = new Web3(provider);
-  await getPermission();
 
   return web3;
 }
