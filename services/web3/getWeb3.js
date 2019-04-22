@@ -40,12 +40,16 @@ async function loadWeb3Injected() {
   const alreadyInjected = typeof window !== "undefined";
 
   if (!alreadyInjected) throw new Error("Metamask cannot be found");
-  web3 = new Web3(window.ethereum);
-  if (window.ethereum) {
+
+  if (
+    typeof window.ethereum !== "undefined" ||
+    typeof window.web3 !== "undefined"
+  ) {
+    const provider = window.ethereum || window.web3.currentProvider;
+    web3 = new Web3(provider);
     // Request for account access if required
     await window.ethereum.enable();
   }
-
   return web3;
 }
 
