@@ -37,7 +37,7 @@ async function loadWeb3Ledger(mainnet = true) {
 
 async function loadWeb3Injected() {
   let { web3 } = window;
-  const alreadyInjected = typeof window !== "undefined";
+  const alreadyInjected = typeof web3 !== "undefined";
 
   if (!alreadyInjected) throw new Error("Metamask cannot be found");
 
