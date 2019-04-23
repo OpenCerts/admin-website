@@ -5,12 +5,15 @@ import TransportU2F from "@ledgerhq/hw-transport-u2f";
 import createLedgerSubprovider from "@ledgerhq/web3-subprovider";
 import WebsocketSubProvider from "web3-provider-engine/subproviders/websocket";
 import { NETWORK_TYPES, INFURA_PROJECT_ID } from "../../config";
+import { getLogger } from "../../logger";
+
+const { trace, error } = getLogger("services:getWeb3");
 
 let web3Instance;
 let web3InstanceType;
 
 async function loadWeb3Ledger(mainnet = true) {
-  let { web3 } = window;
+  trace(`Loading web3 using ledger subprovider engine`);
   const networkId = mainnet ? 1 : 3;
   const rpcUrl = mainnet
     ? `wss://mainnet.infura.io/ws/v3/${INFURA_PROJECT_ID}`
@@ -30,25 +33,28 @@ async function loadWeb3Ledger(mainnet = true) {
   engine.addProvider(filterAndSubsSubprovider);
 
   engine.start();
-  web3 = new Web3(engine);
-
-  return web3;
+  return new Web3(engine);
 }
 
+/**
+ * Used for retrieving Injected web3, we expect Metamask to do this
+ */
 async function loadWeb3Injected() {
+  trace(`Loading injected web3`);
   let { web3 } = window;
-  const alreadyInjected = typeof web3 !== "undefined";
-
-  if (!alreadyInjected) throw new Error("Metamask cannot be found");
 
   if (
-    typeof window.ethereum !== "undefined" ||
-    typeof window.web3 !== "undefined"
+    typeof window.ethereum !== "undefined" || // new metamask api EIP-1102
+    typeof window.web3 !== "undefined" // old metamask api
   ) {
+    trace(`Metamask provider found: ${window.web3}`);
+
     const provider = window.ethereum || window.web3.currentProvider;
     web3 = new Web3(provider);
     // Request for account access if required
     await window.ethereum.enable();
+  } else {
+    throw new Error("Metamask cannot be found");
   }
   return web3;
 }
@@ -100,12 +106,13 @@ async function resolveWeb3(
     web3InstanceType = t;
     resolve(web3Instance);
   } catch (e) {
-    console.error(e);
+    error(e);
     reject(e);
   }
 }
 
 export function setNewWeb3(t, config) {
+  trace(`Setting new Web3: ${t}, ${config}`);
   if (
     web3InstanceType === NETWORK_TYPES.LEDGER_MAIN ||
     web3InstanceType === NETWORK_TYPES.LEDGER_ROPSTEN
