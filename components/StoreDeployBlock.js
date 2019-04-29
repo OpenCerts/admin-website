@@ -44,7 +44,7 @@ class StoreDeployBlock extends Component {
           </div>
         </div>
 
-        <button disabled={this.props.deploying} onClick={this.onDeployClick}>
+        <button onClick={this.onDeployClick} disabled={this.props.deploying}>
           {this.props.deploying ? "Deploying…" : "Deploy"}
         </button>
 

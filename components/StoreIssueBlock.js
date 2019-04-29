@@ -42,7 +42,11 @@ class StoreIssueBlock extends Component {
             placeholder="0x…"
           />
         </div>
-        <button className="mt4" onClick={this.onIssueClick}>
+        <button
+          className="mt4"
+          onClick={this.onIssueClick}
+          disabled={this.props.issuingCertificate}
+        >
           {this.props.issuingCertificate ? "Issuing…" : "Issue"}
         </button>
 
