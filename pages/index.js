@@ -3,10 +3,10 @@
 import "@babel/polyfill";
 
 import withRedux from "next-redux-wrapper";
-import initStore from "../store";
-import Meta from "../components/Meta";
-import AdminContainer from "../components/AdminContainer";
-import NetworkSelectorContainer from "../components/NetworkSelectorContainer";
+import initStore from "../src/store";
+import Meta from "../src/components/Meta";
+import AdminContainer from "../src/components/AdminContainer";
+import NetworkSelectorContainer from "../src/components/NetworkSelectorContainer";
 
 const VerifierPage = props => (
   <div className="min-vh-100 pv5">
