@@ -110,114 +110,129 @@ class AdminContainer extends Component {
 
     return (
       <div>
-        <h1>Admin</h1>
-        <div className="flex bb pb3">
-          <div className="w-50">
-            <h3>
-              Current account{" "}
-              <div
-                style={{ cursor: "pointer" }}
-                className="dib click-to-refresh"
-                onClick={this.refreshCurrentAddress}
-                title="Try to grab current account"
-                tabIndex={1}
-              >
-                <i className="fas fa-sync-alt" />
-                <style jsx>{`
-                  .click-to-refresh {
-                    transform: rotateZ(0deg);
-                    transition: transform 1.5s ease-in;
-                  }
-
-                  .click-to-refresh:hover {
-                    color: #e7040f;
-                  }
-
-                  .click-to-refresh:active {
-                    transform: rotateZ(-360deg);
-                    transition: transform 0s;
-                  }
-
-                  .click-to-refresh:focus {
-                    outline: none;
-                  }
-                `}</style>
+        {networkId ? (
+          ""
+        ) : (
+          <div
+            style={{
+              marginTop: "-88px",
+              backgroundColor: "black",
+              color: "white",
+              padding: "16px"
+            }}
+          >
+            No wallet found. Please go to{" "}
+            <a href="https://docs.opencerts.io/appendix_test_accounts.html">
+              here
+            </a>{" "}
+            and follow the instructions to install a test wallet.
+          </div>
+        )}
+        <div>
+          <h1>Admin</h1>
+          <div className="flex bb pb3">
+            <div className="w-50">
+              <h3>
+                Current account{" "}
+                <div
+                  style={{ cursor: "pointer" }}
+                  className="dib click-to-refresh"
+                  onClick={this.refreshCurrentAddress}
+                  title="Try to grab current account"
+                  tabIndex={1}
+                >
+                  <i className="fas fa-sync-alt" />
+                  <style jsx>{`
+                    .click-to-refresh {
+                      transform: rotateZ(0deg);
+                      transition: transform 1.5s ease-in;
+                    }
+                    .click-to-refresh:hover {
+                      color: #e7040f;
+                    }
+                    .click-to-refresh:active {
+                      transform: rotateZ(-360deg);
+                      transition: transform 0s;
+                    }
+                    .click-to-refresh:focus {
+                      outline: none;
+                    }
+                  `}</style>
+                </div>
+              </h3>
+              <div className="pa2">
+                {adminAddress ? (
+                  <HashColor hashee={adminAddress} networkId={networkId} />
+                ) : (
+                  <div className="red">No wallet address found.</div>
+                )}
               </div>
-            </h3>
-
-            <div className="pa2">
-              <HashColor hashee={adminAddress} networkId={networkId} />
+            </div>
+            <div className="w-50">
+              <h3>Store address</h3>
+              <HashColorInput
+                type="address"
+                value={this.state.localStoreAddress}
+                onChange={this.storeAddressOnChange}
+                placeholder="Enter existing (0x…), or deploy new instance"
+              />
             </div>
           </div>
-
-          <div className="w-50">
-            <h3>Store address</h3>
-            <HashColorInput
-              type="address"
-              value={this.state.localStoreAddress}
-              onChange={this.storeAddressOnChange}
-              placeholder="Enter existing (0x…), or deploy new instance"
-            />
-          </div>
+          <Tabs className="flex flex-row w-100">
+            <TabList className="flex flex-column w-30 list pa0">
+              <Tab className="tab pl3">
+                <h3>Deploy new instance</h3>
+                {tabStyle}
+              </Tab>
+              <Tab className="tab pl3">
+                <h3>Issue certificate batch</h3>
+              </Tab>
+              <Tab className="tab pl3">
+                <h3>Revoke certificate</h3>
+              </Tab>
+            </TabList>
+            <div className="w-70 pa4 pl5">
+              <TabPanel>
+                <StoreDeployBlock
+                  adminAddress={adminAddress}
+                  storeAddress={storeAddress}
+                  handleStoreDeploy={this.handleStoreDeploy}
+                  deploying={deploying}
+                  networkId={networkId}
+                  deployedTx={deployedTx}
+                />
+              </TabPanel>
+              <TabPanel>
+                {storeAddress ? (
+                  <StoreIssueBlock
+                    networkId={networkId}
+                    issuedTx={issuedTx}
+                    adminAddress={adminAddress}
+                    storeAddress={storeAddress}
+                    handleCertificateIssue={this.handleCertificateIssue}
+                    issuingCertificate={issuingCertificate}
+                  />
+                ) : (
+                  <div className="red">Enter a store address first.</div>
+                )}
+              </TabPanel>
+              <TabPanel>
+                {storeAddress ? (
+                  <StoreRevokeBlock
+                    networkId={networkId}
+                    revokingCertificate={revokingCertificate}
+                    revokedTx={revokedTx}
+                    adminAddress={adminAddress}
+                    storeAddress={storeAddress}
+                    handleCertificateRevoke={this.handleCertificateRevoke}
+                  />
+                ) : (
+                  <div className="red">Enter a store address first.</div>
+                )}
+              </TabPanel>
+            </div>
+          </Tabs>
         </div>
-
-        <Tabs className="flex flex-row w-100">
-          <TabList className="flex flex-column w-30 list pa0">
-            <Tab className="tab pl3">
-              <h3>Deploy new instance</h3>
-              {tabStyle}
-            </Tab>
-            <Tab className="tab pl3">
-              <h3>Issue certificate batch</h3>
-            </Tab>
-            <Tab className="tab pl3">
-              <h3>Revoke certificate</h3>
-            </Tab>
-          </TabList>
-
-          <div className="w-70 pa4 pl5">
-            <TabPanel>
-              <StoreDeployBlock
-                adminAddress={adminAddress}
-                storeAddress={storeAddress}
-                handleStoreDeploy={this.handleStoreDeploy}
-                deploying={deploying}
-                networkId={networkId}
-                deployedTx={deployedTx}
-              />
-            </TabPanel>
-
-            <TabPanel>
-              {storeAddress ? (
-                <StoreIssueBlock
-                  networkId={networkId}
-                  issuedTx={issuedTx}
-                  adminAddress={adminAddress}
-                  storeAddress={storeAddress}
-                  handleCertificateIssue={this.handleCertificateIssue}
-                  issuingCertificate={issuingCertificate}
-                />
-              ) : (
-                <div className="red">Enter a store address first.</div>
-              )}
-            </TabPanel>
-
-            <TabPanel>
-              {storeAddress ? (
-                <StoreRevokeBlock
-                  networkId={networkId}
-                  revokingCertificate={revokingCertificate}
-                  revokedTx={revokedTx}
-                  adminAddress={adminAddress}
-                  storeAddress={storeAddress}
-                  handleCertificateRevoke={this.handleCertificateRevoke}
-                />
-              ) : (
-                <div className="red">Enter a store address first.</div>
-              )}
-            </TabPanel>
-          </div>
-        </Tabs>
       </div>
     );
   }
