@@ -1,0 +1,79 @@
+.button {
+  cursor: pointer;
+  border: none;
+  border-radius: 50px;
+  padding: 1rem 2rem;
+  user-select: none;
+  text-decoration: none;
+  color: #fff;
+  border: 1px solid #000;
+  background: #000;
+  min-width: 10rem;
+  margin: 8px;
+}
+
+.buttonOutline {
+  cursor: pointer;
+  border: none;
+  border-radius: 50px;
+  padding: 1rem 2rem;
+  user-select: none;
+  text-decoration: none;
+  color: #000;
+  border: 1px solid #000;
+  background: transparent;
+  min-width: 10rem;
+  margin: 8px;
+}
+
+.buttonOutline:hover {
+  color: #fff;
+  border: 1px solid #000;
+  background: #000;
+}
+
+.primary {
+  color: #fff;
+  background: #0099cc;
+  border: 1px solid #0099cc;
+}
+
+.primary:hover {
+  color: #fff;
+  background: #00769e;
+  border: 1px solid #00769e;
+}
+
+.primaryOutline {
+  background: transparent;
+  color: #0099cc;
+  border: 1px solid #0099cc;
+}
+
+.primaryOutline:hover {
+  color: #fff;
+  background: #0099cc;
+}
+
+.danger {
+  color: #fff;
+  background: #fe9734;
+  border: 1px solid #fe9734;
+}
+
+.danger:hover {
+  color: #fff;
+  background: #ff6a33;
+  border: 1px solid #ff6a33;
+}
+
+.dangerOutline {
+  background: transparent;
+  color: #fe9734;
+  border: 1px solid #fe9734;
+}
+
+.dangerOutline:hover {
+  color: #fff;
+  background: #fe9734;
+}
