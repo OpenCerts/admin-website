@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import Router from "next/router";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import styles from "./style.scss";
 import { updateWeb3 } from "../../reducers/application";
 import { NETWORK_TYPES } from "../../config";
 import Button from "../Button";
