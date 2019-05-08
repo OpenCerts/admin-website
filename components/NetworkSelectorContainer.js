@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { updateWeb3, getNetwork, getCustomRpc } from "../reducers/application";
 import { NETWORK_TYPES } from "../config";
 
-class AdminContainer extends Component {
+class NetworkSelectorContainer extends Component {
   constructor(props) {
     super(props);
 
@@ -53,9 +53,9 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(AdminContainer);
+)(NetworkSelectorContainer);
 
-AdminContainer.propTypes = {
+NetworkSelectorContainer.propTypes = {
   network: PropTypes.string,
   customRpc: PropTypes.string,
   updateWeb3: PropTypes.func

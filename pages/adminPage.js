@@ -3,15 +3,15 @@
 import "@babel/polyfill";
 import { connect } from "react-redux";
 import Meta from "../components/Meta";
-import NetworkSelectorPage from "../components/NetworkSelectorPage";
+import AdminContainer from "../components/AdminContainer";
 
-const DefaultPage = () => (
+const AdminPage = props => (
   <div className="min-vh-100 bg-light">
     <Meta />
     <div className="mw9 mw8-ns center pa4 ph5-ns br3 pv5">
-      <NetworkSelectorPage />
+      <AdminContainer {...props} />
     </div>
   </div>
 );
 
-export default connect()(DefaultPage);
+export default connect()(AdminPage);
