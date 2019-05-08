@@ -27,7 +27,7 @@ class NetworkSelector extends Component {
     this.props.updateWeb3({
       network: networkType
     });
-    Router.push("/panel", "/panel", { shallow: true });
+    Router.push("/adminPage");
   }
 
   selectMain() {

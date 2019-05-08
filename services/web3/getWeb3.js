@@ -13,7 +13,7 @@ let web3Instance;
 let web3InstanceType;
 
 async function loadWeb3Ledger(mainnet = true) {
-  trace(`Loading web3 using ledger subprovider engine`);
+  trace(`Loading web3 using ledger sub-provider engine`);
   const networkId = mainnet ? 1 : 3;
   const rpcUrl = mainnet
     ? `wss://mainnet.infura.io/ws/v3/${INFURA_PROJECT_ID}`

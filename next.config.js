@@ -14,12 +14,12 @@ module.exports = withBundleAnalyzer(
     exportPathMap: function exportMap() {
       return {
         "/": { page: "/" },
-        "/panel": { page: "/adminPage" }
+        "/adminPage": { page: "/adminPage" }
       };
     },
+    // Variables passed to both server and client
     publicRuntimeConfig: {
       network: process.env.NET
-    },
-    assetPrefix: ""
+    }
   })
 );
