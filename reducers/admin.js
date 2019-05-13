@@ -1,5 +1,4 @@
 export const initialState = {
-  isLoading: false,
   adminAddress: "",
   storeAddress: "",
 
@@ -47,16 +46,6 @@ export default function reducer(state = initialState, action) {
     case types.NETWORK_RESET:
       return {
         ...initialState
-      };
-    case types.IS_LOADING:
-      return {
-        ...state,
-        isLoading: true
-      };
-    case types.IS_NOT_LOADING:
-      return {
-        ...state,
-        isLoading: false
       };
     case types.LOADING_ADMIN_ADDRESS_FAILURE:
       return {
@@ -136,20 +125,6 @@ export default function reducer(state = initialState, action) {
 }
 
 // Action Creators
-export function setIsLoading(payload) {
-  return {
-    type: types.IS_LOADING,
-    payload
-  };
-}
-
-export function setIsNotLoading(payload) {
-  return {
-    type: types.IS_NOT_LOADING,
-    payload
-  };
-}
-
 export function loadAdminAddress() {
   return {
     type: types.LOADING_ADMIN_ADDRESS
@@ -191,10 +166,6 @@ export function getAdminAddress(store) {
 
 export function getStoreAddress(store) {
   return store.admin.storeAddress;
-}
-
-export function getIsLoading(store) {
-  return store.admin.isLoading;
 }
 
 export function getIssuingError(store) {

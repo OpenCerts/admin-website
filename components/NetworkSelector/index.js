@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Router from "next/router";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { updateWeb3 } from "../../reducers/application";
+import { updateWeb3, setIsLoading } from "../../reducers/application";
 import { NETWORK_TYPES } from "../../config";
 import Button from "../Button";
 
@@ -36,6 +36,7 @@ class NetworkSelector extends Component {
   }
 
   async setNetwork(network) {
+    this.props.setIsLoading();
     await this.handleNetworkChange(network);
   }
 
@@ -86,7 +87,8 @@ class NetworkSelector extends Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  updateWeb3: payload => dispatch(updateWeb3(payload))
+  updateWeb3: payload => dispatch(updateWeb3(payload)),
+  setIsLoading: () => dispatch(setIsLoading())
 });
 
 export default connect(
@@ -96,5 +98,7 @@ export default connect(
 
 NetworkSelector.propTypes = {
   updateWeb3: PropTypes.func,
-  rest: PropTypes.object
+  isLoading: PropTypes.bool,
+  rest: PropTypes.object,
+  setIsLoading: PropTypes.func
 };
