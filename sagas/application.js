@@ -10,8 +10,7 @@ import {
   getNetworkPollingTask,
   foundNewBlock,
   announceMinedTransaction,
-  removeTxFromPollingList,
-  getIsLoading
+  removeTxFromPollingList
 } from "../reducers/application";
 import { setNewWeb3, getCurrentWeb3 } from "../services/web3/getWeb3";
 

@@ -17,6 +17,7 @@ class ErrorContainer extends Component {
     };
   }
 
+  // eslint-disable-next-line class-methods-use-this
   refreshPage() {
     window.location.reload();
   }
