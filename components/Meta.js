@@ -171,47 +171,6 @@ const Meta = () => (
         padding: 0.5rem; // tachyons pa2
       }
 
-      .button,
-      button {
-        cursor: pointer;
-        background-color: "#FBA54F";
-        // border: solid 2px black;
-        border-radius: 50px;
-        padding: 1rem 2rem; // tachyons pa3
-        user-select: none;
-        text-decoration: none;
-        color: "#fff";
-      }
-
-      .button:hover,
-      button:hover {
-        background-color: "#FBA54F";
-      }
-
-      .button:active,
-      button:active {
-        background-color: black;
-        color: white;
-      }
-
-      .button:disabled,
-      button:disabled {
-        opacity: 0.7;
-        pointer-events: none;
-      }
-
-      .button.danger,
-      button.danger {
-        color: #e7040f;
-        border-color: #e7040f;
-      }
-
-      .button.danger:hover,
-      button.danger:hover {
-        color: white;
-        background-color: #e7040f;
-      }
-
       .__hashcolor > input {
         font-family: inherit;
         color: inherit;

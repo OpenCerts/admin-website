@@ -1,7 +1,6 @@
 .button {
   cursor: pointer;
   border: none;
-  border-radius: 50px;
   padding: 1rem 2rem;
   user-select: none;
   text-decoration: none;
@@ -12,10 +11,17 @@
   margin: 8px;
 }
 
+.pill {
+  border-radius: 50px;
+}
+
+.rounded {
+  border-radius: 5px;
+}
+
 .buttonOutline {
   cursor: pointer;
   border: none;
-  border-radius: 50px;
   padding: 1rem 2rem;
   user-select: none;
   text-decoration: none;

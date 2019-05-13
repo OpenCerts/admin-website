@@ -6,6 +6,8 @@ const Button = ({
   children,
   primary,
   danger,
+  pill,
+  rounded,
   buttonOutline,
   primaryOutline,
   dangerOutline,
@@ -13,13 +15,21 @@ const Button = ({
   ...rest
 }) => {
   const classes = classNames.bind(styles);
-  const defaultClassName = classes("button", {
-    primary,
-    danger,
-    buttonOutline,
-    primaryOutline,
-    dangerOutline
-  });
+  const defaultClassName = classes(
+    "button",
+    "pill",
+    {
+      primary,
+      danger,
+      buttonOutline,
+      primaryOutline,
+      dangerOutline
+    },
+    {
+      pill,
+      rounded
+    }
+  );
   return (
     <button className={defaultClassName} onClick={onClick} {...rest}>
       {children}
@@ -40,6 +50,8 @@ Button.propTypes = {
   rest: PropTypes.object,
   primary: PropTypes.bool,
   danger: PropTypes.bool,
+  pill: PropTypes.bool,
+  rounded: PropTypes.bool,
   buttonOutline: PropTypes.bool,
   primaryOutline: PropTypes.bool,
   dangerOutline: PropTypes.bool

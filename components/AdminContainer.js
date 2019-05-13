@@ -117,18 +117,6 @@ class AdminContainer extends Component {
 
     return (
       <div>
-        {isLoading && (
-          <div
-            style={{
-              zIndex: 9999,
-              width: "100%",
-              height: "100%",
-              background: "#fff"
-            }}
-          >
-            <p>Loading...</p>
-          </div>
-        )}
         {adminAddress ? (
           <Panel>
             <NetworkSelectorContainer />

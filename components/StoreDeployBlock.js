@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import Button from "./Button";
 import HashColor from "./HashColor";
 
 class StoreDeployBlock extends Component {
@@ -44,9 +45,13 @@ class StoreDeployBlock extends Component {
           </div>
         </div>
 
-        <button onClick={this.onDeployClick} disabled={this.props.deploying}>
+        <Button
+          onClick={this.onDeployClick}
+          disabled={this.props.deploying}
+          danger
+        >
           {this.props.deploying ? "Deploying…" : "Deploy"}
-        </button>
+        </Button>
 
         {this.props.deployedTx ? (
           <div className="mt5">

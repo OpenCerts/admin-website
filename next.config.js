@@ -14,7 +14,7 @@ module.exports = withBundleAnalyzer(
     exportPathMap: function exportMap() {
       return {
         "/": { page: "/" },
-        "/adminPage": { page: "/adminPage" }
+        "/deploy": { page: "/deploy" }
       };
     },
     // Variables passed to both server and client

@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 const Notification = props => (
   <div
     style={{
-      marginTop: "-88px",
       backgroundColor: "black",
       color: "white",
       padding: "16px"
