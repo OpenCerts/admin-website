@@ -4,8 +4,8 @@ import Router from "next/router";
 import withGA from "next-ga";
 import React from "react";
 import { Provider } from "react-redux";
-import initStore from "../store";
-import { GA_ID } from "../config";
+import initStore from "../src/store";
+import { GA_ID } from "../src/config";
 
 class MyApp extends App {
   static async getInitialProps({ Component, ctx }) {

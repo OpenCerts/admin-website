@@ -3,10 +3,10 @@
 import "@babel/polyfill";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import Meta from "../components/Meta";
-import NetworkSelectorPage from "../components/NetworkSelectorPage";
-import { getIsLoading } from "../reducers/application";
-import PageLoader from "../components/PageLoader";
+import Meta from "../src/components/Meta";
+import NetworkSelectorPage from "../src/components/NetworkSelectorPage";
+import { getIsLoading } from "../src/reducers/application";
+import PageLoader from "../src/components/PageLoader";
 
 const DefaultPage = props => (
   <div>

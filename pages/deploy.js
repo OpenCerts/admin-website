@@ -2,8 +2,8 @@
 // see: https://github.com/LedgerHQ/ledgerjs/issues/218
 import "@babel/polyfill";
 import { connect } from "react-redux";
-import Meta from "../components/Meta";
-import AdminContainer from "../components/AdminContainer";
+import Meta from "../src/components/Meta";
+import AdminContainer from "../src/components/AdminContainer";
 
 const AdminPage = props => (
   <div className="min-vh-100 bg-light">
