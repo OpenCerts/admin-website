@@ -45,15 +45,15 @@ class ErrorContainer extends Component {
                 and follow the instructions to install a test wallet.
               </p>
               <Button onClick={this.toggleNetworkSelector} danger>
-                Change Network
+                Change Wallet Provider
               </Button>
               <Button onClick={this.refreshPage} dangerOutline>
-                Continue
+                Retry
               </Button>
             </div>
           ) : (
             <div>
-              <p>Select another wallet network.</p>
+              <p>Select another wallet provider.</p>
               <NetworkSelector />
             </div>
           )}

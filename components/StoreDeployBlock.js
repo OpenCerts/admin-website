@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import Button from "./Button";
 import HashColor from "./HashColor";
+import Input from "./Input";
 
 class StoreDeployBlock extends Component {
   constructor(props) {
@@ -35,11 +36,13 @@ class StoreDeployBlock extends Component {
           <div>
             Issuer Name
             <br />
-            <input
+            <Input
               type="text"
               onChange={this.onNameChange}
               value={this.state.issuerName}
+              placeholder="Name of organization"
               size={50}
+              rounded
               required
             />
           </div>

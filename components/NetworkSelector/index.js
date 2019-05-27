@@ -48,14 +48,22 @@ class NetworkSelector extends Component {
 
   render() {
     return (
-      <div>
+      <div id={this.props.id}>
         <div>
           {this.state.selectedNetwork === "Main" && (
             <div>
-              <Button onClick={() => this.setNetwork(LEDGER_ROPSTEN)} danger>
+              <Button
+                id="ledger-test"
+                onClick={() => this.setNetwork(LEDGER_ROPSTEN)}
+                danger
+              >
                 Test
               </Button>
-              <Button onClick={() => this.setNetwork(LEDGER_MAIN)} danger>
+              <Button
+                id="ledger-production"
+                onClick={() => this.setNetwork(LEDGER_MAIN)}
+                danger
+              >
                 Production
               </Button>
             </div>
@@ -63,15 +71,19 @@ class NetworkSelector extends Component {
 
           {this.state.selectedNetwork === "" ? (
             <div>
-              <Button onClick={() => this.setNetwork(INJECTED)} danger>
+              <Button
+                id="metamask"
+                onClick={() => this.setNetwork(INJECTED)}
+                danger
+              >
                 Metamask
               </Button>
-              <Button onClick={this.selectMain} danger>
-                Main
+              <Button id="ledger" onClick={this.selectMain} danger>
+                Ledger
               </Button>
             </div>
           ) : (
-            <Button onClick={this.selectBack} buttonOutline>
+            <Button id="back" onClick={this.selectBack} buttonOutline>
               <i
                 className="fa fa-chevron-left"
                 style={{ float: "left" }}
@@ -97,6 +109,7 @@ export default connect(
 )(NetworkSelector);
 
 NetworkSelector.propTypes = {
+  id: PropTypes.string,
   updateWeb3: PropTypes.func,
   isLoading: PropTypes.bool,
   rest: PropTypes.object,

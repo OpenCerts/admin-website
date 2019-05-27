@@ -21,7 +21,7 @@ class NetworkSelectorContainer extends Component {
     const { INJECTED, LEDGER_MAIN, LEDGER_ROPSTEN } = NETWORK_TYPES;
 
     return (
-      <div className="fr ba">
+      <div className="fr ba" style={{ borderRadius: "5px" }}>
         <select
           className="pa2"
           value={this.props.network}

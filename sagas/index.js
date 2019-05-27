@@ -1,10 +1,10 @@
 import { takeEvery, all } from "redux-saga/effects";
 
 import { types as applicationType } from "../reducers/application";
-import * as applicationSaga from "../sagas/application";
+import * as applicationSaga from "./application";
 
 import { types as adminType } from "../reducers/admin";
-import * as adminSaga from "../sagas/admin";
+import * as adminSaga from "./admin";
 
 export default function* rootSaga() {
   yield all([

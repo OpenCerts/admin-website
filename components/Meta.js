@@ -3,7 +3,7 @@ import Head from "next/head";
 const Meta = () => (
   <div>
     <Head>
-      <title>OpenCerts Admin Panel</title>
+      <title>OpenCerts - Admin Panel</title>
       <meta name="viewport" content="width=device-width, initial-scale=1" />
       <meta charSet="utf-8" />
       <link
@@ -100,80 +100,6 @@ const Meta = () => (
       }
       .text-brand-dark {
         color: #324353;
-      }
-      li.slanted-tab {
-        background-color: transparent;
-        border-color: transparent;
-        z-index: 1;
-        position: relative;
-        display: inline-block;
-        padding: 1.5em 1.5em 1em;
-        color: inherit;
-        text-decoration: none;
-        margin: 0 -7px;
-      }
-      ul.navbar-nav > li.nav-item > a.nav-link::hover {
-        color: #fff !important;
-      }
-      ul.navbar-nav > li.nav-item > a.nav-link.active {
-        font-family: Montserrat;
-        color: #fff !important;
-      }
-      li.slanted-tab::before {
-        content: ""; /* To generate the box */
-        position: absolute;
-        top: 0;
-        right: 0;
-        bottom: 0.5em;
-        left: 0;
-        z-index: -1;
-        border-bottom: none;
-        border-radius: 10px 10px 0 0;
-        background: #ddd;
-        box-shadow: 0 2px hsla(0, 0%, 100%, 0.5) inset;
-        transform: perspective(5px) rotateX(2deg);
-        transform-origin: bottom;
-      }
-      li.slanted-tab.active::before {
-        background: #aaa;
-        -webkit-print-color-adjust: exact;
-      }
-      li.slanted-tab.active {
-        z-index: 2;
-      }
-      .fill {
-        min-height: 100%;
-        min-height: 100vh;
-      }
-      .pointer {
-        cursor: pointer;
-      }
-      .bg-red {
-        background: #ff6565;
-      }
-      .no-padding {
-        padding: 0 !important;
-      }
-      .noselect {
-        user-select: none;
-        -webkit-user-select: none;
-        -ms-user-select: none;
-      }
-
-      a:visited {
-        color: inherit;
-      }
-
-      input[type="text"] {
-        font-family: var(--font-monospace) !important;
-        font-size: var(--font-monospace-size);
-        border: solid 1px black;
-        padding: 0.5rem; // tachyons pa2
-      }
-
-      .__hashcolor > input {
-        font-family: inherit;
-        color: inherit;
       }
     `}</style>
   </div>
