@@ -47,10 +47,12 @@ class NetworkSelector extends Component {
   }
 
   render() {
+    const { id } = this.props;
+    const { selectedNetwork } = this.state;
     return (
-      <div id={this.props.id}>
+      <div id={id}>
         <div>
-          {this.state.selectedNetwork === "Main" && (
+          {selectedNetwork === "Main" && (
             <div>
               <Button
                 id="ledger-test"
@@ -69,7 +71,7 @@ class NetworkSelector extends Component {
             </div>
           )}
 
-          {this.state.selectedNetwork === "" ? (
+          {selectedNetwork === "" ? (
             <div>
               <Button
                 id="metamask"

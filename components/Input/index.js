@@ -32,16 +32,14 @@ const Input = ({
     }
   );
   return (
-    <div>
-      <input
-        type={type}
-        className={defaultClassName}
-        onChange={onChange}
-        value={value}
-        size={50}
-        {...rest}
-      />
-    </div>
+    <input
+      type={type}
+      className={defaultClassName}
+      onChange={onChange}
+      value={value}
+      size={50}
+      {...rest}
+    />
   );
 };
 

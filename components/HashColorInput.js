@@ -27,8 +27,6 @@ const HashColorInput = props => {
         spellCheck="false"
         style={{
           color: "inherit",
-          fontFamily: "var(--font-monospace) monospace",
-          fontSize: "var(--font-monospace-size)",
           border: isValid ? "solid 1px black" : "solid 1px #e7040f"
         }}
         maxLength={maxLength}
