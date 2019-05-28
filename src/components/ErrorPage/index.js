@@ -46,10 +46,13 @@ class ErrorPage extends Component {
                 </a>{" "}
                 and follow the instructions to install a test wallet.
               </p>
-              <Button onClick={this.toggleWalletProviderSelector} danger>
+              <Button
+                onClick={this.toggleWalletProviderSelector}
+                className="danger"
+              >
                 Change Wallet Provider
               </Button>
-              <Button onClick={this.refreshPage} dangerOutline>
+              <Button onClick={this.refreshPage} className="dangerOutline">
                 Retry
               </Button>
             </div>

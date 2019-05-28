@@ -57,14 +57,14 @@ class WalletProviderSelector extends Component {
               <Button
                 id="ledger-test"
                 onClick={() => this.setNetwork(LEDGER_ROPSTEN)}
-                danger
+                className="danger"
               >
                 Test
               </Button>
               <Button
                 id="ledger-production"
                 onClick={() => this.setNetwork(LEDGER_MAIN)}
-                danger
+                className="danger"
               >
                 Production
               </Button>
@@ -76,16 +76,20 @@ class WalletProviderSelector extends Component {
               <Button
                 id="metamask"
                 onClick={() => this.setNetwork(INJECTED)}
-                danger
+                className="danger"
               >
                 Metamask
               </Button>
-              <Button id="ledger" onClick={this.selectMain} danger>
+              <Button id="ledger" onClick={this.selectMain} className="danger">
                 Ledger
               </Button>
             </div>
           ) : (
-            <Button id="back" onClick={this.selectBack} buttonOutline>
+            <Button
+              id="back"
+              className="buttonOutline"
+              onClick={this.selectBack}
+            >
               <i
                 className="fa fa-chevron-left"
                 style={{ float: "left" }}

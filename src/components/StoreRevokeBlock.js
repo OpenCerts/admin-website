@@ -52,7 +52,7 @@ class StoreRevokeBlock extends Component {
         <Button
           onClick={this.onRevokeClick}
           disabled={this.props.revokingCertificate}
-          danger
+          className="danger"
         >
           <i className="fas fa-exclamation-triangle" />
           &nbsp;

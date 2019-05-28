@@ -48,7 +48,7 @@ class StoreIssueBlock extends Component {
         <Button
           onClick={this.onIssueClick}
           disabled={issuingCertificate}
-          danger
+          className="danger"
         >
           {issuingCertificate ? "Issuing…" : "Issue"}
         </Button>

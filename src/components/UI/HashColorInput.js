@@ -31,7 +31,6 @@ const HashColorInput = props => {
         }}
         maxLength={maxLength}
         placeholder={props.placeholder}
-        rounded
       />
     </HashColor>
   );

@@ -2,34 +2,10 @@ import PropTypes from "prop-types";
 import classNames from "classnames/bind";
 import styles from "./style.scss";
 
-const Button = ({
-  children,
-  primary,
-  danger,
-  pill,
-  rounded,
-  buttonOutline,
-  primaryOutline,
-  dangerOutline,
-  onClick,
-  ...rest
-}) => {
+const Button = ({ children, onClick, className, ...rest }) => {
   const classes = classNames.bind(styles);
-  const defaultClassName = classes(
-    "button",
-    "pill",
-    {
-      primary,
-      danger,
-      buttonOutline,
-      primaryOutline,
-      dangerOutline
-    },
-    {
-      pill,
-      rounded
-    }
-  );
+  const getClassName = () => (className ? className.split(" ") : "");
+  const defaultClassName = classes("button", "pill", getClassName());
   return (
     <button className={defaultClassName} onClick={onClick} {...rest}>
       {children}
@@ -47,12 +23,5 @@ Button.propTypes = {
   className: PropTypes.object,
   onClick: PropTypes.func,
   style: PropTypes.object,
-  rest: PropTypes.object,
-  primary: PropTypes.bool,
-  danger: PropTypes.bool,
-  pill: PropTypes.bool,
-  rounded: PropTypes.bool,
-  buttonOutline: PropTypes.bool,
-  primaryOutline: PropTypes.bool,
-  dangerOutline: PropTypes.bool
+  rest: PropTypes.object
 };
