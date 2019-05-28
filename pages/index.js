@@ -4,9 +4,9 @@ import "@babel/polyfill";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import Meta from "../src/components/Meta";
-import NetworkSelectorPage from "../src/components/NetworkSelectorPage";
+import WalletProviderSelectorPage from "../src/components/WalletProviderSelectorPage";
 import { getIsLoading } from "../src/reducers/application";
-import PageLoader from "../src/components/PageLoader";
+import PageLoader from "../src/components/UI/PageLoader";
 
 const DefaultPage = props => (
   <div>
@@ -14,7 +14,7 @@ const DefaultPage = props => (
     <div className="min-vh-100 bg-light">
       <Meta />
       <div className="mw9 mw8-ns center pa4 ph5-ns br3 pv5">
-        <NetworkSelectorPage />
+        <WalletProviderSelectorPage />
       </div>
     </div>
   </div>

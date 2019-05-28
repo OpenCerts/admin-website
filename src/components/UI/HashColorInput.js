@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { isValidAddress } from "./utils";
+import { isValidAddress } from "../utils";
 import HashColor from "./HashColor";
 import Input from "./Input";
 

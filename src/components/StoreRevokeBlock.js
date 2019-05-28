@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import Button from "./Button";
-import HashColor from "./HashColor";
-import HashColorInput from "./HashColorInput";
+import Button from "./UI/Button";
+import HashColor from "./UI/HashColor";
+import HashColorInput from "./UI/HashColorInput";
 
 class StoreRevokeBlock extends Component {
   constructor(props) {

@@ -28,12 +28,12 @@ import {
 import StoreDeployBlock from "./StoreDeployBlock";
 import StoreIssueBlock from "./StoreIssueBlock";
 import StoreRevokeBlock from "./StoreRevokeBlock";
-import HashColor from "./HashColor";
-import HashColorInput from "./HashColorInput";
-import Notification from "./Notification";
+import HashColor from "./UI/HashColor";
+import HashColorInput from "./UI/HashColorInput";
+import Notification from "./UI/Notification";
 import NetworkSelectorContainer from "./NetworkSelectorContainer";
-import ErrorContainer from "./ErrorContainer";
-import Panel from "./Panel";
+import ErrorPage from "./ErrorPage";
+import Panel from "./UI/Panel";
 
 const tabStyle = (
   <style jsx>
@@ -256,7 +256,7 @@ class AdminContainer extends Component {
             </Panel>
           </React.Fragment>
         ) : (
-          <ErrorContainer />
+          <ErrorPage />
         )}
       </div>
     );

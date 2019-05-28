@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import HashColor from "./HashColor";
-import HashColorInput from "./HashColorInput";
-import Button from "./Button";
+import HashColor from "./UI/HashColor";
+import HashColorInput from "./UI/HashColorInput";
+import Button from "./UI/Button";
 
 class StoreIssueBlock extends Component {
   constructor(props) {

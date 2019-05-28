@@ -4,11 +4,11 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { updateWeb3, setIsLoading } from "../../reducers/application";
 import { NETWORK_TYPES } from "../../config";
-import Button from "../Button";
+import Button from "../UI/Button";
 
 const { INJECTED, LEDGER_MAIN, LEDGER_ROPSTEN } = NETWORK_TYPES;
 
-class NetworkSelector extends Component {
+class WalletProviderSelector extends Component {
   constructor(props) {
     super(props);
 
@@ -108,9 +108,9 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   null,
   mapDispatchToProps
-)(NetworkSelector);
+)(WalletProviderSelector);
 
-NetworkSelector.propTypes = {
+WalletProviderSelector.propTypes = {
   id: PropTypes.string,
   updateWeb3: PropTypes.func,
   isLoading: PropTypes.bool,

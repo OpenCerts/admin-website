@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import Button from "./Button";
-import HashColor from "./HashColor";
-import Input from "./Input";
+import Button from "./UI/Button";
+import HashColor from "./UI/HashColor";
+import Input from "./UI/Input";
 
 class StoreDeployBlock extends Component {
   constructor(props) {

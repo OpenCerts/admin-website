@@ -1,6 +1,6 @@
 import { Selector, ClientFunction } from "testcafe";
 
-fixture("Network Selector").page`http://localhost:3000`;
+fixture("Wallet Provider Selector").page`http://localhost:3000`;
 
 const NetworkSelector = Selector("#network-selector");
 const MetamaskButton = Selector("#metamask");
@@ -9,7 +9,7 @@ const LedgerTestButton = Selector("#ledger-test");
 const LedgerProductionButton = Selector("#ledger-production");
 const BackButton = Selector("#back");
 
-test("Network selector is rendered correctly", async t => {
+test("Is rendered correctly", async t => {
   await t
     .expect(NetworkSelector.textContent)
     .contains("Welcome to OpenCerts Admin Portal");

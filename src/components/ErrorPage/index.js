@@ -2,18 +2,20 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import images from "../Images";
 import styles from "./style.scss";
-import Button from "../Button";
-import Panel from "../Panel";
-import NetworkSelector from "../NetworkSelector";
+import Button from "../UI/Button";
+import Panel from "../UI/Panel";
+import WalletProviderSelector from "../WalletProviderSelector";
 
-class ErrorContainer extends Component {
+class ErrorPage extends Component {
   constructor(props) {
     super(props);
     this.refreshPage = this.refreshPage.bind(this);
-    this.toggleNetworkSelector = this.toggleNetworkSelector.bind(this);
+    this.toggleWalletProviderSelector = this.toggleWalletProviderSelector.bind(
+      this
+    );
 
     this.state = {
-      showNetworkSelector: false
+      showWalletProviderSelector: false
     };
   }
 
@@ -22,20 +24,20 @@ class ErrorContainer extends Component {
     window.location.reload();
   }
 
-  toggleNetworkSelector() {
+  toggleWalletProviderSelector() {
     this.setState({
-      showNetworkSelector: !this.state.showNetworkSelector
+      showWalletProviderSelector: !this.state.showWalletProviderSelector
     });
   }
 
   render() {
-    const { showNetworkSelector } = this.state;
+    const { showWalletProviderSelector } = this.state;
     return (
       <Panel style={{ textAlign: "center" }}>
         <div className={styles.walletError}>
           {images.wallet()}
           <h1>Admin wallet address not found.</h1>
-          {!showNetworkSelector ? (
+          {!showWalletProviderSelector ? (
             <div>
               <p>
                 Please click{" "}
@@ -44,7 +46,7 @@ class ErrorContainer extends Component {
                 </a>{" "}
                 and follow the instructions to install a test wallet.
               </p>
-              <Button onClick={this.toggleNetworkSelector} danger>
+              <Button onClick={this.toggleWalletProviderSelector} danger>
                 Change Wallet Provider
               </Button>
               <Button onClick={this.refreshPage} dangerOutline>
@@ -54,7 +56,7 @@ class ErrorContainer extends Component {
           ) : (
             <div>
               <p>Select another wallet provider.</p>
-              <NetworkSelector />
+              <WalletProviderSelector />
             </div>
           )}
         </div>
@@ -63,9 +65,9 @@ class ErrorContainer extends Component {
   }
 }
 
-export default ErrorContainer;
+export default ErrorPage;
 
-ErrorContainer.propTypes = {
+ErrorPage.propTypes = {
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node
