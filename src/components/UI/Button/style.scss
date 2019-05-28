@@ -1,12 +1,14 @@
+@import "../../../styles/variables.scss";
+
 .button {
   cursor: pointer;
   border: none;
   padding: 1rem 2rem;
   user-select: none;
   text-decoration: none;
-  color: #fff;
-  border: 1px solid #000;
-  background: #000;
+  color: $white;
+  border: 1px solid $black;
+  background: $black;
   min-width: 10rem;
   margin: 8px;
 }
@@ -25,61 +27,61 @@
   padding: 1rem 2rem;
   user-select: none;
   text-decoration: none;
-  color: #000;
-  border: 1px solid #000;
+  color: $black;
+  border: 1px solid $black;
   background: transparent;
   min-width: 10rem;
   margin: 8px;
 }
 
 .buttonOutline:hover {
-  color: #fff;
-  border: 1px solid #000;
-  background: #000;
+  color: $white;
+  border: 1px solid $black;
+  background: $black;
 }
 
 .primary {
-  color: #fff;
-  background: #0099cc;
-  border: 1px solid #0099cc;
+  color: $white;
+  background: $brand-blue;
+  border: 1px solid $brand-blue;
 }
 
 .primary:hover {
-  color: #fff;
+  color: $white;
   background: #00769e;
   border: 1px solid #00769e;
 }
 
 .primaryOutline {
   background: transparent;
-  color: #0099cc;
-  border: 1px solid #0099cc;
+  color: $brand-blue;
+  border: 1px solid $brand-blue;
 }
 
 .primaryOutline:hover {
-  color: #fff;
-  background: #0099cc;
+  color: $white;
+  background: $brand-blue;
 }
 
 .danger {
-  color: #fff;
-  background: #fe9734;
-  border: 1px solid #fe9734;
+  color: $white;
+  background: $brand-orange;
+  border: 1px solid $brand-orange;
 }
 
 .danger:hover {
-  color: #fff;
-  background: #ff6a33;
-  border: 1px solid #ff6a33;
+  color: $white;
+  background: $brand-dark-orange;
+  border: 1px solid $brand-dark-orange;
 }
 
 .dangerOutline {
   background: transparent;
-  color: #fe9734;
-  border: 1px solid #fe9734;
+  color: $brand-orange;
+  border: 1px solid $brand-orange;
 }
 
 .dangerOutline:hover {
-  color: #fff;
-  background: #fe9734;
+  color: $white;
+  background: $brand-orange;
 }
