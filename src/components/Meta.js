@@ -10,6 +10,15 @@ const Meta = () => (
         href="https://fonts.googleapis.com/css?family=Roboto+Mono"
         rel="stylesheet"
       />
+      <link
+        href="https://fonts.googleapis.com/css?family=Montserrat"
+        rel="stylesheet"
+      />
+      <link
+        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro"
+        rel="stylesheet"
+        type="text/css"
+      />
     </Head>
     <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js" />
     <link
@@ -18,76 +27,78 @@ const Meta = () => (
     />
     <style jsx global>{`
       :root {
-        --font-monospace: "Roboto Mono", monospace;
-        --font-monospace-size: 0.8rem !important;
+        font: "Source Sans Pro", sans-serif;
+        --font-monospace: "Source Sans Pro", sans-serif;
+        -webkit-font-smoothing: antialiased;
+      }
+      .btn {
+        font-family: source sans pro;
       }
 
       body {
         background: white;
-        font-family: arial, sans-serif;
+        font-family: "Source Sans Pro", sans-serif;
         line-height: 1.5;
+        margin: 0px;
       }
-
-      .noselect {
-        user-select: none;
-        -webkit-user-select: none;
-        -ms-user-select: none;
+      .navbar-toggler {
+        position: absolute;
+        right: 30px;
       }
-
-      a:visited {
-        color: inherit;
+      .main {
+        max-width: 1280px;
+        display: flex;
+        justify-content: flex-start;
+        margin: 0 auto;
+        width: 100%;
+        padding: 2rem;
       }
-
-      input[type="text"] {
-        font-family: var(--font-monospace) !important;
-        font-size: var(--font-monospace-size);
-        border: solid 1px black;
-        padding: 0.5rem; // tachyons pa2
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        font-family: "Montserrat";
       }
-
-      .button,
-      button {
-        cursor: pointer;
-        background: transparent;
-        border: solid 2px black;
-        padding: 1rem; // tachyons pa3
-        user-select: none;
-        text-decoration: none;
-        color: inherit;
+      .bg-light {
+        background-color: #f7fafc;
       }
-
-      .button:hover,
-      button:hover {
-        background-color: gold;
+      .exact-print {
+        -webkit-print-color-adjust: exact;
       }
-
-      .button:active,
-      button:active {
-        background-color: black;
-        color: white;
+      .print-only {
+        display: none;
       }
-
-      .button:disabled,
-      button:disabled {
-        opacity: 0.7;
-        pointer-events: none;
+      .screen-only {
+        display: block;
       }
-
-      .button.danger,
-      button.danger {
-        color: #e7040f;
-        border-color: #e7040f;
+      @media print {
+        .print-only {
+          display: block;
+        }
+        .screen-only {
+          display: none;
+        }
       }
-
-      .button.danger:hover,
-      button.danger:hover {
-        color: white;
-        background-color: #e7040f;
+      .bg-brand-dark {
+        background-color: #324353;
+        -webkit-print-color-adjust: exact;
       }
-
-      .__hashcolor > input {
-        font-family: inherit;
-        color: inherit;
+      .text-red {
+        color: #ff5268;
+      }
+      .text-blue {
+        color: #099de3;
+      }
+      .text-orange {
+        color: #ffb152;
+      }
+      .text-green {
+        color: #00c04a;
+      }
+      .text-brand-dark {
+        color: #324353;
       }
     `}</style>
   </div>

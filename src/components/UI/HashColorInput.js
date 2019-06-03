@@ -6,7 +6,7 @@ import Input from "./Input";
 const VALIDATIONS = {
   address: { size: 42, maxLength: 50, validityFn: isValidAddress },
   hash: {
-    size: 66,
+    size: 60,
     maxLength: 80,
     validityFn: address => /^(0x){1}[0-9a-fA-F]{64}$/i.test(address)
   },
