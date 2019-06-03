@@ -20,7 +20,7 @@ Button.propTypes = {
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node
   ]).isRequired,
-  className: PropTypes.object,
+  className: PropTypes.string,
   onClick: PropTypes.func,
   style: PropTypes.object,
   rest: PropTypes.object

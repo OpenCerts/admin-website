@@ -17,7 +17,9 @@ describe("Button component", () => {
   });
 
   it("shows rounded button", () => {
-    const button = renderer.create(<Button rounded>Test Button</Button>);
+    const button = renderer.create(
+      <Button className="rounded">Test Button</Button>
+    );
     const tree = button.toJSON();
     expect(tree.props.className).toContain("rounded");
   });
