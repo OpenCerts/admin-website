@@ -21,7 +21,7 @@ const Input = ({ className, type, onChange, value, ...rest }) => {
 export default Input;
 
 Input.propTypes = {
-  className: PropTypes.object,
+  className: PropTypes.string,
   style: PropTypes.object,
   rest: PropTypes.object,
   onChange: PropTypes.func,
