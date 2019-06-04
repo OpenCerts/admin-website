@@ -19,13 +19,13 @@ describe("Button component", () => {
   it("shows rounded button type", () => {
     const button = renderer.create(<Button type="rounded">Test Button</Button>);
     const tree = button.toJSON();
-    expect(tree.props.className).toContain("rounded");
+    expect(tree.props.type).toContain("rounded");
   });
 
   it("shows orange button colour", () => {
     const button = renderer.create(<Button color="orange">Test Button</Button>);
     const tree = button.toJSON();
-    expect(tree.props.className).toContain("orange");
+    expect(tree.props.color).toContain("orange");
   });
 
   it("should call mock function when button is clicked", () => {
