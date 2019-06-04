@@ -95,7 +95,7 @@ Button.propTypes = {
   ]).isRequired,
   type: PropTypes.string,
   color: PropTypes.string,
-  outline: PropTypes.boolean,
+  outline: PropTypes.bool,
   className: PropTypes.string,
   onClick: PropTypes.func,
   style: PropTypes.object,
