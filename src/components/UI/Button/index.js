@@ -1,61 +1,89 @@
 import PropTypes from "prop-types";
-import "../../../styles/variables";
+import styled, { css } from "styled-components";
+import colors from "../../../styles/variables";
 
-export const defaultStyle = {
-  cursor: "pointer",
-  border: "none",
-  padding: "1rem 2rem",
-  userSelect: "none",
-  textDecoration: "none",
-  minWidth: "10rem",
-  margin: "8px"
-};
+const StyledButton = styled.button`
+  font-weight: bold;
+  cursor: pointer;
+  border: none;
+  padding: 1rem 2rem;
+  user-select: none;
+  text-decoration: none;
+  color: ${colors.white};
+  border: 1px solid ${colors.black};
+  background: ${colors.black};
+  min-width: 10rem;
+  margin: 8px;
 
-export const pill = {
-  borderRadius: "50px"
-};
+  ${props =>
+    props.type === "rounded" &&
+    css`
+      border-radius: 5px;
+    `};
 
-export const rounded = {
-  borderRadius: "5px"
-};
+  ${props =>
+    props.type === "pill" &&
+    css`
+      border-radius: 50px;
+    `};
 
-const switchType = name => {
-  switch (name) {
-    case "pill":
-      return pill;
-    case "rounded":
-      return rounded;
-    default:
-      return {};
-  }
-};
+  ${props =>
+    props.color === "orange" &&
+    css`
+      color: ${colors.white};
+      background: ${colors.brandOrange};
+      border: 1px solid ${colors.brandOrange};
 
-export const orange = {
-  color: "#fff",
-  backgroundColor: "#ff9933"
-};
+      :hover {
+        background-color: ${colors.brandDarkOrange};
+      }
+    `};
 
-const switchColour = name => {
-  switch (name) {
-    case "orange":
-      return orange;
-    case "blue":
-      return "blue";
-    case "green":
-      return "green";
-    default:
-      return {};
-  }
-};
+  ${props =>
+    props.color === "orange" &&
+    props.outline &&
+    css`
+      color: ${colors.brandOrange};
+      background: transparent;
+      border: 1px solid ${colors.brandOrange};
 
-const Button = ({ children, type, colour, onClick, ...rest }) => (
-  <button
-    style={{ ...defaultStyle, ...switchType(type), ...switchColour(colour) }}
-    onClick={onClick}
-    {...rest}
-  >
+      :hover {
+        color: ${colors.white}
+        background-color: ${colors.brandDarkOrange};
+      }
+    `};
+
+  ${props =>
+    props.color === "blue" &&
+    css`
+      color: ${colors.white};
+      background: ${colors.brandBlue};
+      border: 1px solid ${colors.brandBlue};
+
+      :hover {
+        background-color: ${colors.brandDarkBlue};
+      }
+    `};
+
+  ${props =>
+    props.color === "blue" &&
+    props.outline &&
+    css`
+        color: ${colors.brandBlue};
+        background: transparent;
+        border: 1px solid ${colors.brandBlue};
+  
+        :hover {
+          color: ${colors.white}
+          background-color: ${colors.brandDarkBlue};
+        }
+      `};
+`;
+
+const Button = ({ children, onClick, ...rest }) => (
+  <StyledButton onClick={onClick} {...rest}>
     {children}
-  </button>
+  </StyledButton>
 );
 
 export default Button;
@@ -66,7 +94,8 @@ Button.propTypes = {
     PropTypes.node
   ]).isRequired,
   type: PropTypes.string,
-  colour: PropTypes.string,
+  color: PropTypes.string,
+  outline: PropTypes.boolean,
   className: PropTypes.string,
   onClick: PropTypes.func,
   style: PropTypes.object,

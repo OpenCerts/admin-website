@@ -16,12 +16,16 @@ describe("Button component", () => {
     expect(button.toJSON()).toMatchSnapshot();
   });
 
-  it("shows rounded button", () => {
-    const button = renderer.create(
-      <Button className="rounded">Test Button</Button>
-    );
+  it("shows rounded button type", () => {
+    const button = renderer.create(<Button type="rounded">Test Button</Button>);
     const tree = button.toJSON();
     expect(tree.props.className).toContain("rounded");
+  });
+
+  it("shows orange button colour", () => {
+    const button = renderer.create(<Button color="orange">Test Button</Button>);
+    const tree = button.toJSON();
+    expect(tree.props.className).toContain("orange");
   });
 
   it("should call mock function when button is clicked", () => {
