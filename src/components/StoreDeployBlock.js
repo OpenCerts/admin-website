@@ -42,7 +42,6 @@ class StoreDeployBlock extends Component {
               value={this.state.issuerName}
               placeholder="Name of organization"
               size={50}
-              className="danger"
               required
             />
           </div>
@@ -51,7 +50,8 @@ class StoreDeployBlock extends Component {
         <Button
           onClick={this.onDeployClick}
           disabled={this.props.deploying}
-          className="danger"
+          type="pill"
+          colour="orange"
         >
           {this.props.deploying ? "Deploying…" : "Deploy"}
         </Button>
