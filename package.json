@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@babel/polyfill": "^7.4.0",
+    "@emotion/core": "^10.0.10",
     "@ledgerhq/hw-transport-u2f": "4.48.0",
     "@ledgerhq/web3-subprovider": "4.48.0",
     "@zeit/next-sass": "^1.0.1",
@@ -35,7 +36,6 @@
     "redux": "^3.6.0",
     "redux-devtools-extension": "^2.13.2",
     "redux-saga": "^0.16.0",
-    "styled-components": "^4.2.1",
     "truffle-contract": "^3.0.4",
     "web3": "1.0.0-beta.36",
     "web3-provider-engine": "14.0.6",

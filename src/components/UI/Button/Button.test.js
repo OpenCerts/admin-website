@@ -4,7 +4,7 @@ import jest from "jest-mock";
 import enzyme from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 import renderer from "react-test-renderer";
-import Button from ".";
+import { Button } from ".";
 
 describe("Button component", () => {
   it("should be defined", () => {
@@ -16,16 +16,10 @@ describe("Button component", () => {
     expect(button.toJSON()).toMatchSnapshot();
   });
 
-  it("shows rounded button type", () => {
-    const button = renderer.create(<Button type="rounded">Test Button</Button>);
+  it("shows pill button type", () => {
+    const button = renderer.create(<Button type="pill">Test Button</Button>);
     const tree = button.toJSON();
-    expect(tree.props.type).toContain("rounded");
-  });
-
-  it("shows orange button colour", () => {
-    const button = renderer.create(<Button color="orange">Test Button</Button>);
-    const tree = button.toJSON();
-    expect(tree.props.color).toContain("orange");
+    expect(tree.props.type).toContain("pill");
   });
 
   it("should call mock function when button is clicked", () => {

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import Button from "./UI/Button";
+import { OrangeButton } from "./UI/Button";
 import HashColor from "./UI/HashColor";
 import HashColorInput from "./UI/HashColorInput";
 
@@ -49,15 +49,15 @@ class StoreRevokeBlock extends Component {
             placeholder="0x…"
           />
         </div>
-        <Button
+        <OrangeButton
           onClick={this.onRevokeClick}
           disabled={this.props.revokingCertificate}
-          className="danger"
+          type="pill"
         >
           <i className="fas fa-exclamation-triangle" />
           &nbsp;
           {this.props.revokingCertificate ? "Revoking…" : "Revoke"}
-        </Button>
+        </OrangeButton>
 
         {revokedTx ? (
           <div className="mt5">

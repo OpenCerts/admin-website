@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import Button from "./UI/Button";
+import { OrangeButton } from "./UI/Button";
 import HashColor from "./UI/HashColor";
 import Input from "./UI/Input";
 
@@ -47,14 +47,13 @@ class StoreDeployBlock extends Component {
           </div>
         </div>
 
-        <Button
+        <OrangeButton
           onClick={this.onDeployClick}
           disabled={this.props.deploying}
           type="pill"
-          color="orange"
         >
           {this.props.deploying ? "Deploying…" : "Deploy"}
-        </Button>
+        </OrangeButton>
 
         {this.props.deployedTx ? (
           <div className="mt5">

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import HashColor from "./UI/HashColor";
 import HashColorInput from "./UI/HashColorInput";
-import Button from "./UI/Button";
+import { OrangeButton } from "./UI/Button";
 
 class StoreIssueBlock extends Component {
   constructor(props) {
@@ -45,13 +45,13 @@ class StoreIssueBlock extends Component {
             placeholder="0x…"
           />
         </div>
-        <Button
+        <OrangeButton
           onClick={this.onIssueClick}
           disabled={issuingCertificate}
-          className="danger"
+          type="pill"
         >
           {issuingCertificate ? "Issuing…" : "Issue"}
-        </Button>
+        </OrangeButton>
 
         {issuedTx && !issuingCertificate ? (
           <div className="mt5">
