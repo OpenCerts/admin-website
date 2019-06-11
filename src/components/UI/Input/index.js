@@ -16,14 +16,15 @@ const pill = css`
   border-radius: 50px;
 `;
 
-const Input = ({ custom, type, onChange, value, ...rest }) => (
+const Input = ({ custom, variant, type, onChange, value, ...rest }) => (
   <input
     css={css(
       base,
       custom,
-      type === "rounded" && rounded,
-      type === "pill" && pill
+      variant === "rounded" && rounded,
+      variant === "pill" && pill
     )}
+    variant={variant}
     type={type}
     onChange={onChange}
     value={value}
@@ -41,5 +42,6 @@ Input.propTypes = {
   rest: PropTypes.object,
   onChange: PropTypes.func,
   value: PropTypes.string,
+  variant: PropTypes.string,
   type: PropTypes.string
 };
