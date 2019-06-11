@@ -16,10 +16,10 @@ describe("Button component", () => {
     expect(button.toJSON()).toMatchSnapshot();
   });
 
-  it("shows pill button type", () => {
-    const button = renderer.create(<Button type="pill">Test Button</Button>);
+  it("shows pill button variant", () => {
+    const button = renderer.create(<Button variant="pill">Test Button</Button>);
     const tree = button.toJSON();
-    expect(tree.props.type).toContain("pill");
+    expect(tree.props.variant).toContain("pill");
   });
 
   it("should call mock function when button is clicked", () => {

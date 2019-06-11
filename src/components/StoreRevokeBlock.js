@@ -52,7 +52,7 @@ class StoreRevokeBlock extends Component {
         <OrangeButton
           onClick={this.onRevokeClick}
           disabled={this.props.revokingCertificate}
-          type="pill"
+          variant="pill"
         >
           <i className="fas fa-exclamation-triangle" />
           &nbsp;

@@ -50,7 +50,7 @@ class StoreDeployBlock extends Component {
         <OrangeButton
           onClick={this.onDeployClick}
           disabled={this.props.deploying}
-          type="pill"
+          variant="pill"
         >
           {this.props.deploying ? "Deploying…" : "Deploy"}
         </OrangeButton>

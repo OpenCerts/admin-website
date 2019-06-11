@@ -25,15 +25,15 @@ const pill = css`
   border-radius: 50px;
 `;
 
-export const Button = ({ children, custom, type, onClick, ...rest }) => (
+export const Button = ({ children, custom, variant, onClick, ...rest }) => (
   <button
     css={css(
       base,
       custom,
-      type === "rounded" && rounded,
-      type === "pill" && pill
+      variant === "rounded" && rounded,
+      variant === "pill" && pill
     )}
-    type={type}
+    variant={variant}
     onClick={onClick}
     {...rest}
   >
@@ -41,7 +41,7 @@ export const Button = ({ children, custom, type, onClick, ...rest }) => (
   </button>
 );
 
-export const OrangeButton = ({ children, type, onClick, ...rest }) => {
+export const OrangeButton = ({ children, variant, onClick, ...rest }) => {
   const custom = css`
     color: ${colors.white};
     background: ${colors.brandOrange};
@@ -52,13 +52,18 @@ export const OrangeButton = ({ children, type, onClick, ...rest }) => {
     }
   `;
   return (
-    <Button custom={custom} type={type} onClick={onClick} {...rest}>
+    <Button custom={custom} variant={variant} onClick={onClick} {...rest}>
       {children}
     </Button>
   );
 };
 
-export const OrangeOutlineButton = ({ children, type, onClick, ...rest }) => {
+export const OrangeOutlineButton = ({
+  children,
+  variant,
+  onClick,
+  ...rest
+}) => {
   const custom = css`
     color: ${colors.brandOrange};
     background: transparent;
@@ -70,13 +75,13 @@ export const OrangeOutlineButton = ({ children, type, onClick, ...rest }) => {
     },
   `;
   return (
-    <Button custom={custom} type={type} onClick={onClick} {...rest}>
+    <Button custom={custom} variant={variant} onClick={onClick} {...rest}>
       {children}
     </Button>
   );
 };
 
-export const BlueButton = ({ children, type, onClick, ...rest }) => {
+export const BlueButton = ({ children, variant, onClick, ...rest }) => {
   const custom = css`
     color: ${colors.white};
     background: ${colors.brandBlue};
@@ -87,13 +92,13 @@ export const BlueButton = ({ children, type, onClick, ...rest }) => {
     }
   `;
   return (
-    <Button custom={custom} type={type} onClick={onClick} {...rest}>
+    <Button custom={custom} variant={variant} onClick={onClick} {...rest}>
       {children}
     </Button>
   );
 };
 
-export const BlueOutlineButton = ({ children, type, onClick, ...rest }) => {
+export const BlueOutlineButton = ({ children, variant, onClick, ...rest }) => {
   const custom = css`
     color: ${colors.brandBlue};
     background: transparent;
@@ -105,7 +110,7 @@ export const BlueOutlineButton = ({ children, type, onClick, ...rest }) => {
     }
   `;
   return (
-    <Button custom={custom} type={type} onClick={onClick} {...rest}>
+    <Button custom={custom} variant={variant} onClick={onClick} {...rest}>
       {children}
     </Button>
   );
@@ -118,7 +123,7 @@ Button.propTypes = {
   ]).isRequired,
   className: PropTypes.string,
   custom: PropTypes.object,
-  type: PropTypes.string,
+  variant: PropTypes.string,
   color: PropTypes.string,
   onClick: PropTypes.func,
   style: PropTypes.object,
@@ -130,7 +135,7 @@ OrangeButton.propTypes = {
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node
   ]).isRequired,
-  type: PropTypes.string,
+  variant: PropTypes.string,
   onClick: PropTypes.func
 };
 
@@ -139,7 +144,7 @@ OrangeOutlineButton.propTypes = {
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node
   ]).isRequired,
-  type: PropTypes.string,
+  variant: PropTypes.string,
   onClick: PropTypes.func
 };
 
@@ -148,7 +153,7 @@ BlueButton.propTypes = {
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node
   ]).isRequired,
-  type: PropTypes.string,
+  variant: PropTypes.string,
   onClick: PropTypes.func
 };
 
@@ -157,6 +162,6 @@ BlueOutlineButton.propTypes = {
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node
   ]).isRequired,
-  type: PropTypes.string,
+  variant: PropTypes.string,
   onClick: PropTypes.func
 };

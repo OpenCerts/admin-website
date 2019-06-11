@@ -48,7 +48,7 @@ class StoreIssueBlock extends Component {
         <OrangeButton
           onClick={this.onIssueClick}
           disabled={issuingCertificate}
-          type="pill"
+          variant="pill"
         >
           {issuingCertificate ? "Issuing…" : "Issue"}
         </OrangeButton>
