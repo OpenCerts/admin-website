@@ -1,7 +1,14 @@
 import PropTypes from "prop-types";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
-import colors from "../../../styles/variables";
+import {
+  white,
+  black,
+  brandBlue,
+  brandDarkBlue,
+  brandOrange,
+  brandDarkOrange
+} from "../../../styles/variables";
 
 const base = css`
   font-weight: bold;
@@ -10,9 +17,9 @@ const base = css`
   padding: 1rem 2rem;
   user-select: none;
   text-decoration: none;
-  color: ${colors.white};
-  border: 1px solid ${colors.black};
-  background: ${colors.black};
+  color: ${white};
+  border: 1px solid ${black};
+  background: ${black};
   min-width: 10rem;
   margin: 8px;
 `;
@@ -43,12 +50,12 @@ export const Button = ({ children, custom, variant, onClick, ...rest }) => (
 
 export const OrangeButton = ({ children, variant, onClick, ...rest }) => {
   const custom = css`
-    color: ${colors.white};
-    background: ${colors.brandOrange};
-    border: 1px solid ${colors.brandOrange};
+    color: ${white};
+    background: ${brandOrange};
+    border: 1px solid ${brandOrange};
 
     :hover {
-      background-color: ${colors.brandDarkOrange};
+      background-color: ${brandDarkOrange};
     }
   `;
   return (
@@ -65,13 +72,13 @@ export const OrangeOutlineButton = ({
   ...rest
 }) => {
   const custom = css`
-    color: ${colors.brandOrange};
+    color: ${brandOrange};
     background: transparent;
-    border: 1px solid ${colors.brandOrange};
+    border: 1px solid ${brandOrange};
 
     :hover {
-      color: ${colors.white};
-      background-color: ${colors.brandDarkOrange};
+      color: ${white};
+      background-color: ${brandDarkOrange};
     },
   `;
   return (
@@ -83,12 +90,12 @@ export const OrangeOutlineButton = ({
 
 export const BlueButton = ({ children, variant, onClick, ...rest }) => {
   const custom = css`
-    color: ${colors.white};
-    background: ${colors.brandBlue};
-    border: 1px solid ${colors.brandBlue};
+    color: ${white};
+    background: ${brandBlue};
+    border: 1px solid ${brandBlue};
 
     :hover {
-      background-color: ${colors.brandDarkBlue};
+      background-color: ${brandDarkBlue};
     }
   `;
   return (
@@ -100,13 +107,13 @@ export const BlueButton = ({ children, variant, onClick, ...rest }) => {
 
 export const BlueOutlineButton = ({ children, variant, onClick, ...rest }) => {
   const custom = css`
-    color: ${colors.brandBlue};
+    color: ${brandBlue};
     background: transparent;
-    border: 1px solid ${colors.brandBlue};
+    border: 1px solid ${brandBlue};
 
     :hover {
-      color: ${colors.white};
-      background-color: ${colors.brandDarkBlue};
+      color: ${white};
+      background-color: ${brandDarkBlue};
     }
   `;
   return (
