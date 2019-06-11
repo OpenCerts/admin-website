@@ -1,24 +1,21 @@
-const variables = {
-  black: "#000000",
-  white: "#ffffff",
-  brandBlue: "#0099cc",
-  brandDarkBlue: "#005f7f",
-  brandOrange: "#ff9933",
-  brandDarkOrange: "#ff6a33",
-  lightGrey: "#e5e5e5",
-  greyBlue: "#c1c9d1",
-  brandDark: "#324353",
-  faintBlue: "#f5f8fb",
-  faintGreen: "#f5fbf7",
+export const black = "#000000";
+export const white = "#ffffff";
+export const brandBlue = "#0099cc";
 
-  headerUiBg: "#f3f8fc",
-  lowTranslucencyWhite: "rgba(255, 255, 255, 0.7)",
+export const brandDarkBlue = "#005f7f";
+export const brandOrange = "#ff9933";
+export const brandDarkOrange = "#ff6a33";
+export const lightGrey = "#e5e5e5";
+export const greyBlue = "#c1c9d1";
+export const brandDark = "#324353";
+export const faintBlue = "#f5f8fb";
+export const faintGreen = "#f5fbf7";
 
-  successColor: "#28a745",
-  warningColor: "#ffbf00",
-  warningBackground: "#fff9e8",
-  invalidColor: "#e46767",
-  invalidBackground: "#fbebe7"
-};
+export const headerUiBg = "#f3f8fc";
+export const lowTranslucencyWhite = "rgba(255, 255, 255, 0.7)";
 
-export default variables;
+export const successColor = "#28a745";
+export const warningColor = "#ffbf00";
+export const warningBackground = "#fff9e8";
+export const invalidColor = "#e46767";
+export const invalidBackground = "#fbebe7";
