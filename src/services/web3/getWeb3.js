@@ -28,7 +28,7 @@ async function loadWeb3Ledger(mainnet = true) {
   });
   engine.addProvider(ledger);
   const eth = new Eth(await getTransport());
-  window.ledger-eth = eth;
+  trace("ledger-eth", eth);
   const fetchProvider = new WebsocketSubProvider({ rpcUrl });
   engine.addProvider(fetchProvider);
 
