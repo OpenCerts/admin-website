@@ -24,6 +24,7 @@ import StoreIssueBlock from "./StoreIssueBlock";
 import StoreRevokeBlock from "./StoreRevokeBlock";
 import HashColor from "./HashColor";
 import HashColorInput from "./HashColorInput";
+import Panel from "./UI/Panel";
 
 const tabStyle = (
   <style jsx>
@@ -109,7 +110,7 @@ class AdminContainer extends Component {
     } = this.props;
 
     return (
-      <div>
+      <Panel>
         <h1>Admin</h1>
         <div className="flex bb pb3">
           <div className="w-50">
@@ -218,7 +219,7 @@ class AdminContainer extends Component {
             </TabPanel>
           </div>
         </Tabs>
-      </div>
+      </Panel>
     );
   }
 }
