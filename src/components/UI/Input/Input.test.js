@@ -3,8 +3,11 @@ import React from "react";
 import jest from "jest-mock";
 import enzyme from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
+import { matchers } from "jest-emotion";
 import renderer from "react-test-renderer";
 import Input from ".";
+
+expect.extend(matchers);
 
 describe("Input component", () => {
   it("should be defined", () => {
@@ -17,9 +20,15 @@ describe("Input component", () => {
   });
 
   it("shows pill Input type", () => {
-    const input = renderer.create(<Input type="pill">Test Input</Input>);
+    const input = renderer.create(<Input variant="pill">Test Input</Input>);
     const tree = input.toJSON();
-    expect(tree.props.type).toContain("pill");
+    expect(tree).toHaveStyleRule("border-radius", "50px");
+  });
+
+  it("shows rounded Input type", () => {
+    const input = renderer.create(<Input variant="rounded">Test Input</Input>);
+    const tree = input.toJSON();
+    expect(tree).toHaveStyleRule("border-radius", "5px");
   });
 
   it("should call mock function when Input is changed", () => {
