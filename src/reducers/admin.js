@@ -188,6 +188,6 @@ export function getIssuingCertificate(store) {
   return store.admin.issuingCertificate;
 }
 
-export function getRevokingCertificate(store) {
+export function getrevokingCertificate(store) {
   return store.admin.revokingCertificate;
 }

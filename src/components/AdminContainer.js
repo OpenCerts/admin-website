@@ -13,8 +13,8 @@ import {
   getIssuedTx,
   getRevokedTx,
   revokeCertificate,
+  getrevokingCertificate,
   getDeploying,
-  getRevokingCertificate,
   getIssuingCertificate,
   getDeployedTx
 } from "../reducers/admin";
@@ -22,9 +22,8 @@ import { updateNetworkId, getNetworkId } from "../reducers/application";
 import StoreDeployBlock from "./StoreDeployBlock";
 import StoreIssueBlock from "./StoreIssueBlock";
 import StoreRevokeBlock from "./StoreRevokeBlock";
-import HashColor from "./UI/HashColor";
-import HashColorInput from "./UI/HashColorInput";
-import NetworkSelectorContainer from "./NetworkSelectorContainer";
+import HashColor from "./HashColor";
+import HashColorInput from "./HashColorInput";
 import Panel from "./UI/Panel";
 
 const tabStyle = (
@@ -32,17 +31,15 @@ const tabStyle = (
     {`
       .tab {
         cursor: pointer;
-        border: solid 1px #e8e8e8;
       }
 
       .tab:hover {
-        background-color: #fcf3e5;
+        background-color: gold;
       }
 
       .tab[aria-selected="true"] {
-        border-left: solid 4px #fe9734;
-        color: #fe9734;
-        border-right: 0;
+        color: white;
+        background-color: black;
       }
     `}
   </style>
@@ -113,119 +110,117 @@ class AdminContainer extends Component {
     } = this.props;
 
     return (
-      <React.Fragment>
-        <Panel>
-          <img src="/static/images/logo.svg" style={{ maxWidth: 250 }} />
-          <NetworkSelectorContainer />
-          <div>
-            <div>
-              <h1>Admin</h1>
-              <div className="flex bb pb3">
-                <div className="w-50">
-                  <h3>
-                    Current account{" "}
-                    <div
-                      style={{ cursor: "pointer" }}
-                      className="dib click-to-refresh"
-                      onClick={this.refreshCurrentAddress}
-                      title="Try to grab current account"
-                      tabIndex={1}
-                    >
-                      <i className="fas fa-sync-alt" />
-                      <style jsx>{`
-                        .click-to-refresh {
-                          transform: rotateZ(0deg);
-                          transition: transform 1.5s ease-in;
-                        }
-                        .click-to-refresh:hover {
-                          color: #ff6a33;
-                        }
-                        .click-to-refresh:active {
-                          transform: rotateZ(-360deg);
-                          transition: transform 0s;
-                        }
-                        .click-to-refresh:focus {
-                          outline: none;
-                        }
-                      `}</style>
-                    </div>
-                  </h3>
-                  <div className="pa2">
-                    {adminAddress ? (
-                      <HashColor hashee={adminAddress} networkId={networkId} />
-                    ) : (
-                      <div className="red">No wallet address found.</div>
-                    )}
-                  </div>
-                </div>
-                <div className="w-50">
-                  <h3>Store address</h3>
-                  <HashColorInput
-                    type="address"
-                    value={this.state.localStoreAddress}
-                    onChange={this.storeAddressOnChange}
-                    placeholder="Enter existing (0x…), or deploy new instance"
-                  />
-                </div>
+      <Panel>
+        <h1>Admin</h1>
+        <div className="flex bb pb3">
+          <div className="w-50">
+            <h3>
+              Current account{" "}
+              <div
+                style={{ cursor: "pointer" }}
+                className="dib click-to-refresh"
+                onClick={this.refreshCurrentAddress}
+                title="Try to grab current account"
+                tabIndex={1}
+              >
+                <i className="fas fa-sync-alt" />
+                <style jsx>{`
+                  .click-to-refresh {
+                    transform: rotateZ(0deg);
+                    transition: transform 1.5s ease-in;
+                  }
+
+                  .click-to-refresh:hover {
+                    color: #e7040f;
+                  }
+
+                  .click-to-refresh:active {
+                    transform: rotateZ(-360deg);
+                    transition: transform 0s;
+                  }
+
+                  .click-to-refresh:focus {
+                    outline: none;
+                  }
+                `}</style>
               </div>
-              <Tabs className="flex flex-row w-100">
-                <TabList className="flex flex-column w-30 list pa0">
-                  <Tab className="tab pl3">
-                    <h3>Deploy new instance</h3>
-                    {tabStyle}
-                  </Tab>
-                  <Tab className="tab pl3">
-                    <h3>Issue certificate batch</h3>
-                  </Tab>
-                  <Tab className="tab pl3">
-                    <h3>Revoke certificate</h3>
-                  </Tab>
-                </TabList>
-                <div className="w-70 pa4 pl5">
-                  <TabPanel>
-                    <StoreDeployBlock
-                      adminAddress={adminAddress}
-                      storeAddress={storeAddress}
-                      handleStoreDeploy={this.handleStoreDeploy}
-                      deploying={deploying}
-                      networkId={networkId}
-                      deployedTx={deployedTx}
-                    />
-                  </TabPanel>
-                  <TabPanel>
-                    {storeAddress ? (
-                      <StoreIssueBlock
-                        networkId={networkId}
-                        issuedTx={issuedTx}
-                        adminAddress={adminAddress}
-                        storeAddress={storeAddress}
-                        handleCertificateIssue={this.handleCertificateIssue}
-                        issuingCertificate={issuingCertificate}
-                      />
-                    ) : (
-                      <div className="red">Enter a store address first.</div>
-                    )}
-                  </TabPanel>
-                  <TabPanel>
-                    {storeAddress ? (
-                      <StoreRevokeBlock
-                        networkId={networkId}
-                        revokingCertificate={revokingCertificate}
-                        revokedTx={revokedTx}
-                        adminAddress={adminAddress}
-                        storeAddress={storeAddress}
-                        handleCertificateRevoke={this.handleCertificateRevoke}
-                      />
-                    ) : (
-                      <div className="red">Enter a store address first.</div>
-                    )}
-                  </TabPanel>
-                </div>
-              </Tabs>
+            </h3>
+
+            <div className="pa2">
+              <HashColor hashee={adminAddress} networkId={networkId} />
             </div>
           </div>
-        </Panel>
-      </React.Fragment>
+
+          <div className="w-50">
+            <h3>Store address</h3>
+            <HashColorInput
+              variant="pill"
+              type="address"
+              value={this.state.localStoreAddress}
+              onChange={this.storeAddressOnChange}
+              placeholder="Enter existing (0x…), or deploy new instance"
+            />
+          </div>
+        </div>
+
+        <Tabs className="flex flex-row w-100">
+          <TabList className="flex flex-column w-30 list pa0">
+            <Tab className="tab pl3">
+              <h3>Deploy new instance</h3>
+              {tabStyle}
+            </Tab>
+            <Tab className="tab pl3">
+              <h3>Issue certificate batch</h3>
+            </Tab>
+            <Tab className="tab pl3">
+              <h3>Revoke certificate</h3>
+            </Tab>
+          </TabList>
+
+          <div className="w-70 pa4 pl5">
+            <TabPanel>
+              <StoreDeployBlock
+                adminAddress={adminAddress}
+                storeAddress={storeAddress}
+                handleStoreDeploy={this.handleStoreDeploy}
+                deploying={deploying}
+                networkId={networkId}
+                deployedTx={deployedTx}
+              />
+            </TabPanel>
+
+            <TabPanel>
+              {storeAddress ? (
+                <StoreIssueBlock
+                  networkId={networkId}
+                  issuedTx={issuedTx}
+                  adminAddress={adminAddress}
+                  storeAddress={storeAddress}
+                  handleCertificateIssue={this.handleCertificateIssue}
+                  issuingCertificate={issuingCertificate}
+                />
+              ) : (
+                <div className="red">Enter a store address first.</div>
+              )}
+            </TabPanel>
+
+            <TabPanel>
+              {storeAddress ? (
+                <StoreRevokeBlock
+                  networkId={networkId}
+                  revokingCertificate={revokingCertificate}
+                  revokedTx={revokedTx}
+                  adminAddress={adminAddress}
+                  storeAddress={storeAddress}
+                  handleCertificateRevoke={this.handleCertificateRevoke}
+                />
+              ) : (
+                <div className="red">Enter a store address first.</div>
+              )}
+            </TabPanel>
+          </div>
+        </Tabs>
+      </Panel>
     );
   }
 }
@@ -234,7 +229,7 @@ const mapStateToProps = store => ({
   adminAddress: getAdminAddress(store),
   storeAddress: getStoreAddress(store),
   issuedTx: getIssuedTx(store),
-  revokingCertificate: getRevokingCertificate(store),
+  revokingCertificate: getrevokingCertificate(store),
   revokedTx: getRevokedTx(store),
   networkId: getNetworkId(store),
   deploying: getDeploying(store),
@@ -267,7 +262,6 @@ AdminContainer.propTypes = {
   adminAddress: PropTypes.string,
   storeAddress: PropTypes.string,
   issuingCertificate: PropTypes.bool,
-  issuingError: PropTypes.string,
   issuedTx: PropTypes.string,
   revokingCertificate: PropTypes.bool,
   revokedTx: PropTypes.string,
