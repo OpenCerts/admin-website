@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 /** @jsx jsx */
-import { Global, css, jsx } from "@emotion/core";
+import { css, jsx } from "@emotion/core";
 import { connect } from "react-redux";
 import { updateWeb3, getNetwork, getCustomRpc } from "../reducers/application";
 import { NETWORK_TYPES } from "../config";
