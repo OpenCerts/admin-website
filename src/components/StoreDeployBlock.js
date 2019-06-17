@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import HashColor from "./HashColor";
+import Input from "./UI/Input";
 
 class StoreDeployBlock extends Component {
   constructor(props) {
@@ -34,8 +35,10 @@ class StoreDeployBlock extends Component {
           <div>
             Issuer Name
             <br />
-            <input
+            <Input
+              variant="pill"
               type="text"
+              placeholder="Name of organization"
               onChange={this.onNameChange}
               value={this.state.issuerName}
               size={50}

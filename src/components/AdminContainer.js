@@ -154,6 +154,7 @@ class AdminContainer extends Component {
           <div className="w-50">
             <h3>Store address</h3>
             <HashColorInput
+              variant="pill"
               type="address"
               value={this.state.localStoreAddress}
               onChange={this.storeAddressOnChange}

@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Input component shows Input text 1`] = `
+<input
+  className="css-1ku9ygt-Input"
+  size={50}
+>
+  Test Input
+</input>
+`;
