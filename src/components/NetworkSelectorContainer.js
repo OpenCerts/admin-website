@@ -21,10 +21,7 @@ class AdminContainer extends Component {
     const { INJECTED, LEDGER_MAIN, LEDGER_ROPSTEN } = NETWORK_TYPES;
 
     return (
-      <div
-        className="fr ba"
-        style={{ borderRadius: "50px", padding: "0.2em 0.5em" }}
-      >
+      <div className="fr ba">
         <select
           className="pa2"
           value={this.props.network}
@@ -32,7 +29,7 @@ class AdminContainer extends Component {
           style={{
             backgroundColor: "white",
             borderWidth: 0,
-            borderRadius: "50px"
+            borderRadius: 0
           }}
         >
           <option value={INJECTED}>Metamask</option>

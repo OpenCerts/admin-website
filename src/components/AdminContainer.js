@@ -21,8 +21,8 @@ import {
   getIssuedTx,
   getRevokedTx,
   revokeCertificate,
+  getrevokingCertificate,
   getDeploying,
-  getRevokingCertificate,
   getIssuingCertificate,
   getDeployedTx
 } from "../reducers/admin";
@@ -30,9 +30,8 @@ import { updateNetworkId, getNetworkId } from "../reducers/application";
 import StoreDeployBlock from "./StoreDeployBlock";
 import StoreIssueBlock from "./StoreIssueBlock";
 import StoreRevokeBlock from "./StoreRevokeBlock";
-import HashColor from "./UI/HashColor";
-import HashColorInput from "./UI/HashColorInput";
-import NetworkSelectorContainer from "./NetworkSelectorContainer";
+import HashColor from "./HashColor";
+import HashColorInput from "./HashColorInput";
 import Panel from "./UI/Panel";
 
 const baseStyle = (
@@ -139,8 +138,6 @@ class AdminContainer extends Component {
       <React.Fragment>
         {baseStyle}
         <Panel>
-          <img src="/static/images/logo.svg" style={{ maxWidth: 250 }} />
-          <NetworkSelectorContainer />
           <div>
             <div>
               <h1>Admin</h1>
@@ -242,7 +239,7 @@ const mapStateToProps = store => ({
   adminAddress: getAdminAddress(store),
   storeAddress: getStoreAddress(store),
   issuedTx: getIssuedTx(store),
-  revokingCertificate: getRevokingCertificate(store),
+  revokingCertificate: getrevokingCertificate(store),
   revokedTx: getRevokedTx(store),
   networkId: getNetworkId(store),
   deploying: getDeploying(store),
@@ -275,7 +272,6 @@ AdminContainer.propTypes = {
   adminAddress: PropTypes.string,
   storeAddress: PropTypes.string,
   issuingCertificate: PropTypes.bool,
-  issuingError: PropTypes.string,
   issuedTx: PropTypes.string,
   revokingCertificate: PropTypes.bool,
   revokedTx: PropTypes.string,
