@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import Button from "./UI/Button";
-import HashColor from "./UI/HashColor";
-import Input from "./UI/Input";
+import HashColor from "./HashColor";
 
 class StoreDeployBlock extends Component {
   constructor(props) {
@@ -36,25 +34,19 @@ class StoreDeployBlock extends Component {
           <div>
             Issuer Name
             <br />
-            <Input
+            <input
               type="text"
               onChange={this.onNameChange}
               value={this.state.issuerName}
-              placeholder="Name of organization"
               size={50}
-              className="danger"
               required
             />
           </div>
         </div>
 
-        <Button
-          onClick={this.onDeployClick}
-          disabled={this.props.deploying}
-          className="danger"
-        >
+        <button disabled={this.props.deploying} onClick={this.onDeployClick}>
           {this.props.deploying ? "Deploying…" : "Deploy"}
-        </Button>
+        </button>
 
         {this.props.deployedTx ? (
           <div className="mt5">
