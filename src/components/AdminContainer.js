@@ -1,7 +1,15 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+/** @jsx jsx */
+import { Global, css, jsx } from "@emotion/core";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
+import {
+  lightGrey,
+  faintOrange,
+  brandOrange,
+  brandDarkOrange
+} from "../styles/variables";
 import { isValidAddress } from "./utils";
 import {
   loadAdminAddress,
@@ -27,25 +35,40 @@ import HashColorInput from "./UI/HashColorInput";
 import NetworkSelectorContainer from "./NetworkSelectorContainer";
 import Panel from "./UI/Panel";
 
-const tabStyle = (
-  <style jsx>
-    {`
+const baseStyle = (
+  <Global
+    styles={css`
+      .click-to-refresh {
+        transform: rotateZ(0deg);
+        transition: transform 1.5s ease-in;
+      }
+      .click-to-refresh:hover {
+        color: ${brandDarkOrange};
+      }
+      .click-to-refresh:active {
+        transform: rotateZ(-360deg);
+        transition: transform 0s;
+      }
+      .click-to-refresh:focus {
+        outline: none;
+      }
+
       .tab {
         cursor: pointer;
-        border: solid 1px #e8e8e8;
+        border: solid 1px ${lightGrey};
       }
 
       .tab:hover {
-        background-color: #fcf3e5;
+        background-color: ${faintOrange};
       }
 
       .tab[aria-selected="true"] {
-        border-left: solid 4px #fe9734;
-        color: #fe9734;
+        border-left: solid 4px ${brandOrange};
+        color: ${brandOrange};
         border-right: 0;
       }
     `}
-  </style>
+  />
 );
 
 class AdminContainer extends Component {
@@ -114,6 +137,7 @@ class AdminContainer extends Component {
 
     return (
       <React.Fragment>
+        {baseStyle}
         <Panel>
           <img src="/static/images/logo.svg" style={{ maxWidth: 250 }} />
           <NetworkSelectorContainer />
@@ -132,22 +156,6 @@ class AdminContainer extends Component {
                       tabIndex={1}
                     >
                       <i className="fas fa-sync-alt" />
-                      <style jsx>{`
-                        .click-to-refresh {
-                          transform: rotateZ(0deg);
-                          transition: transform 1.5s ease-in;
-                        }
-                        .click-to-refresh:hover {
-                          color: #ff6a33;
-                        }
-                        .click-to-refresh:active {
-                          transform: rotateZ(-360deg);
-                          transition: transform 0s;
-                        }
-                        .click-to-refresh:focus {
-                          outline: none;
-                        }
-                      `}</style>
                     </div>
                   </h3>
                   <div className="pa2">
@@ -172,7 +180,6 @@ class AdminContainer extends Component {
                 <TabList className="flex flex-column w-30 list pa0">
                   <Tab className="tab pl3">
                     <h3>Deploy new instance</h3>
-                    {tabStyle}
                   </Tab>
                   <Tab className="tab pl3">
                     <h3>Issue certificate batch</h3>
