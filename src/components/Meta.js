@@ -1,4 +1,6 @@
 import Head from "next/head";
+/** @jsx jsx */
+import { Global, css, jsx } from "@emotion/core";
 
 const Meta = () => (
   <div>
@@ -16,80 +18,88 @@ const Meta = () => (
       rel="stylesheet"
       href="https://unpkg.com/tachyons@4.9.1/css/tachyons.min.css"
     />
-    <style jsx global>{`
-      :root {
-        --font-monospace: "Roboto Mono", monospace;
-        --font-monospace-size: 0.8rem !important;
-      }
+    <Global
+      styles={css`
+        :root {
+          --font-monospace: "Roboto Mono", monospace;
+          --font-monospace-size: 0.8rem !important;
+        }
 
-      body {
-        background: white;
-        font-family: arial, sans-serif;
-        line-height: 1.5;
-      }
+        body {
+          background: white;
+          font-family: arial, sans-serif;
+          line-height: 1.5;
+        }
 
-      .noselect {
-        user-select: none;
-        -webkit-user-select: none;
-        -ms-user-select: none;
-      }
+        .provider-selector {
+          border-width: 0;
+          border-radius: 0;
+          outline: none;
+        }
 
-      a:visited {
-        color: inherit;
-      }
+        .noselect {
+          user-select: none;
+          -webkit-user-select: none;
+          -ms-user-select: none;
+        }
 
-      input[type="text"] {
-        font-family: var(--font-monospace) !important;
-        font-size: var(--font-monospace-size);
-        border: solid 1px black;
-        padding: 0.5rem; // tachyons pa2
-      }
+        a:visited {
+          color: inherit;
+        }
 
-      .button,
-      button {
-        cursor: pointer;
-        background: transparent;
-        border: solid 2px black;
-        padding: 1rem; // tachyons pa3
-        user-select: none;
-        text-decoration: none;
-        color: inherit;
-      }
+        input[type="text"] {
+          font-family: var(--font-monospace) !important;
+          font-size: var(--font-monospace-size);
+          border: solid 1px black;
+          padding: 0.5rem; // tachyons pa2
+        }
 
-      .button:hover,
-      button:hover {
-        background-color: gold;
-      }
+        .button,
+        button {
+          cursor: pointer;
+          background: transparent;
+          border: solid 2px black;
+          padding: 1rem; // tachyons pa3
+          user-select: none;
+          text-decoration: none;
+          color: inherit;
+        }
 
-      .button:active,
-      button:active {
-        background-color: black;
-        color: white;
-      }
+        .button:hover,
+        button:hover {
+          background-color: gold;
+        }
 
-      .button:disabled,
-      button:disabled {
-        opacity: 0.7;
-        pointer-events: none;
-      }
+        .button:active,
+        button:active {
+          background-color: black;
+          color: white;
+        }
 
-      .button.danger,
-      button.danger {
-        color: #e7040f;
-        border-color: #e7040f;
-      }
+        .button:disabled,
+        button:disabled {
+          opacity: 0.7;
+          pointer-events: none;
+        }
 
-      .button.danger:hover,
-      button.danger:hover {
-        color: white;
-        background-color: #e7040f;
-      }
+        .button.danger,
+        button.danger {
+          color: #e7040f;
+          border-color: #e7040f;
+        }
 
-      .__hashcolor > input {
-        font-family: inherit;
-        color: inherit;
-      }
-    `}</style>
+        .button.danger:hover,
+        button.danger:hover {
+          color: white;
+          background-color: #e7040f;
+        }
+
+        .__hashcolor > input {
+          font-family: inherit;
+          color: inherit;
+        }
+      `}
+    />
   </div>
 );
 
