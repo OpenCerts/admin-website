@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import { Component } from "react";
 import PropTypes from "prop-types";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
@@ -28,19 +28,17 @@ class AdminContainer extends Component {
     const { INJECTED, LEDGER_MAIN, LEDGER_ROPSTEN } = NETWORK_TYPES;
 
     return (
-      <React.Fragment>
-        <div className="fr ba" css={css(divBase)}>
-          <select
-            className="pa2 provider-selector"
-            value={this.props.network}
-            onChange={this.handleNetworkChange}
-          >
-            <option value={INJECTED}>Metamask</option>
-            <option value={LEDGER_MAIN}>Ledger Nano (Mainnet)</option>
-            <option value={LEDGER_ROPSTEN}>Ledger Nano (Ropsten)</option>
-          </select>
-        </div>
-      </React.Fragment>
+      <div className="fr ba" css={css(divBase)}>
+        <select
+          className="pa2 provider-selector"
+          value={this.props.network}
+          onChange={this.handleNetworkChange}
+        >
+          <option value={INJECTED}>Metamask</option>
+          <option value={LEDGER_MAIN}>Ledger Nano (Mainnet)</option>
+          <option value={LEDGER_ROPSTEN}>Ledger Nano (Ropsten)</option>
+        </select>
+      </div>
     );
   }
 }
