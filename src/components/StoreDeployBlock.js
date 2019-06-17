@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import HashColor from "./HashColor";
 import Input from "./UI/Input";
+import { OrangeButton } from "./UI/Button";
 
 class StoreDeployBlock extends Component {
   constructor(props) {
@@ -47,9 +48,13 @@ class StoreDeployBlock extends Component {
           </div>
         </div>
 
-        <button disabled={this.props.deploying} onClick={this.onDeployClick}>
+        <OrangeButton
+          variant="pill"
+          onClick={this.onDeployClick}
+          disabled={this.props.deploying}
+        >
           {this.props.deploying ? "Deploying…" : "Deploy"}
-        </button>
+        </OrangeButton>
 
         {this.props.deployedTx ? (
           <div className="mt5">
