@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import HashColor from "./HashColor";
-import HashColorInput from "./HashColorInput";
+import HashColor from "./UI/HashColor";
+import HashColorInput from "./UI/HashColorInput";
+import { OrangeButton } from "./UI/Button";
 
 class StoreIssueBlock extends Component {
   constructor(props) {
@@ -30,37 +31,39 @@ class StoreIssueBlock extends Component {
   }
 
   render() {
+    const { certificateHash } = this.state;
+    const { issuingCertificate, issuedTx, networkId } = this.props;
     return (
-      <div>
-        <div>
+      <React.Fragment>
+        <div className="mb4">
           Issue certificates with the Merkle root hash
           <HashColorInput
             variant="pill"
             type="hash"
-            hashee={this.state.certificateHash}
+            hashee={certificateHash}
             onChange={this.onHashChange}
-            value={this.state.certificateHash}
+            value={certificateHash}
             placeholder="0x…"
           />
         </div>
-        <button className="mt4" onClick={this.onIssueClick}>
-          {this.props.issuingCertificate ? "Issuing…" : "Issue"}
-        </button>
+        <OrangeButton
+          onClick={this.onIssueClick}
+          disabled={issuingCertificate}
+          variant="pill"
+        >
+          {issuingCertificate ? "Issuing…" : "Issue"}
+        </OrangeButton>
 
-        {this.props.issuedTx && !this.props.issuingCertificate ? (
+        {issuedTx && !issuingCertificate ? (
           <div className="mt5">
             <p>🎉 Batch has been issued.</p>
             <div>
               Transaction ID{" "}
-              <HashColor
-                hashee={this.props.issuedTx}
-                networkId={this.props.networkId}
-                isTx
-              />
+              <HashColor hashee={issuedTx} networkId={networkId} isTx />
             </div>
           </div>
         ) : null}
-      </div>
+      </React.Fragment>
     );
   }
 }
