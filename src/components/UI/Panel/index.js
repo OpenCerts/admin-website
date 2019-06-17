@@ -1,8 +1,20 @@
+/** @jsx jsx */
+import { css, jsx } from "@emotion/core";
 import PropTypes from "prop-types";
-import styles from "./style.scss";
 
-const Panel = ({ children, ...rest }) => (
-  <div className={styles.panel} {...rest}>
+const base = css`
+  background-color: white;
+  border-radius: 3px;
+  border: none;
+  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.1);
+  display: block;
+  max-width: 1080px;
+  margin: 3rem auto;
+  padding: 3rem;
+`;
+
+const Panel = ({ children, custom, ...rest }) => (
+  <div css={css(base, custom)} {...rest}>
     {children}
   </div>
 );
@@ -14,5 +26,6 @@ Panel.propTypes = {
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node
   ]).isRequired,
+  custom: PropTypes.object,
   rest: PropTypes.object
 };

@@ -42,6 +42,7 @@ class StoreRevokeBlock extends Component {
         <div className="mb4">
           Certificate hash to revoke
           <HashColorInput
+            variant="pill"
             type="hash"
             hashee={this.state.certificateHash}
             onChange={this.onHashChange}

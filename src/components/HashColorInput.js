@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 import { isValidAddress } from "./utils";
 import HashColor from "./HashColor";
+import Input from "./UI/Input";
 
 const VALIDATIONS = {
   address: { size: 42, maxLength: 50, validityFn: isValidAddress },
@@ -18,7 +19,8 @@ const HashColorInput = props => {
 
   return (
     <HashColor hashee={props.value} clickable={false} color={isValid}>
-      <input
+      <Input
+        variant={props.variant}
         type="text"
         onChange={props.onChange}
         size={size}
@@ -37,7 +39,10 @@ const HashColorInput = props => {
   );
 };
 
+export default HashColorInput;
+
 HashColorInput.propTypes = {
+  variant: PropTypes.string,
   type: PropTypes.string,
   value: PropTypes.any,
   onChange: PropTypes.func,
@@ -47,5 +52,3 @@ HashColorInput.propTypes = {
 HashColorInput.defaultProps = {
   type: "none"
 };
-
-export default HashColorInput;

@@ -37,10 +37,11 @@ class StoreDeployBlock extends Component {
             Issuer Name
             <br />
             <Input
+              variant="pill"
               type="text"
+              placeholder="Name of organization"
               onChange={this.onNameChange}
               value={this.state.issuerName}
-              placeholder="Name of organization"
               size={50}
               required
             />
