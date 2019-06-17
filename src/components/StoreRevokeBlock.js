@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { OrangeButton } from "./UI/Button";
-import HashColor from "./UI/HashColor";
-import HashColorInput from "./UI/HashColorInput";
+import HashColor from "./HashColor";
+import HashColorInput from "./HashColorInput";
 
 class StoreRevokeBlock extends Component {
   constructor(props) {
@@ -39,7 +38,7 @@ class StoreRevokeBlock extends Component {
     const { revokedTx, networkId } = this.props;
     return (
       <div>
-        <div className="mb4">
+        <div>
           Certificate hash to revoke
           <HashColorInput
             variant="pill"
@@ -50,15 +49,11 @@ class StoreRevokeBlock extends Component {
             placeholder="0x…"
           />
         </div>
-        <OrangeButton
-          onClick={this.onRevokeClick}
-          disabled={this.props.revokingCertificate}
-          variant="pill"
-        >
+        <button className="mt4 danger" onClick={this.onRevokeClick}>
           <i className="fas fa-exclamation-triangle" />
           &nbsp;
           {this.props.revokingCertificate ? "Revoking…" : "Revoke"}
-        </OrangeButton>
+        </button>
 
         {revokedTx ? (
           <div className="mt5">
