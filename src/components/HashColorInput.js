@@ -23,6 +23,7 @@ const HashColorInput = props => {
         variant={props.variant}
         type="text"
         onChange={props.onChange}
+        className={props.className}
         size={size}
         value={props.value}
         spellCheck="false"
@@ -42,6 +43,7 @@ const HashColorInput = props => {
 export default HashColorInput;
 
 HashColorInput.propTypes = {
+  className: PropTypes.className,
   variant: PropTypes.string,
   type: PropTypes.string,
   value: PropTypes.any,
