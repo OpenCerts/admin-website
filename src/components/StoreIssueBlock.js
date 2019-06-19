@@ -36,6 +36,7 @@ class StoreIssueBlock extends Component {
         <div>
           Issue certificates with the Merkle root hash
           <HashColorInput
+            className="mt2"
             variant="pill"
             type="hash"
             hashee={this.state.certificateHash}
