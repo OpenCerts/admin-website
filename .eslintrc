@@ -1,5 +1,10 @@
 {
-  "extends": ["plugin:react/recommended", "airbnb-base", "prettier"],
+  "extends": [
+    "plugin:react/recommended",
+    "airbnb-base",
+    "prettier",
+    "plugin:testcafe/recommended"
+  ],
   "env": {
     "mocha": true
   },
@@ -10,7 +15,14 @@
       "jsx": true
     }
   },
-  "plugins": ["react", "prettier", "chai-friendly", "chai-expect", "mocha"],
+  "plugins": [
+    "react",
+    "prettier",
+    "chai-friendly",
+    "chai-expect",
+    "mocha",
+    "testcafe"
+  ],
   "globals": {
     "artifacts": false,
     "contract": false,
