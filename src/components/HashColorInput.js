@@ -43,7 +43,7 @@ const HashColorInput = props => {
 export default HashColorInput;
 
 HashColorInput.propTypes = {
-  className: PropTypes.className,
+  className: PropTypes.func,
   variant: PropTypes.string,
   type: PropTypes.string,
   value: PropTypes.any,
