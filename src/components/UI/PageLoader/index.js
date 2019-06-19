@@ -64,7 +64,6 @@ class PageLoader extends Component {
     const { loaderColor } = this.props;
     return (
       <div css={css(Loader)}>
-        <pageLoaderBase />
         <img src={"../../static/images/logo.svg"} css={css(logo)} />
         <FadeLoader color={loaderColor} sizeUnit={"px"} size={30} />
       </div>
