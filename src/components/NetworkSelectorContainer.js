@@ -1,8 +1,15 @@
-import React, { Component } from "react";
+import { Component } from "react";
 import PropTypes from "prop-types";
+/** @jsx jsx */
+import { css, jsx } from "@emotion/core";
 import { connect } from "react-redux";
 import { updateWeb3, getNetwork, getCustomRpc } from "../reducers/application";
 import { NETWORK_TYPES } from "../config";
+
+const divBase = css`
+  border-radius: 50px;
+  padding: 0.2em 0.5em;
+`;
 
 class AdminContainer extends Component {
   constructor(props) {
@@ -21,16 +28,11 @@ class AdminContainer extends Component {
     const { INJECTED, LEDGER_MAIN, LEDGER_ROPSTEN } = NETWORK_TYPES;
 
     return (
-      <div className="fr ba">
+      <div className="fr ba" css={css(divBase)}>
         <select
-          className="pa2"
+          className="pa2 provider-selector"
           value={this.props.network}
           onChange={this.handleNetworkChange}
-          style={{
-            backgroundColor: "white",
-            borderWidth: 0,
-            borderRadius: 0
-          }}
         >
           <option value={INJECTED}>Metamask</option>
           <option value={LEDGER_MAIN}>Ledger Nano (Mainnet)</option>
