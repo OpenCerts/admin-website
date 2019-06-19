@@ -2,6 +2,7 @@ import { omit } from "lodash";
 import { NETWORK_TYPES } from "../config";
 
 export const initialState = {
+  isLoading: false,
   network: NETWORK_TYPES.INJECTED,
   networkId: null,
   networkIdVerbose: "",
@@ -24,7 +25,10 @@ export const types = {
   TRANSACTION_MINED: "TRANSACTION_MINED",
 
   TX_POLLING_ADD: "TX_POLLING_ADD",
-  TX_POLLING_REMOVE: "TX_POLLING_REMOVE"
+  TX_POLLING_REMOVE: "TX_POLLING_REMOVE",
+
+  IS_LOADING: "IS_LOADING",
+  IS_NOT_LOADING: "IS_NOT_LOADING"
 
   // polling_started
   // add to poll : should take a tx hash and a callback action
@@ -35,6 +39,16 @@ export const types = {
 // Reducers
 export default function reducer(state = initialState, action) {
   switch (action.type) {
+    case types.IS_LOADING:
+      return {
+        ...state,
+        isLoading: true
+      };
+    case types.IS_NOT_LOADING:
+      return {
+        ...state,
+        isLoading: false
+      };
     case types.UPDATE_WEB3:
       return {
         ...state,
@@ -96,6 +110,18 @@ export default function reducer(state = initialState, action) {
 }
 
 // Action Creators
+export function setIsLoading() {
+  return {
+    type: types.IS_LOADING
+  };
+}
+
+export function setIsNotLoading() {
+  return {
+    type: types.IS_NOT_LOADING
+  };
+}
+
 export function updateWeb3(payload) {
   return {
     type: types.UPDATE_WEB3,
@@ -131,6 +157,10 @@ export function removeTxFromPollingList(payload) {
 }
 
 // Selectors
+export function getIsLoading(store) {
+  return store.application.isLoading;
+}
+
 export function getNetwork(store) {
   return store.application.network;
 }

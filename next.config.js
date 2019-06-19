@@ -1,7 +1,8 @@
 module.exports = {
   exportPathMap: function exportMap() {
     return {
-      "/": { page: "/" }
+      "/": { page: "/" },
+      "/deploy": { page: "/deploy" }
     };
   },
   assetPrefix: ""
