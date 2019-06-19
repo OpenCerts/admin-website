@@ -2,7 +2,7 @@ import { Component } from "react";
 import PropTypes from "prop-types";
 import { FadeLoader } from "react-spinners";
 /** @jsx jsx */
-import { Global, css, jsx } from "@emotion/core";
+import { css, jsx } from "@emotion/core";
 
 const logo = css`
   position: absolute;

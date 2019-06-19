@@ -44,7 +44,10 @@
     "prettier/prettier": "error",
     "no-unused-expressions": "off",
     "mocha/no-exclusive-tests": "error",
-    "chai-friendly/no-unused-expressions": "error",
+    "chai-friendly/no-unused-expressions": [
+      "error",
+      { "allowTaggedTemplates": true }
+    ],
     "chai-expect/no-inner-compare": "error",
     "chai-expect/missing-assertion": "error",
     "chai-expect/terminating-properties": "error"
