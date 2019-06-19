@@ -1,6 +1,7 @@
 import Head from "next/head";
 /** @jsx jsx */
 import { Global, css, jsx } from "@emotion/core";
+import { faintBlue } from "../styles/variables";
 
 const Meta = () => (
   <div>
@@ -26,7 +27,7 @@ const Meta = () => (
         }
 
         body {
-          background: white;
+          background: ${faintBlue};
           font-family: arial, sans-serif;
           line-height: 1.5;
         }
