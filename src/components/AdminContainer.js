@@ -138,8 +138,14 @@ class AdminContainer extends Component {
     return (
       <Panel>
         {baseStyle}
-        <NetworkSelectorContainer />
-        <h1>Admin</h1>
+        <div className="flex">
+          <div className="w-50">
+            <h1 className="mt0">Admin</h1>
+          </div>
+          <div className="w-50">
+            <NetworkSelectorContainer />
+          </div>
+        </div>
         <div className="flex bb pb3">
           <div className="w-50">
             <h3>
