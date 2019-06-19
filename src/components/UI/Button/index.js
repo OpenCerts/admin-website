@@ -11,7 +11,6 @@ import {
 } from "../../../styles/variables";
 
 const base = css`
-  font-weight: bold;
   cursor: pointer;
   border: none;
   padding: 1rem 2rem;
@@ -79,7 +78,7 @@ export const OrangeOutlineButton = ({
     :hover {
       color: ${white};
       background-color: ${brandDarkOrange};
-    },
+    }
   `;
   return (
     <Button custom={custom} variant={variant} onClick={onClick} {...rest}>
