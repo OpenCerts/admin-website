@@ -26,7 +26,12 @@ import {
   getIssuingCertificate,
   getDeployedTx
 } from "../reducers/admin";
-import { updateNetworkId, getNetworkId } from "../reducers/application";
+import {
+  getIsLoading,
+  setIsNotLoading,
+  updateNetworkId,
+  getNetworkId
+} from "../reducers/application";
 import StoreDeployBlock from "./StoreDeployBlock";
 import StoreIssueBlock from "./StoreIssueBlock";
 import StoreRevokeBlock from "./StoreRevokeBlock";
@@ -238,6 +243,7 @@ class AdminContainer extends Component {
 }
 
 const mapStateToProps = store => ({
+  isLoading: getIsLoading(store),
   adminAddress: getAdminAddress(store),
   storeAddress: getStoreAddress(store),
   issuedTx: getIssuedTx(store),
@@ -250,6 +256,7 @@ const mapStateToProps = store => ({
 });
 
 const mapDispatchToProps = dispatch => ({
+  setIsNotLoading: () => dispatch(setIsNotLoading()),
   loadAdminAddress: payload => dispatch(loadAdminAddress(payload)),
   updateNetworkId: () => dispatch(updateNetworkId()),
   deployStore: payload => dispatch(deployStore(payload)),

@@ -14,6 +14,10 @@ const divBase = css`
 
 const selectorBase = css`
   background: ${white};
+  border: none;
+  :focus {
+    outline: 0;
+  }
 `;
 
 class AdminContainer extends Component {
