@@ -30,8 +30,8 @@ import { updateNetworkId, getNetworkId } from "../reducers/application";
 import StoreDeployBlock from "./StoreDeployBlock";
 import StoreIssueBlock from "./StoreIssueBlock";
 import StoreRevokeBlock from "./StoreRevokeBlock";
-import HashColor from "./HashColor";
-import HashColorInput from "./HashColorInput";
+import HashColor from "./UI/HashColor";
+import HashColorInput from "./UI/HashColorInput";
 import Panel from "./UI/Panel";
 import NetworkSelectorContainer from "./NetworkSelectorContainer";
 

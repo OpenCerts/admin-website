@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import HashColor from "./HashColor";
+import HashColor from "./UI/HashColor";
 import Input from "./UI/Input";
 import { OrangeButton } from "./UI/Button";
 
