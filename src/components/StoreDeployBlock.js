@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import HashColor from "./UI/HashColor";
 import Input from "./UI/Input";
 import { OrangeButton } from "./UI/Button";
+import { validateName } from "../components/utils";
 
 class StoreDeployBlock extends Component {
   constructor(props) {
@@ -12,17 +13,13 @@ class StoreDeployBlock extends Component {
     };
 
     this.onNameChange = this.onNameChange.bind(this);
-    this.validateName = this.validateName.bind(this);
     this.onDeployClick = this.onDeployClick.bind(this);
   }
-
-  validateName = input =>
-    input.length === 0 ? `Organization name cannot be empty.` : "";
 
   onNameChange(event) {
     this.setState({
       issuerName: event.target.value,
-      issuerNameMessage: this.validateName(event.target.value)
+      issuerNameMessage: validateName(event.target.value)
     });
   }
 
@@ -30,7 +27,7 @@ class StoreDeployBlock extends Component {
     const { adminAddress, handleStoreDeploy } = this.props;
     const { issuerName, issuerNameMessage } = this.state;
     this.setState({
-      issuerNameMessage: this.validateName(issuerName)
+      issuerNameMessage: validateName(issuerName)
     });
     if (issuerNameMessage === "") {
       handleStoreDeploy({

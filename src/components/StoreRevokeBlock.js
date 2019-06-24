@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import HashColor from "./UI/HashColor";
 import HashColorInput from "./UI/HashColorInput";
 import { OrangeButton } from "./UI/Button";
+import { validateHash } from "../components/utils";
 
 class StoreRevokeBlock extends Component {
   constructor(props) {
@@ -17,21 +18,27 @@ class StoreRevokeBlock extends Component {
 
   onHashChange(event) {
     this.setState({
-      certificateHash: event.target.value
+      certificateHash: event.target.value,
+      certificateHashMessage: validateHash(event.target.value)
     });
   }
 
   onRevokeClick() {
     const { adminAddress, storeAddress, handleCertificateRevoke } = this.props;
+    const { certificateHash, certificateHashMessage } = this.state;
 
-    const yes = window.confirm("Are you sure you want to revoke this hash?"); // eslint-disable-line
-
-    if (yes) {
-      handleCertificateRevoke({
-        storeAddress,
-        fromAddress: adminAddress,
-        certificateHash: this.state.certificateHash
-      });
+    this.setState({
+      certificateHashMessage: validateHash(certificateHash)
+    });
+    if (certificateHashMessage === "") {
+      const yes = window.confirm("Are you sure you want to revoke this hash?"); // eslint-disable-line
+      if (yes) {
+        handleCertificateRevoke({
+          storeAddress,
+          fromAddress: adminAddress,
+          certificateHash: this.state.certificateHash
+        });
+      }
     }
   }
 
@@ -48,6 +55,7 @@ class StoreRevokeBlock extends Component {
             hashee={this.state.certificateHash}
             onChange={this.onHashChange}
             value={this.state.certificateHash}
+            message={this.state.certificateHashMessage}
             placeholder="0x…"
           />
         </div>
