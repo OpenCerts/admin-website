@@ -6,6 +6,7 @@ const base = css`
   padding: 0.5rem 1rem;
   border: solid 1px black;
   outline: none;
+  width: 100%;
 `;
 
 const rounded = css`
