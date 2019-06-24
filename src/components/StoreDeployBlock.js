@@ -37,6 +37,7 @@ class StoreDeployBlock extends Component {
             Issuer Name
             <br />
             <Input
+              className="mt2"
               variant="pill"
               type="text"
               placeholder="Name of organization"

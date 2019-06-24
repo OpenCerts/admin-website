@@ -23,13 +23,12 @@ const HashColorInput = props => {
         variant={props.variant}
         type="text"
         onChange={props.onChange}
+        className={props.className}
         size={size}
         value={props.value}
         spellCheck="false"
         style={{
           color: "inherit",
-          fontFamily: "var(--font-monospace) monospace",
-          fontSize: "var(--font-monospace-size)",
           border: isValid ? "solid 1px black" : "solid 1px #e7040f"
         }}
         maxLength={maxLength}
@@ -42,6 +41,7 @@ const HashColorInput = props => {
 export default HashColorInput;
 
 HashColorInput.propTypes = {
+  className: PropTypes.func,
   variant: PropTypes.string,
   type: PropTypes.string,
   value: PropTypes.any,
