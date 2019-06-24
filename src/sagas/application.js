@@ -16,18 +16,6 @@ import { setNewWeb3, getCurrentWeb3 } from "../services/web3/getWeb3";
 
 const POLLING_INTERVAL = 4000; // milliseconds
 
-export function* setIsLoading() {
-  yield put({
-    type: types.IS_LOADING
-  });
-}
-
-export function* setIsNotLoading() {
-  yield put({
-    type: types.IS_NOT_LOADING
-  });
-}
-
 export function* getSelectedWeb3(getNew = false) {
   const networkPending = yield select(getNetworkPending);
   if (networkPending && !getNew) {
