@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 import { isValidAddress } from "../utils";
 import HashColor from "./HashColor";
 import Input from "./Input";
+import { black, invalidColor } from "../../styles/variables";
 
 const VALIDATIONS = {
   address: { size: 42, maxLength: 50, validityFn: isValidAddress },
@@ -28,7 +29,7 @@ const HashColorInput = ({ variant, type, placeholder, onChange, value }) => {
         spellCheck="false"
         style={{
           color: "inherit",
-          border: isValid ? "solid 1px black" : "solid 1px #e7040f"
+          border: isValid ? `solid 1px ${black}` : `solid 1px ${invalidColor}`
         }}
         maxLength={maxLength}
         placeholder={placeholder}

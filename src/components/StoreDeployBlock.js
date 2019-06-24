@@ -12,21 +12,32 @@ class StoreDeployBlock extends Component {
     };
 
     this.onNameChange = this.onNameChange.bind(this);
+    this.validateName = this.validateName.bind(this);
     this.onDeployClick = this.onDeployClick.bind(this);
   }
 
+  validateName = input =>
+    input.length === 0 ? `Organization name cannot be empty.` : "";
+
   onNameChange(event) {
     this.setState({
-      issuerName: event.target.value
+      issuerName: event.target.value,
+      issuerNameMessage: this.validateName(event.target.value)
     });
   }
 
   onDeployClick() {
     const { adminAddress, handleStoreDeploy } = this.props;
-    handleStoreDeploy({
-      fromAddress: adminAddress,
-      name: this.state.issuerName
+    const { issuerName, issuerNameMessage } = this.state;
+    this.setState({
+      issuerNameMessage: this.validateName(issuerName)
     });
+    if (issuerNameMessage === "") {
+      handleStoreDeploy({
+        fromAddress: adminAddress,
+        name: issuerName
+      });
+    }
   }
 
   render() {
@@ -43,6 +54,7 @@ class StoreDeployBlock extends Component {
               placeholder="Name of organization"
               onChange={this.onNameChange}
               value={this.state.issuerName}
+              message={this.state.issuerNameMessage}
               size={50}
               required
             />

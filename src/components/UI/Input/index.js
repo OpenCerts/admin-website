@@ -1,6 +1,8 @@
+import React from "react";
 import PropTypes from "prop-types";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
+import { invalidColor, black } from "../../../styles/variables";
 
 const base = css`
   padding: 0.5rem 1rem;
@@ -17,26 +19,39 @@ const pill = css`
   border-radius: 50px;
 `;
 
-const Input = ({ custom, variant, type, onChange, value, ...rest }) => (
-  <input
-    css={css(
-      base,
-      custom,
-      variant === "rounded" && rounded,
-      variant === "pill" && pill
-    )}
-    variant={variant}
-    type={type}
-    onChange={onChange}
-    value={value}
-    size={50}
-    {...rest}
-  />
+const Input = ({
+  custom,
+  variant,
+  type,
+  onChange,
+  value,
+  message,
+  ...rest
+}) => (
+  <React.Fragment>
+    <input
+      css={css(
+        base,
+        custom,
+        variant === "rounded" && rounded,
+        variant === "pill" && pill
+      )}
+      variant={variant}
+      type={type}
+      style={message ? { borderColor: invalidColor } : { borderColor: black }}
+      onChange={onChange}
+      value={value}
+      size={50}
+      {...rest}
+    />
+    <small style={{ color: invalidColor }}>{message}</small>
+  </React.Fragment>
 );
 
 export default Input;
 
 Input.propTypes = {
+  message: PropTypes.string,
   custom: PropTypes.object,
   className: PropTypes.string,
   style: PropTypes.object,

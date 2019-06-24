@@ -12,6 +12,7 @@ class StoreIssueBlock extends Component {
     };
 
     this.onHashChange = this.onHashChange.bind(this);
+    this.validateNotEmpty = this.validateNotEmpty.bind(this);
     this.onIssueClick = this.onIssueClick.bind(this);
   }
 
