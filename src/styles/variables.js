@@ -10,6 +10,7 @@ export const greyBlue = "#c1c9d1";
 export const brandDark = "#324353";
 export const faintBlue = "#f5f8fb";
 export const faintGreen = "#f5fbf7";
+export const faintOrange = "#fcf3e5";
 
 export const headerUiBg = "#f3f8fc";
 export const lowTranslucencyWhite = "rgba(255, 255, 255, 0.7)";
