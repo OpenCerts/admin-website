@@ -5,10 +5,19 @@ import { css, jsx } from "@emotion/core";
 import { connect } from "react-redux";
 import { updateWeb3, getNetwork, getCustomRpc } from "../reducers/application";
 import { NETWORK_TYPES } from "../config";
+import { white } from "./../styles/variables";
 
 const divBase = css`
   border-radius: 50px;
   padding: 0.2em 0.5em;
+`;
+
+const selectorBase = css`
+  background: ${white};
+  border: none;
+  :focus {
+    outline: 0;
+  }
 `;
 
 class AdminContainer extends Component {
@@ -30,6 +39,7 @@ class AdminContainer extends Component {
     return (
       <div className="fr ba" css={css(divBase)}>
         <select
+          css={css(selectorBase)}
           className="pa2 provider-selector"
           value={this.props.network}
           onChange={this.handleNetworkChange}

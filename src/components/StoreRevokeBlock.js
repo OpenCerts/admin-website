@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import HashColor from "./HashColor";
-import HashColorInput from "./HashColorInput";
+import HashColor from "./UI/HashColor";
+import HashColorInput from "./UI/HashColorInput";
 import { OrangeButton } from "./UI/Button";
 
 class StoreRevokeBlock extends Component {
@@ -42,6 +42,7 @@ class StoreRevokeBlock extends Component {
         <div>
           Certificate hash to revoke
           <HashColorInput
+            className="mt2"
             variant="pill"
             type="hash"
             hashee={this.state.certificateHash}
