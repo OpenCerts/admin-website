@@ -38,7 +38,7 @@ const Input = ({
       )}
       variant={variant}
       type={type}
-      style={message ? { borderColor: invalidColor } : { borderColor: black }}
+      style={{ borderColor: message ? invalidColor : black }}
       onChange={onChange}
       value={value}
       size={50}
