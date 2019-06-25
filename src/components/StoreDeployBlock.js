@@ -3,41 +3,45 @@ import PropTypes from "prop-types";
 import HashColor from "./UI/HashColor";
 import Input from "./UI/Input";
 import { OrangeButton } from "./UI/Button";
-import { validateName } from "../components/utils";
+import { isEmpty } from "../components/utils";
 
 class StoreDeployBlock extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      issuerName: ""
+      issuerName: "",
+      issuerNameIsValid: true
     };
-
     this.onNameChange = this.onNameChange.bind(this);
-    this.onDeployClick = this.onDeployClick.bind(this);
   }
 
   onNameChange(event) {
     this.setState({
       issuerName: event.target.value,
-      issuerNameMessage: validateName(event.target.value)
+      issuerIsValid: isEmpty(event.target.value)
     });
-  }
-
-  onDeployClick() {
-    const { adminAddress, handleStoreDeploy } = this.props;
-    const { issuerName, issuerNameMessage } = this.state;
-    this.setState({
-      issuerNameMessage: validateName(issuerName)
-    });
-    if (issuerNameMessage === "") {
-      handleStoreDeploy({
-        fromAddress: adminAddress,
-        name: issuerName
-      });
-    }
   }
 
   render() {
+    const inputMessage = this.state.issuerIsValid
+      ? "Issuer Name cannot be empty."
+      : "";
+
+    const onDeployClick = () => {
+      const { adminAddress, handleStoreDeploy } = this.props;
+      const { issuerName, issuerNameIsValid } = this.state;
+      if (!isEmpty(issuerName) && issuerNameIsValid) {
+        handleStoreDeploy({
+          fromAddress: adminAddress,
+          name: issuerName
+        });
+      } else {
+        this.setState({
+          issuerIsValid: isEmpty(issuerName)
+        });
+      }
+    };
+
     return (
       <div className="w-100">
         <div className="mb4">
@@ -51,7 +55,7 @@ class StoreDeployBlock extends Component {
               placeholder="Name of organization"
               onChange={this.onNameChange}
               value={this.state.issuerName}
-              message={this.state.issuerNameMessage}
+              message={inputMessage}
               size={50}
               required
             />
@@ -60,7 +64,7 @@ class StoreDeployBlock extends Component {
 
         <OrangeButton
           variant="pill"
-          onClick={this.onDeployClick}
+          onClick={onDeployClick}
           disabled={this.props.deploying}
         >
           {this.props.deploying ? "Deploying…" : "Deploy"}

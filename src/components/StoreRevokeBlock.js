@@ -3,47 +3,57 @@ import PropTypes from "prop-types";
 import HashColor from "./UI/HashColor";
 import HashColorInput from "./UI/HashColorInput";
 import { OrangeButton } from "./UI/Button";
-import { validateHash } from "../components/utils";
+import { isValidHash } from "../components/utils";
 
 class StoreRevokeBlock extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      certificateHash: ""
+      certificateHash: "",
+      certificateHashIsValid: true
     };
 
     this.onHashChange = this.onHashChange.bind(this);
-    this.onRevokeClick = this.onRevokeClick.bind(this);
   }
 
   onHashChange(event) {
     this.setState({
       certificateHash: event.target.value,
-      certificateHashMessage: validateHash(event.target.value)
+      certificateHashIsValid: isValidHash(event.target.value)
     });
-  }
-
-  onRevokeClick() {
-    const { adminAddress, storeAddress, handleCertificateRevoke } = this.props;
-    const { certificateHash, certificateHashMessage } = this.state;
-
-    this.setState({
-      certificateHashMessage: validateHash(certificateHash)
-    });
-    if (certificateHashMessage === "") {
-      const yes = window.confirm("Are you sure you want to revoke this hash?"); // eslint-disable-line
-      if (yes) {
-        handleCertificateRevoke({
-          storeAddress,
-          fromAddress: adminAddress,
-          certificateHash: this.state.certificateHash
-        });
-      }
-    }
   }
 
   render() {
     const { revokedTx, networkId } = this.props;
+    const certificateHashMessage = this.state.certificateHashIsValid
+      ? ""
+      : "Merkle Root Hash is not valid.";
+
+    const onRevokeClick = () => {
+      const {
+        adminAddress,
+        storeAddress,
+        handleCertificateRevoke
+      } = this.props;
+      const { certificateHash, certificateHashIsValid } = this.state;
+
+      this.setState({
+        certificateHashIsValid: isValidHash(certificateHash)
+      });
+      if (isValidHash(certificateHash) && certificateHashIsValid) {
+        const yes = window.confirm(
+          "Are you sure you want to revoke this hash?"
+        ); // eslint-disable-line
+        if (yes) {
+          handleCertificateRevoke({
+            storeAddress,
+            fromAddress: adminAddress,
+            certificateHash: this.state.certificateHash
+          });
+        }
+      }
+    };
+
     return (
       <div>
         <div>
@@ -55,15 +65,11 @@ class StoreRevokeBlock extends Component {
             hashee={this.state.certificateHash}
             onChange={this.onHashChange}
             value={this.state.certificateHash}
-            message={this.state.certificateHashMessage}
+            message={certificateHashMessage}
             placeholder="0x…"
           />
         </div>
-        <OrangeButton
-          variant="pill"
-          className="mt4"
-          onClick={this.onRevokeClick}
-        >
+        <OrangeButton variant="pill" className="mt4" onClick={onRevokeClick}>
           <i className="fas fa-exclamation-triangle" />
           &nbsp;
           {this.props.revokingCertificate ? "Revoking…" : "Revoke"}
