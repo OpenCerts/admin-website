@@ -4,6 +4,7 @@ import HashColor from "./UI/HashColor";
 import HashColorInput from "./UI/HashColorInput";
 import { OrangeButton } from "./UI/Button";
 import { isValidCertificateHash } from "../components/utils";
+import Modal from "./UI/Modal";
 
 class StoreRevokeBlock extends Component {
   constructor(props) {
@@ -78,6 +79,13 @@ class StoreRevokeBlock extends Component {
           &nbsp;
           {this.props.revokingCertificate ? "Revoking…" : "Revoke"}
         </OrangeButton>
+
+        <Modal
+          buttonText="Select Certificate"
+          titleText="Please select a certificate or drag and drop it below."
+        >
+          Hello world
+        </Modal>
 
         {revokedTx ? (
           <div className="mt5">

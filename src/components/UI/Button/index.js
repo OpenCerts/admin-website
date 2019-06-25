@@ -11,6 +11,7 @@ import {
 } from "../../../styles/variables";
 
 const base = css`
+  outline: none;
   cursor: pointer;
   border: none;
   padding: 1rem 2rem;
