@@ -41,9 +41,10 @@ class StoreRevokeBlock extends Component {
         certificateHashIsValid: isValidHash(certificateHash)
       });
       if (isValidHash(certificateHash) && certificateHashIsValid) {
+        // eslint-disable-next-line no-alert
         const yes = window.confirm(
           "Are you sure you want to revoke this hash?"
-        ); // eslint-disable-line
+        );
         if (yes) {
           handleCertificateRevoke({
             storeAddress,
