@@ -14,6 +14,7 @@ class StoreRevokeBlock extends Component {
     };
 
     this.onHashChange = this.onHashChange.bind(this);
+    this.onRevokeClick = this.onRevokeClick.bind(this);
   }
 
   onHashChange(event) {
@@ -23,37 +24,32 @@ class StoreRevokeBlock extends Component {
     });
   }
 
+  onRevokeClick() {
+    const { adminAddress, storeAddress, handleCertificateRevoke } = this.props;
+    const { certificateHash } = this.state;
+
+    this.setState({
+      certificateHashIsValid: isValidHash(certificateHash)
+    });
+    if (isValidHash(certificateHash)) {
+      // eslint-disable-next-line no-alert
+      const yes = window.confirm("Are you sure you want to revoke this hash?");
+      if (yes) {
+        handleCertificateRevoke({
+          storeAddress,
+          fromAddress: adminAddress,
+          certificateHash
+        });
+      }
+    }
+  }
+
   render() {
+    const { certificateHash, certificateHashIsValid } = this.state;
     const { revokedTx, networkId } = this.props;
-    const certificateHashMessage = this.state.certificateHashIsValid
+    const certificateHashMessage = certificateHashIsValid
       ? ""
       : "Merkle Root Hash is not valid.";
-
-    const onRevokeClick = () => {
-      const {
-        adminAddress,
-        storeAddress,
-        handleCertificateRevoke
-      } = this.props;
-      const { certificateHash, certificateHashIsValid } = this.state;
-
-      this.setState({
-        certificateHashIsValid: isValidHash(certificateHash)
-      });
-      if (isValidHash(certificateHash) && certificateHashIsValid) {
-        // eslint-disable-next-line no-alert
-        const yes = window.confirm(
-          "Are you sure you want to revoke this hash?"
-        );
-        if (yes) {
-          handleCertificateRevoke({
-            storeAddress,
-            fromAddress: adminAddress,
-            certificateHash: this.state.certificateHash
-          });
-        }
-      }
-    };
 
     return (
       <div>
@@ -63,14 +59,18 @@ class StoreRevokeBlock extends Component {
             className="mt2"
             variant="pill"
             type="hash"
-            hashee={this.state.certificateHash}
+            hashee={certificateHash}
             onChange={this.onHashChange}
-            value={this.state.certificateHash}
+            value={certificateHash}
             message={certificateHashMessage}
             placeholder="0x…"
           />
         </div>
-        <OrangeButton variant="pill" className="mt4" onClick={onRevokeClick}>
+        <OrangeButton
+          variant="pill"
+          className="mt4"
+          onClick={this.onRevokeClick}
+        >
           <i className="fas fa-exclamation-triangle" />
           &nbsp;
           {this.props.revokingCertificate ? "Revoking…" : "Revoke"}

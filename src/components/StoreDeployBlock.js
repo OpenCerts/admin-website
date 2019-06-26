@@ -13,6 +13,7 @@ class StoreDeployBlock extends Component {
       issuerNameIsValid: true
     };
     this.onNameChange = this.onNameChange.bind(this);
+    this.onDeployClick = this.onDeployClick.bind(this);
   }
 
   onNameChange(event) {
@@ -22,25 +23,27 @@ class StoreDeployBlock extends Component {
     });
   }
 
-  render() {
-    const inputMessage = this.state.issuerIsValid
-      ? "Issuer Name cannot be empty."
-      : "";
+  onDeployClick() {
+    const { adminAddress, handleStoreDeploy } = this.props;
+    const { issuerName } = this.state;
+    if (!isEmpty(issuerName)) {
+      console.log(adminAddress);
+      handleStoreDeploy({
+        fromAddress: adminAddress,
+        name: issuerName
+      });
+    } else {
+      this.setState({
+        issuerIsValid: isEmpty(issuerName)
+      });
+    }
+  }
 
-    const onDeployClick = () => {
-      const { adminAddress, handleStoreDeploy } = this.props;
-      const { issuerName, issuerNameIsValid } = this.state;
-      if (!isEmpty(issuerName) && issuerNameIsValid) {
-        handleStoreDeploy({
-          fromAddress: adminAddress,
-          name: issuerName
-        });
-      } else {
-        this.setState({
-          issuerIsValid: isEmpty(issuerName)
-        });
-      }
-    };
+  render() {
+    const { issuerIsValid, issuerName } = this.state;
+    const { deploying, deployedTx, networkId, storeAddress } = this.props;
+
+    const inputMessage = issuerIsValid ? "Issuer Name cannot be empty." : "";
 
     return (
       <div className="w-100">
@@ -54,7 +57,7 @@ class StoreDeployBlock extends Component {
               type="text"
               placeholder="Name of organization"
               onChange={this.onNameChange}
-              value={this.state.issuerName}
+              value={issuerName}
               message={inputMessage}
               size={50}
               required
@@ -64,25 +67,21 @@ class StoreDeployBlock extends Component {
 
         <OrangeButton
           variant="pill"
-          onClick={onDeployClick}
-          disabled={this.props.deploying}
+          onClick={this.onDeployClick}
+          disabled={deploying}
         >
-          {this.props.deploying ? "Deploying…" : "Deploy"}
+          {deploying ? "Deploying…" : "Deploy"}
         </OrangeButton>
 
-        {this.props.deployedTx ? (
+        {deployedTx ? (
           <div className="mt5">
             <div>
               🎉 New store deployed at
-              <HashColor hashee={this.props.storeAddress} type="address" />
+              <HashColor hashee={storeAddress} type="address" />
             </div>
             <div className="mt2">
               Transaction ID
-              <HashColor
-                hashee={this.props.deployedTx}
-                isTx
-                networkId={this.props.networkId}
-              />
+              <HashColor hashee={deployedTx} isTx networkId={networkId} />
             </div>
           </div>
         ) : null}
