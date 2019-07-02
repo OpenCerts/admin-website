@@ -33,7 +33,6 @@ class StoreIssueBlock extends Component {
         fromAddress: adminAddress,
         certificateHash
       });
-      console.log(certificateHash);
     } else {
       this.setState({
         certificateHashIsValid: isValidHash(certificateHash)
