@@ -153,7 +153,7 @@ class AdminContainer extends Component {
           </a>
           <div className="flex">
             <div className="w-40-ns">
-              <h3 style={{ margin: 0 }}>
+              <h3 className="ma0">
                 Current Account{" "}
                 <div
                   style={{ cursor: "pointer" }}
@@ -173,8 +173,8 @@ class AdminContainer extends Component {
                 )}
               </div>
             </div>
-            <div className="w-20-ns">
-              <h3 style={{ margin: 0 }}>Account Balance</h3>
+            <div className="w-30-ns">
+              <h3 className="ma0">Account Balance</h3>
               <div className="pa2">
                 {accountBalance ? (
                   <div>{accountBalance} ETH</div>
@@ -183,7 +183,7 @@ class AdminContainer extends Component {
                 )}
               </div>
             </div>
-            <div className="w-20-mns v-mid dtc">
+            <div className="w-10-mns v-mid dtc">
               <h3 style={{ margin: 0 }}>Network</h3>
               <NetworkSelectorContainer className="v-mid" />
             </div>
