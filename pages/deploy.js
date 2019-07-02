@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import AdminContainer from "../src/components/AdminContainer";
 
 const AdminPage = props => (
-  <div className="min-vh-100 pv5">
+  <div className="min-vh-100">
     <div className="mw9 mw8-ns center pa4 ph5-ns br3 pv5">
       <AdminContainer {...props} />
     </div>
