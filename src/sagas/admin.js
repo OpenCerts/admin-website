@@ -1,5 +1,5 @@
 import { put, take, select } from "redux-saga/effects";
-import { types } from "../reducers/admin";
+import { types, getAdminAddress } from "../reducers/admin";
 import {
   types as applicationTypes,
   getTransactionReceipt
@@ -25,6 +25,27 @@ export function* loadAdminAddress() {
   } catch (e) {
     yield put({
       type: types.LOADING_ADMIN_ADDRESS_FAILURE,
+      payload: e.message
+    });
+    console.error(e);
+  }
+}
+
+export function* loadAccountBalance() {
+  try {
+    const web3 = yield getSelectedWeb3();
+    const adminAddress = yield select(getAdminAddress);
+    const balance = yield web3.eth.getBalance(adminAddress);
+    const balanceEther = yield web3.utils.fromWei(balance, "ether");
+    if (!balanceEther) throw new Error("Balance not found");
+
+    yield put({
+      type: types.LOADING_ACCOUNT_BALANCE_SUCCESS,
+      payload: balanceEther
+    });
+  } catch (e) {
+    yield put({
+      type: types.LOADING_ACCOUNT_BALANCE_FAILURE,
       payload: e.message
     });
     console.error(e);
@@ -92,6 +113,9 @@ export function* deployStore({ payload }) {
         txHash: txReceipt.transactionHash
       }
     });
+    yield put({
+      type: types.LOADING_ACCOUNT_BALANCE
+    });
   } catch (e) {
     yield put({
       type: types.DEPLOYING_STORE_FAILURE,
@@ -138,6 +162,9 @@ export function* issueCertificate({ payload }) {
       type: types.ISSUING_CERTIFICATE_SUCCESS,
       payload: txReceipt.transactionHash
     });
+    yield put({
+      type: types.LOADING_ACCOUNT_BALANCE
+    });
   } catch (e) {
     yield put({
       type: types.ISSUING_CERTIFICATE_FAILURE,
@@ -181,6 +208,9 @@ export function* revokeCertificate({ payload }) {
     yield put({
       type: types.REVOKING_CERTIFICATE_SUCCESS,
       payload: txReceipt.transactionHash
+    });
+    yield put({
+      type: types.LOADING_ACCOUNT_BALANCE
     });
   } catch (e) {
     yield put({

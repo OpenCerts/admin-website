@@ -2,6 +2,8 @@ export const initialState = {
   adminAddress: "",
   storeAddress: "",
 
+  accountBalance: "",
+
   deploying: false,
   deploymentError: null,
   deployedTx: null,
@@ -23,6 +25,10 @@ export const types = {
   LOADING_ADMIN_ADDRESS: "LOADING_ADMIN_ADDRESS",
   LOADING_ADMIN_ADDRESS_SUCCESS: "LOADING_ADMIN_ADDRESS_SUCCESS",
   LOADING_ADMIN_ADDRESS_FAILURE: "LOADING_ADMIN_ADDRESS_FAILURE",
+
+  LOADING_ACCOUNT_BALANCE: "LOADING_ACCOUNT_BALANCE",
+  LOADING_ACCOUNT_BALANCE_SUCCESS: "LOADING_ACCOUNT_BALANCE_SUCCESS",
+  LOADING_ACCOUNT_BALANCE_FAILURE: "LOADING_ACCOUNT_BALANCE_FAILURE",
 
   DEPLOYING_STORE: "DEPLOYING_STORE",
   DEPLOYING_STORE_TX_SUBMITTED: "DEPLOYING_STORE_TX_SUBMITTED",
@@ -47,11 +53,6 @@ export default function reducer(state = initialState, action) {
       return {
         ...initialState
       };
-    case types.LOADING_ADMIN_ADDRESS_FAILURE:
-      return {
-        ...state,
-        adminAddress: ""
-      };
     case types.UPDATE_STORE_ADDRESS:
       return {
         ...state,
@@ -62,10 +63,25 @@ export default function reducer(state = initialState, action) {
         ...state,
         adminAddress: action.payload
       };
+    case types.LOADING_ADMIN_ADDRESS_FAILURE:
+      return {
+        ...state,
+        adminAddress: ""
+      };
     case types.DEPLOYING_STORE:
       return {
         ...state,
         deploying: true
+      };
+    case types.LOADING_ACCOUNT_BALANCE_SUCCESS:
+      return {
+        ...state,
+        accountBalance: action.payload
+      };
+    case types.LOADING_ACCOUNT_BALANCE_FAILURE:
+      return {
+        ...state,
+        accountBalance: ""
       };
     case types.DEPLOYING_STORE_SUCCESS:
       return {
@@ -131,6 +147,12 @@ export function loadAdminAddress() {
   };
 }
 
+export function loadAccountBalance() {
+  return {
+    type: types.LOADING_ACCOUNT_BALANCE
+  };
+}
+
 export function deployStore(payload) {
   return {
     type: types.DEPLOYING_STORE,
@@ -166,6 +188,10 @@ export function getAdminAddress(store) {
 
 export function getStoreAddress(store) {
   return store.admin.storeAddress;
+}
+
+export function getAccountBalance(store) {
+  return store.admin.accountBalance;
 }
 
 export function getIssuedTx(store) {

@@ -14,6 +14,7 @@ import { isValidAddress } from "./utils";
 import {
   loadAdminAddress,
   getAdminAddress,
+  getAccountBalance,
   deployStore,
   getStoreAddress,
   updateStoreAddress,
@@ -93,7 +94,6 @@ class AdminContainer extends Component {
   // eslint-disable-next-line camelcase
   UNSAFE_componentWillMount() {
     this.props.updateNetworkId();
-    this.props.loadAdminAddress();
   }
 
   // eslint-disable-next-line camelcase
@@ -130,6 +130,7 @@ class AdminContainer extends Component {
   render() {
     const {
       adminAddress,
+      accountBalance,
       storeAddress,
       issuingCertificate,
       issuedTx,
@@ -151,7 +152,7 @@ class AdminContainer extends Component {
             <NetworkSelectorContainer />
           </div>
         </div>
-        <div className="flex bb pb3">
+        <div className="flex">
           <div className="w-50">
             <h3>
               Current account{" "}
@@ -182,6 +183,18 @@ class AdminContainer extends Component {
               onChange={this.storeAddressOnChange}
               placeholder="Enter existing (0x…), or deploy new instance"
             />
+          </div>
+        </div>
+        <div className="flex bb pb3">
+          <div className="w-50">
+            <h3>Account Balance</h3>
+            <div className="pa2">
+              {accountBalance ? (
+                <div>{accountBalance} Ethers</div>
+              ) : (
+                <div className="red">Unable to load account balance.</div>
+              )}
+            </div>
           </div>
         </div>
         <Tabs className="flex flex-row w-100">
@@ -245,6 +258,7 @@ class AdminContainer extends Component {
 const mapStateToProps = store => ({
   isLoading: getIsLoading(store),
   adminAddress: getAdminAddress(store),
+  accountBalance: getAccountBalance(store),
   storeAddress: getStoreAddress(store),
   issuedTx: getIssuedTx(store),
   revokingCertificate: getrevokingCertificate(store),
@@ -279,6 +293,7 @@ AdminContainer.propTypes = {
   issueCertificate: PropTypes.func,
   updateStoreAddress: PropTypes.func,
   adminAddress: PropTypes.string,
+  accountBalance: PropTypes.string,
   storeAddress: PropTypes.string,
   issuingCertificate: PropTypes.bool,
   issuedTx: PropTypes.string,
