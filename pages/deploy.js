@@ -5,12 +5,6 @@ import "@babel/polyfill";
 import { connect } from "react-redux";
 import AdminContainer from "../src/components/AdminContainer";
 
-const AdminPage = props => (
-  <div className="min-vh-100">
-    <div className="mw9 mw8-ns center pa4 ph5-ns br3 pv5">
-      <AdminContainer {...props} />
-    </div>
-  </div>
-);
+const AdminPage = props => <AdminContainer {...props} />;
 
 export default connect()(AdminPage);
