@@ -154,7 +154,7 @@ class AdminContainer extends Component {
             <img
               src={"../../static/images/logo.svg"}
               className="dib w20 h2"
-              alt="Site Name"
+              alt="OpenCerts"
             />
           </a>
           <div className="flex">
@@ -201,7 +201,7 @@ class AdminContainer extends Component {
               </div>
             </div>
             <div className="w-10-mns v-mid dtc">
-              <h3 style={{ margin: 0 }}>Network</h3>
+              <h3 className="ma0">Wallet Provider</h3>
               <NetworkSelectorContainer className="v-mid" />
             </div>
           </div>
