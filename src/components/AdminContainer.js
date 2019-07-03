@@ -14,6 +14,7 @@ import { isValidAddress } from "./utils";
 import {
   loadAdminAddress,
   getAdminAddress,
+  loadAccountBalance,
   getAccountBalance,
   deployStore,
   getStoreAddress,
@@ -81,6 +82,7 @@ class AdminContainer extends Component {
   constructor(props) {
     super(props);
     this.refreshCurrentAddress = this.refreshCurrentAddress.bind(this);
+    this.refreshAccountBalance = this.refreshAccountBalance.bind(this);
     this.handleStoreDeploy = this.handleStoreDeploy.bind(this);
     this.storeAddressOnChange = this.storeAddressOnChange.bind(this);
     this.handleCertificateIssue = this.handleCertificateIssue.bind(this);
@@ -125,6 +127,10 @@ class AdminContainer extends Component {
 
   refreshCurrentAddress() {
     this.props.loadAdminAddress();
+  }
+
+  refreshAccountBalance() {
+    this.props.loadAccountBalance();
   }
 
   render() {
@@ -174,7 +180,18 @@ class AdminContainer extends Component {
               </div>
             </div>
             <div className="w-30-ns">
-              <h3 className="ma0">Account Balance</h3>
+              <h3 className="ma0">
+                Account Balance{" "}
+                <div
+                  style={{ cursor: "pointer" }}
+                  className="dib click-to-refresh"
+                  onClick={this.refreshAccountBalance}
+                  title="Refresh account balance"
+                  tabIndex={1}
+                >
+                  <i className="fas fa-sync-alt" />
+                </div>
+              </h3>
               <div className="pa2">
                 {accountBalance ? (
                   <div>{accountBalance} ETH</div>
@@ -195,7 +212,7 @@ class AdminContainer extends Component {
             {baseStyle}
             <div className="flex">
               <div className="w-50">
-                <h1 className="mt0">Admin</h1>
+                <h1 className="ma0">Admin</h1>
               </div>
             </div>
             <div className="flex bb pb3">
@@ -212,13 +229,16 @@ class AdminContainer extends Component {
             </div>
             <Tabs className="flex flex-row w-100">
               <TabList className="flex flex-column w-30 list pa0">
-                <Tab className="tab pl3">
+                <Tab className="tab pl3" style={{ borderTopLeftRadius: "5px" }}>
                   <h3>Deploy new instance</h3>
                 </Tab>
                 <Tab className="tab pl3">
                   <h3>Issue certificate batch</h3>
                 </Tab>
-                <Tab className="tab pl3">
+                <Tab
+                  className="tab pl3"
+                  style={{ borderBottomLeftRadius: "5px" }}
+                >
                   <h3>Revoke certificate</h3>
                 </Tab>
               </TabList>
@@ -287,6 +307,7 @@ const mapStateToProps = store => ({
 const mapDispatchToProps = dispatch => ({
   setIsNotLoading: () => dispatch(setIsNotLoading()),
   loadAdminAddress: payload => dispatch(loadAdminAddress(payload)),
+  loadAccountBalance: payload => dispatch(loadAccountBalance(payload)),
   updateNetworkId: () => dispatch(updateNetworkId()),
   deployStore: payload => dispatch(deployStore(payload)),
   issueCertificate: payload => dispatch(issueCertificate(payload)),
@@ -304,6 +325,7 @@ AdminContainer.propTypes = {
   deployedTx: PropTypes.string,
   updateNetworkId: PropTypes.func,
   loadAdminAddress: PropTypes.func,
+  loadAccountBalance: PropTypes.func,
   deployStore: PropTypes.func,
   issueCertificate: PropTypes.func,
   updateStoreAddress: PropTypes.func,
