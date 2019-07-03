@@ -44,7 +44,7 @@ const Input = ({
       size={50}
       {...rest}
     />
-    <small style={{ color: invalidColor }}>{message}</small>
+    {message && <small style={{ color: invalidColor }}>{message}</small>}
   </React.Fragment>
 );
 

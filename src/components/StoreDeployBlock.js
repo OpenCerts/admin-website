@@ -1,9 +1,9 @@
 import React, { Component } from "react";
+import { isEmpty } from "lodash";
 import PropTypes from "prop-types";
 import HashColor from "./UI/HashColor";
 import Input from "./UI/Input";
 import { OrangeButton } from "./UI/Button";
-import { isEmpty } from "../components/utils";
 
 class StoreDeployBlock extends Component {
   constructor(props) {
