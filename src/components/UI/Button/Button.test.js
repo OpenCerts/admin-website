@@ -18,7 +18,7 @@ describe("Button component", () => {
 
   it("shows button text", () => {
     const button = renderer.create(<Button>Test Button</Button>);
-    expect(button.toJSON()).toMatchSnapshot();
+    expect(button.toJSON().children).toContain("Test Button");
   });
 
   it("shows pill button variant", () => {

@@ -16,7 +16,7 @@ describe("Input component", () => {
 
   it("shows Input text", () => {
     const input = renderer.create(<Input>Test Input</Input>);
-    expect(input.toJSON()).toMatchSnapshot();
+    expect(input.toJSON().children).toContain("Test Input");
   });
 
   it("shows pill Input type", () => {
