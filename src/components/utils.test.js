@@ -1,4 +1,4 @@
-import { isValidAddress, isValidHash, isValidCertificateHash } from "./utils";
+import { isValidAddress, isValidCertificateHash } from "./utils";
 
 describe("isValidAddress validator", () => {
   it("should return true for address with correct checksum", () => {
