@@ -34,8 +34,8 @@ describe("Input component", () => {
   it("should call mock function when Input is changed", () => {
     enzyme.configure({ adapter: new Adapter() });
     const mockFn = jest.fn();
-    const tree = enzyme.shallow(<Input onChange={mockFn}>Test Input</Input>);
-    tree.simulate("change");
-    expect(mockFn).toHaveBeenCalled();
+    const component = enzyme.mount(<Input onChange={mockFn} />);
+    component.find("input").simulate("change");
+    expect(mockFn).toBeCalled;
   });
 });
