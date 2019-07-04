@@ -9,4 +9,5 @@ export const isValidAddress = address => {
   }
 };
 
-export const isValidHash = input => /^0x[a-fA-F0-9]{64}$/.test(input);
+export const isValidCertificateHash = input =>
+  /^0x[a-fA-F0-9]{64}$/.test(input);

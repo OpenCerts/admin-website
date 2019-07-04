@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import HashColor from "./UI/HashColor";
 import HashColorInput from "./UI/HashColorInput";
 import { OrangeButton } from "./UI/Button";
-import { isValidHash } from "../components/utils";
+import { isValidCertificateHash } from "../components/utils";
 
 class StoreRevokeBlock extends Component {
   constructor(props) {
@@ -20,7 +20,7 @@ class StoreRevokeBlock extends Component {
   onHashChange(event) {
     this.setState({
       certificateHash: event.target.value,
-      certificateHashIsValid: isValidHash(event.target.value)
+      certificateHashIsValid: isValidCertificateHash(event.target.value)
     });
   }
 
@@ -29,9 +29,9 @@ class StoreRevokeBlock extends Component {
     const { certificateHash } = this.state;
 
     this.setState({
-      certificateHashIsValid: isValidHash(certificateHash)
+      certificateHashIsValid: isValidCertificateHash(certificateHash)
     });
-    if (isValidHash(certificateHash)) {
+    if (isValidCertificateHash(certificateHash)) {
       // eslint-disable-next-line no-alert
       const yes = window.confirm("Are you sure you want to revoke this hash?");
       if (yes) {
