@@ -27,7 +27,6 @@ class StoreDeployBlock extends Component {
     const { adminAddress, handleStoreDeploy } = this.props;
     const { issuerName } = this.state;
     if (!isEmpty(issuerName)) {
-      console.log(adminAddress);
       handleStoreDeploy({
         fromAddress: adminAddress,
         name: issuerName
