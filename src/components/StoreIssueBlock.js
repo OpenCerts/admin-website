@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import HashColor from "./UI/HashColor";
 import HashColorInput from "./UI/HashColorInput";
 import { OrangeButton } from "./UI/Button";
-import { isValidHash } from "../components/utils";
+import { isValidCertificateHash } from "../components/utils";
 
 class StoreIssueBlock extends Component {
   constructor(props) {
@@ -20,14 +20,14 @@ class StoreIssueBlock extends Component {
   onHashChange(event) {
     this.setState({
       certificateHash: event.target.value,
-      certificateHashIsValid: isValidHash(event.target.value)
+      certificateHashIsValid: isValidCertificateHash(event.target.value)
     });
   }
 
   onIssueClick() {
     const { adminAddress, storeAddress, handleCertificateIssue } = this.props;
     const { certificateHash } = this.state;
-    if (isValidHash(certificateHash)) {
+    if (isValidCertificateHash(certificateHash)) {
       handleCertificateIssue({
         storeAddress,
         fromAddress: adminAddress,
@@ -35,7 +35,7 @@ class StoreIssueBlock extends Component {
       });
     } else {
       this.setState({
-        certificateHashIsValid: isValidHash(certificateHash)
+        certificateHashIsValid: isValidCertificateHash(certificateHash)
       });
     }
   }
