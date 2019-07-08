@@ -61,8 +61,6 @@ export default class HashColor extends React.Component {
         <style jsx>
           {`
             .__hashcolor {
-              font-family: var(--font-monospace);
-              font-size: var(--font-monospace-size);
               transition: color 0.1s ease-in;
             }
 

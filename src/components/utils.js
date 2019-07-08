@@ -8,3 +8,6 @@ export const isValidAddress = address => {
     return false;
   }
 };
+
+export const isValidCertificateHash = input =>
+  /^0x[a-fA-F0-9]{64}$/.test(input);

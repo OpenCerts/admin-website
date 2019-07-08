@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Button component shows button text 1`] = `
+<button
+  className="css-1ocyg83-Button"
+>
+  Test Button
+</button>
+`;

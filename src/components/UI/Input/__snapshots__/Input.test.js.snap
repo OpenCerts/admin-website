@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Input component shows Input text 1`] = `
+<input
+  className="css-d36eou-Input"
+  size={50}
+  style={
+    Object {
+      "borderColor": "#000000",
+    }
+  }
+>
+  Test Input
+</input>
+`;
