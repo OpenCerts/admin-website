@@ -13,6 +13,9 @@ import {
   removeTxFromPollingList
 } from "../reducers/application";
 import { setNewWeb3, getCurrentWeb3 } from "../services/web3/getWeb3";
+import { getLogger } from "../logger";
+
+const { error } = getLogger("application.js:");
 
 const POLLING_INTERVAL = 4000; // milliseconds
 
@@ -59,8 +62,8 @@ export function* startNetworkPolling() {
 
         // sometimes web3.eth.getblock() comes up null... do-over when that happens
         if (newBlockContents === null) {
-          // eslint-disable-next-line
-          console.error(
+          error(
+            "startNetworkPolling:",
             "web3.eth.getblock() gave null for ",
             fetchBlockNumber,
             ". Retrying"
@@ -121,7 +124,7 @@ export function* updateNetworkId() {
       }
     });
   } catch (e) {
-    console.error(e); // eslint-disable-line
+    error("updateNetworkId:", e);
     yield put({
       type: types.UPDATE_NETWORK_ID_FAILURE,
       payload: e
