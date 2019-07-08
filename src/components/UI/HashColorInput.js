@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 import { isValidAddress } from "../utils";
 import HashColor from "./HashColor";
 import Input from "./Input";
+import { black, invalidColor } from "../../styles/variables";
 
 const VALIDATIONS = {
   address: { size: 42, maxLength: 50, validityFn: isValidAddress },
@@ -13,7 +14,15 @@ const VALIDATIONS = {
   none: { size: 70, maxLength: 99999, validityFn: () => true }
 };
 
-const HashColorInput = ({ variant, type, placeholder, onChange, value }) => {
+const HashColorInput = ({
+  variant,
+  type,
+  placeholder,
+  onChange,
+  value,
+  message,
+  className
+}) => {
   const { size, maxLength, validityFn } = VALIDATIONS[type]; // eslint-disable-line
   const isValid = validityFn(value);
 
@@ -26,9 +35,11 @@ const HashColorInput = ({ variant, type, placeholder, onChange, value }) => {
         size={size}
         value={value}
         spellCheck="false"
+        message={message}
+        className={className}
         style={{
           color: "inherit",
-          border: isValid ? "solid 1px black" : "solid 1px #e7040f"
+          border: isValid ? `solid 1px ${black}` : `solid 1px ${invalidColor}`
         }}
         maxLength={maxLength}
         placeholder={placeholder}
@@ -40,7 +51,9 @@ const HashColorInput = ({ variant, type, placeholder, onChange, value }) => {
 export default HashColorInput;
 
 HashColorInput.propTypes = {
+  className: PropTypes.string,
   variant: PropTypes.string,
+  message: PropTypes.string,
   type: PropTypes.string,
   value: PropTypes.any,
   onChange: PropTypes.func,
