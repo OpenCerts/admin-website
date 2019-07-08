@@ -45,7 +45,7 @@ class StoreIssueBlock extends Component {
     const { issuingCertificate, issuedTx, networkId } = this.props;
     const certificateHashMessage = certificateHashIsValid
       ? ""
-      : "Merkle Root Hash is not valid.";
+      : "Merkle root is not valid.";
 
     return (
       <div>

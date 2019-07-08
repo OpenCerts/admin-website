@@ -42,7 +42,7 @@ class StoreDeployBlock extends Component {
     const { issuerIsValid, issuerName } = this.state;
     const { deploying, deployedTx, networkId, storeAddress } = this.props;
 
-    const inputMessage = issuerIsValid ? "Issuer Name cannot be empty." : "";
+    const inputMessage = issuerIsValid ? "Issuer name cannot be empty." : "";
 
     return (
       <div className="w-100">

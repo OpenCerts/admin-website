@@ -49,7 +49,7 @@ class StoreRevokeBlock extends Component {
     const { revokedTx, networkId } = this.props;
     const certificateHashMessage = certificateHashIsValid
       ? ""
-      : "Merkle Root Hash is not valid.";
+      : "Merkle root/target hash is not valid.";
 
     return (
       <div>
