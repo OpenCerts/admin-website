@@ -217,7 +217,7 @@ class AdminContainer extends Component {
                 </div>
               </div>
             </nav>
-            <Panel>
+            <Panel style={{ maxWidth: "900px" }}>
               {baseStyle}
               <div className="flex">
                 <div className="w-50">
