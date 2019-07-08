@@ -41,6 +41,7 @@ import HashColor from "./UI/HashColor";
 import HashColorInput from "./UI/HashColorInput";
 import Panel from "./UI/Panel";
 import NetworkSelectorContainer from "./NetworkSelectorContainer";
+import ErrorPage from "./ErrorPage";
 
 const baseStyle = (
   <Global
@@ -91,6 +92,10 @@ class AdminContainer extends Component {
     this.state = {
       localStoreAddress: ""
     };
+  }
+
+  componentDidMount() {
+    this.props.setIsNotLoading();
   }
 
   // eslint-disable-next-line camelcase
@@ -149,142 +154,152 @@ class AdminContainer extends Component {
 
     return (
       <React.Fragment>
-        <nav className="dt w-100 border-box pa3 ph5-ns bg-white shadow-1-ns">
-          <a className="dtc v-mid mid-gray link dim w-20" href="#" title="Home">
-            <img
-              src={"../../static/images/logo.svg"}
-              className="dib w20 h2"
-              alt="OpenCerts"
-            />
-          </a>
-          <div className="flex">
-            <div className="w-40-ns">
-              <h3 className="ma0">
-                Current Account{" "}
-                <div
-                  style={{ cursor: "pointer" }}
-                  className="dib click-to-refresh"
-                  onClick={this.refreshCurrentAddress}
-                  title="Try to grab current account"
-                  tabIndex={1}
-                >
-                  <i className="fas fa-sync-alt" />
-                </div>
-              </h3>
-              <div className="pa2">
-                {adminAddress ? (
-                  <HashColor hashee={adminAddress} networkId={networkId} />
-                ) : (
-                  <div className="red">No wallet address found.</div>
-                )}
-              </div>
-            </div>
-            <div className="w-30-ns">
-              <h3 className="ma0">
-                Account Balance{" "}
-                <div
-                  style={{ cursor: "pointer" }}
-                  className="dib click-to-refresh"
-                  onClick={this.refreshAccountBalance}
-                  title="Refresh account balance"
-                  tabIndex={1}
-                >
-                  <i className="fas fa-sync-alt" />
-                </div>
-              </h3>
-              <div className="pa2">
-                {accountBalance ? (
-                  <div>{accountBalance} ETH</div>
-                ) : (
-                  <div className="red">Unable to load account balance.</div>
-                )}
-              </div>
-            </div>
-            <div className="w-10-mns v-mid dtc">
-              <h3 className="ma0">Wallet Provider</h3>
-              <NetworkSelectorContainer className="v-mid" />
-            </div>
-          </div>
-        </nav>
-
-        <div className="mw9 mw8-ns center ph5-ns br3">
-          <Panel>
-            {baseStyle}
-            <div className="flex">
-              <div className="w-50">
-                <h1 className="ma0">Admin</h1>
-              </div>
-            </div>
-            <div className="flex bb pb3">
-              <div className="w-50">
-                <h3>Store address</h3>
-                <HashColorInput
-                  variant="rounded"
-                  type="address"
-                  value={this.state.localStoreAddress}
-                  onChange={this.storeAddressOnChange}
-                  placeholder="Enter existing (0x…), or deploy new instance"
+        {adminAddress ? (
+          <React.Fragment>
+            <nav className="dt w-100 border-box pa3 ph5-ns bg-white shadow-1-ns">
+              <a
+                className="dtc v-mid mid-gray link dim w-20"
+                href="#"
+                title="Home"
+              >
+                <img
+                  src={"../../static/images/logo.svg"}
+                  className="dib w20 h2"
+                  alt="OpenCerts"
                 />
+              </a>
+              <div className="flex">
+                <div className="w-40-ns">
+                  <h3 className="ma0">
+                    Current Account{" "}
+                    <div
+                      style={{ cursor: "pointer" }}
+                      className="dib click-to-refresh"
+                      onClick={this.refreshCurrentAddress}
+                      title="Try to grab current account"
+                      tabIndex={1}
+                    >
+                      <i className="fas fa-sync-alt" />
+                    </div>
+                  </h3>
+                  <div className="pa2">
+                    {adminAddress ? (
+                      <HashColor hashee={adminAddress} networkId={networkId} />
+                    ) : (
+                      <div className="red">No wallet address found.</div>
+                    )}
+                  </div>
+                </div>
+                <div className="w-30-ns">
+                  <h3 className="ma0">
+                    Account Balance{" "}
+                    <div
+                      style={{ cursor: "pointer" }}
+                      className="dib click-to-refresh"
+                      onClick={this.refreshAccountBalance}
+                      title="Refresh account balance"
+                      tabIndex={1}
+                    >
+                      <i className="fas fa-sync-alt" />
+                    </div>
+                  </h3>
+                  <div className="pa2">
+                    {accountBalance ? (
+                      <div>{accountBalance} ETH</div>
+                    ) : (
+                      <div className="red">Unable to load account balance.</div>
+                    )}
+                  </div>
+                </div>
+                <div className="w-10-mns v-mid dtc">
+                  <h3 className="ma0">Wallet Provider</h3>
+                  <NetworkSelectorContainer className="v-mid" />
+                </div>
               </div>
-            </div>
-            <Tabs className="flex flex-row w-100">
-              <TabList className="flex flex-column w-30 list pa0">
-                <Tab className="tab pl3" style={{ borderTopLeftRadius: "5px" }}>
-                  <h3>Deploy new instance</h3>
-                </Tab>
-                <Tab className="tab pl3">
-                  <h3>Issue certificate batch</h3>
-                </Tab>
-                <Tab
-                  className="tab pl3"
-                  style={{ borderBottomLeftRadius: "5px" }}
-                >
-                  <h3>Revoke certificate</h3>
-                </Tab>
-              </TabList>
-              <div className="w-70 pa4 pl5">
-                <TabPanel>
-                  <StoreDeployBlock
-                    adminAddress={adminAddress}
-                    storeAddress={storeAddress}
-                    handleStoreDeploy={this.handleStoreDeploy}
-                    deploying={deploying}
-                    networkId={networkId}
-                    deployedTx={deployedTx}
+            </nav>
+            <Panel>
+              {baseStyle}
+              <div className="flex">
+                <div className="w-50">
+                  <h1 className="mt0">Admin</h1>
+                </div>
+              </div>
+              <div className="flex bb pb3">
+                <div className="w-50">
+                  <h3>Store address</h3>
+                  <HashColorInput
+                    variant="rounded"
+                    type="address"
+                    value={this.state.localStoreAddress}
+                    onChange={this.storeAddressOnChange}
+                    placeholder="Enter existing (0x…), or deploy new instance"
                   />
-                </TabPanel>
-                <TabPanel>
-                  {storeAddress ? (
-                    <StoreIssueBlock
-                      networkId={networkId}
-                      issuedTx={issuedTx}
-                      adminAddress={adminAddress}
-                      storeAddress={storeAddress}
-                      handleCertificateIssue={this.handleCertificateIssue}
-                      issuingCertificate={issuingCertificate}
-                    />
-                  ) : (
-                    <div className="red">Enter a store address first.</div>
-                  )}
-                </TabPanel>
-                <TabPanel>
-                  {storeAddress ? (
-                    <StoreRevokeBlock
-                      networkId={networkId}
-                      revokingCertificate={revokingCertificate}
-                      revokedTx={revokedTx}
-                      adminAddress={adminAddress}
-                      storeAddress={storeAddress}
-                      handleCertificateRevoke={this.handleCertificateRevoke}
-                    />
-                  ) : (
-                    <div className="red">Enter a store address first.</div>
-                  )}
-                </TabPanel>
+                </div>
               </div>
-            </Tabs>
-          </Panel>
-        </div>
+              <Tabs className="flex flex-row w-100">
+                <TabList className="flex flex-column w-30 list pa0">
+                  <Tab
+                    className="tab pl3"
+                    style={{ borderTopLeftRadius: "5px" }}
+                  >
+                    <h3>Deploy new instance</h3>
+                  </Tab>
+                  <Tab className="tab pl3">
+                    <h3>Issue certificate batch</h3>
+                  </Tab>
+                  <Tab
+                    className="tab pl3"
+                    style={{ borderBottomLeftRadius: "5px" }}
+                  >
+                    <h3>Revoke certificate</h3>
+                  </Tab>
+                </TabList>
+                <div className="w-70 pa4 pl5">
+                  <TabPanel>
+                    <StoreDeployBlock
+                      adminAddress={adminAddress}
+                      storeAddress={storeAddress}
+                      handleStoreDeploy={this.handleStoreDeploy}
+                      deploying={deploying}
+                      networkId={networkId}
+                      deployedTx={deployedTx}
+                    />
+                  </TabPanel>
+                  <TabPanel>
+                    {storeAddress ? (
+                      <StoreIssueBlock
+                        networkId={networkId}
+                        issuedTx={issuedTx}
+                        adminAddress={adminAddress}
+                        storeAddress={storeAddress}
+                        handleCertificateIssue={this.handleCertificateIssue}
+                        issuingCertificate={issuingCertificate}
+                      />
+                    ) : (
+                      <div className="red">Enter a store address first.</div>
+                    )}
+                  </TabPanel>
+                  <TabPanel>
+                    {storeAddress ? (
+                      <StoreRevokeBlock
+                        networkId={networkId}
+                        revokingCertificate={revokingCertificate}
+                        revokedTx={revokedTx}
+                        adminAddress={adminAddress}
+                        storeAddress={storeAddress}
+                        handleCertificateRevoke={this.handleCertificateRevoke}
+                      />
+                    ) : (
+                      <div className="red">Enter a store address first.</div>
+                    )}
+                  </TabPanel>
+                </div>
+              </Tabs>
+            </Panel>
+          </React.Fragment>
+        ) : (
+          <ErrorPage />
+        )}
       </React.Fragment>
     );
   }
@@ -332,6 +347,7 @@ AdminContainer.propTypes = {
   adminAddress: PropTypes.string,
   accountBalance: PropTypes.string,
   storeAddress: PropTypes.string,
+  setIsNotLoading: PropTypes.func,
   issuingCertificate: PropTypes.bool,
   issuedTx: PropTypes.string,
   revokingCertificate: PropTypes.bool,

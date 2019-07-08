@@ -9,6 +9,9 @@ import getAccounts from "../services/web3/getAccounts";
 import DocumentStoreDefinition from "../services/contracts/DocumentStore.json";
 
 import { getSelectedWeb3 } from "./application";
+import { getLogger } from "../logger";
+
+const { error } = getLogger("admin.js:");
 
 export function* loadAdminAddress() {
   try {
@@ -27,7 +30,7 @@ export function* loadAdminAddress() {
       type: types.LOADING_ADMIN_ADDRESS_FAILURE,
       payload: e.message
     });
-    console.error(e);
+    error("loadAdminAddress:", e);
   }
 }
 
@@ -170,7 +173,7 @@ export function* issueCertificate({ payload }) {
       type: types.ISSUING_CERTIFICATE_FAILURE,
       payload: e.message
     });
-    console.error(e);
+    error("issueCertificate:", e);
   }
 }
 
@@ -217,7 +220,7 @@ export function* revokeCertificate({ payload }) {
       type: types.REVOKING_CERTIFICATE_FAILURE,
       payload: e.message
     });
-    console.error(e);
+    error("revokeCertificate:", e);
   }
 }
 

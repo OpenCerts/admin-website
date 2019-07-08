@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import Router from "next/router";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { updateWeb3, setIsLoading } from "../../reducers/application";
-import { NETWORK_TYPES } from "../../config";
-import { OrangeButton, OrangeOutlineButton } from "../UI/Button";
+import { updateWeb3, setIsLoading } from "../reducers/application";
+import { NETWORK_TYPES } from "../config";
+import { OrangeButton, OrangeOutlineButton } from "./UI/Button";
 
 const { INJECTED, LEDGER_MAIN, LEDGER_ROPSTEN } = NETWORK_TYPES;
 

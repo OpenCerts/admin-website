@@ -3,12 +3,14 @@ import PropTypes from "prop-types";
 import HashColor from "./UI/HashColor";
 import HashColorInput from "./UI/HashColorInput";
 import { OrangeButton } from "./UI/Button";
+import { isValidCertificateHash } from "../components/utils";
 
 class StoreRevokeBlock extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      certificateHash: ""
+      certificateHash: "",
+      certificateHashIsValid: true
     };
 
     this.onHashChange = this.onHashChange.bind(this);
@@ -17,26 +19,38 @@ class StoreRevokeBlock extends Component {
 
   onHashChange(event) {
     this.setState({
-      certificateHash: event.target.value
+      certificateHash: event.target.value,
+      certificateHashIsValid: isValidCertificateHash(event.target.value)
     });
   }
 
   onRevokeClick() {
     const { adminAddress, storeAddress, handleCertificateRevoke } = this.props;
+    const { certificateHash } = this.state;
 
-    const yes = window.confirm("Are you sure you want to revoke this hash?"); // eslint-disable-line
-
-    if (yes) {
-      handleCertificateRevoke({
-        storeAddress,
-        fromAddress: adminAddress,
-        certificateHash: this.state.certificateHash
-      });
+    this.setState({
+      certificateHashIsValid: isValidCertificateHash(certificateHash)
+    });
+    if (isValidCertificateHash(certificateHash)) {
+      // eslint-disable-next-line no-alert
+      const yes = window.confirm("Are you sure you want to revoke this hash?");
+      if (yes) {
+        handleCertificateRevoke({
+          storeAddress,
+          fromAddress: adminAddress,
+          certificateHash
+        });
+      }
     }
   }
 
   render() {
+    const { certificateHash, certificateHashIsValid } = this.state;
     const { revokedTx, networkId } = this.props;
+    const certificateHashMessage = certificateHashIsValid
+      ? ""
+      : "Merkle Root Hash is not valid.";
+
     return (
       <div>
         <div>
@@ -45,9 +59,10 @@ class StoreRevokeBlock extends Component {
             className="mt2"
             variant="pill"
             type="hash"
-            hashee={this.state.certificateHash}
+            hashee={certificateHash}
             onChange={this.onHashChange}
-            value={this.state.certificateHash}
+            value={certificateHash}
+            message={certificateHashMessage}
             placeholder="0x…"
           />
         </div>

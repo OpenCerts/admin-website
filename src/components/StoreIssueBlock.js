@@ -3,12 +3,14 @@ import PropTypes from "prop-types";
 import HashColor from "./UI/HashColor";
 import HashColorInput from "./UI/HashColorInput";
 import { OrangeButton } from "./UI/Button";
+import { isValidCertificateHash } from "../components/utils";
 
 class StoreIssueBlock extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      certificateHash: ""
+      certificateHash: "",
+      certificateHashIsValid: true
     };
 
     this.onHashChange = this.onHashChange.bind(this);
@@ -17,31 +19,46 @@ class StoreIssueBlock extends Component {
 
   onHashChange(event) {
     this.setState({
-      certificateHash: event.target.value
+      certificateHash: event.target.value,
+      certificateHashIsValid: isValidCertificateHash(event.target.value)
     });
   }
 
   onIssueClick() {
     const { adminAddress, storeAddress, handleCertificateIssue } = this.props;
-    handleCertificateIssue({
-      storeAddress,
-      fromAddress: adminAddress,
-      certificateHash: this.state.certificateHash
-    });
+    const { certificateHash } = this.state;
+    if (isValidCertificateHash(certificateHash)) {
+      handleCertificateIssue({
+        storeAddress,
+        fromAddress: adminAddress,
+        certificateHash
+      });
+    } else {
+      this.setState({
+        certificateHashIsValid: isValidCertificateHash(certificateHash)
+      });
+    }
   }
 
   render() {
+    const { certificateHash, certificateHashIsValid } = this.state;
+    const { issuingCertificate, issuedTx, networkId } = this.props;
+    const certificateHashMessage = certificateHashIsValid
+      ? ""
+      : "Merkle Root Hash is not valid.";
+
     return (
       <div>
         <div>
-          Issue certificates with the Merkle root hash
+          Issue certificates with the Merkle Root Hash
           <HashColorInput
             className="mt2"
             variant="pill"
             type="hash"
-            hashee={this.state.certificateHash}
+            hashee={certificateHash}
             onChange={this.onHashChange}
-            value={this.state.certificateHash}
+            value={certificateHash}
+            message={certificateHashMessage}
             placeholder="0x…"
           />
         </div>
@@ -49,21 +66,17 @@ class StoreIssueBlock extends Component {
           variant="pill"
           className="mt4"
           onClick={this.onIssueClick}
-          disabled={this.props.issuingCertificate}
+          disabled={issuingCertificate}
         >
-          {this.props.issuingCertificate ? "Issuing…" : "Issue"}
+          {issuingCertificate ? "Issuing…" : "Issue"}
         </OrangeButton>
 
-        {this.props.issuedTx && !this.props.issuingCertificate ? (
+        {issuedTx && !issuingCertificate ? (
           <div className="mt5">
             <p>🎉 Batch has been issued.</p>
             <div>
               Transaction ID{" "}
-              <HashColor
-                hashee={this.props.issuedTx}
-                networkId={this.props.networkId}
-                isTx
-              />
+              <HashColor hashee={issuedTx} networkId={networkId} isTx />
             </div>
           </div>
         ) : null}
