@@ -43,6 +43,7 @@ export default function* rootSaga() {
       applicationType.NEW_BLOCK,
       applicationSaga.checkNewBlockForTxPollList
     ),
+    takeEvery(applicationType.NEW_BLOCK, adminSaga.loadAccountBalance),
     takeEvery(
       applicationType.TRANSACTION_MINED,
       applicationSaga.removeTxHashFromPolling

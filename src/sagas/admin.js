@@ -51,7 +51,7 @@ export function* loadAccountBalance() {
       type: types.LOADING_ACCOUNT_BALANCE_FAILURE,
       payload: e.message
     });
-    console.error(e);
+    error("loadAccountBalance:", e);
   }
 }
 
@@ -116,9 +116,6 @@ export function* deployStore({ payload }) {
         txHash: txReceipt.transactionHash
       }
     });
-    yield put({
-      type: types.LOADING_ACCOUNT_BALANCE
-    });
   } catch (e) {
     yield put({
       type: types.DEPLOYING_STORE_FAILURE,
@@ -165,9 +162,6 @@ export function* issueCertificate({ payload }) {
       type: types.ISSUING_CERTIFICATE_SUCCESS,
       payload: txReceipt.transactionHash
     });
-    yield put({
-      type: types.LOADING_ACCOUNT_BALANCE
-    });
   } catch (e) {
     yield put({
       type: types.ISSUING_CERTIFICATE_FAILURE,
@@ -211,9 +205,6 @@ export function* revokeCertificate({ payload }) {
     yield put({
       type: types.REVOKING_CERTIFICATE_SUCCESS,
       payload: txReceipt.transactionHash
-    });
-    yield put({
-      type: types.LOADING_ACCOUNT_BALANCE
     });
   } catch (e) {
     yield put({
