@@ -156,76 +156,71 @@ class AdminContainer extends Component {
       <React.Fragment>
         {adminAddress ? (
           <React.Fragment>
-            <nav className="dt w-100 border-box pa3 ph5-ns bg-white shadow-1-ns">
-              <a
-                className="dtc v-mid mid-gray link dim w-20"
-                href="#"
-                title="Home"
-              >
+            <nav className="dt pa3 w-100 border-box pa3 ph5-ns bg-white shadow-1-ns flex-l flex-row-l">
+              <a className="w-100 w-20-l" href="/" title="Home">
                 <img
                   src={"../../static/images/logo.svg"}
-                  className="dib w20 h2"
+                  className="dtc v-mid mid-gray link dim pa3"
+                  style={{ width: "200px" }}
                   alt="OpenCerts"
                 />
               </a>
-              <div className="flex">
-                <div className="w-40-ns">
-                  <h3 className="ma0">
-                    Current Account{" "}
-                    <div
-                      style={{ cursor: "pointer" }}
-                      className="dib click-to-refresh"
-                      onClick={this.refreshCurrentAddress}
-                      title="Try to grab current account"
-                      tabIndex={1}
-                    >
-                      <i className="fas fa-sync-alt" />
-                    </div>
-                  </h3>
-                  <div className="pa2">
-                    {adminAddress ? (
-                      <HashColor hashee={adminAddress} networkId={networkId} />
-                    ) : (
-                      <div className="red">No wallet address found.</div>
-                    )}
+              <div className="w-100 w-40-l">
+                <h3 className="ma0">
+                  Current Account{" "}
+                  <div
+                    style={{ cursor: "pointer" }}
+                    className="dib click-to-refresh"
+                    onClick={this.refreshCurrentAddress}
+                    title="Try to grab current account"
+                    tabIndex={1}
+                  >
+                    <i className="fas fa-sync-alt" />
                   </div>
+                </h3>
+                <div className="pa2">
+                  {adminAddress ? (
+                    <HashColor hashee={adminAddress} networkId={networkId} />
+                  ) : (
+                    <div className="red">No wallet address found.</div>
+                  )}
                 </div>
-                <div className="w-30-ns">
-                  <h3 className="ma0">
-                    Account Balance{" "}
-                    <div
-                      style={{ cursor: "pointer" }}
-                      className="dib click-to-refresh"
-                      onClick={this.refreshAccountBalance}
-                      title="Refresh account balance"
-                      tabIndex={1}
-                    >
-                      <i className="fas fa-sync-alt" />
-                    </div>
-                  </h3>
-                  <div className="pa2">
-                    {accountBalance ? (
-                      <div>{accountBalance} ETH</div>
-                    ) : (
-                      <div className="red">Unable to load account balance.</div>
-                    )}
+              </div>
+              <div className="w-100 w-20-l">
+                <h3 className="ma0">
+                  Account Balance{" "}
+                  <div
+                    style={{ cursor: "pointer" }}
+                    className="dib click-to-refresh"
+                    onClick={this.refreshAccountBalance}
+                    title="Refresh account balance"
+                    tabIndex={1}
+                  >
+                    <i className="fas fa-sync-alt" />
                   </div>
+                </h3>
+                <div className="pa2">
+                  {accountBalance ? (
+                    <div>{accountBalance} ETH</div>
+                  ) : (
+                    <div className="red">Unable to load account balance.</div>
+                  )}
                 </div>
-                <div className="w-10-mns v-mid dtc">
-                  <h3 className="ma0">Wallet Provider</h3>
-                  <NetworkSelectorContainer className="v-mid" />
-                </div>
+              </div>
+              <div className="w-100 w-20-l">
+                <h3 className="ma0">Wallet Provider</h3>
+                <NetworkSelectorContainer />
               </div>
             </nav>
             <Panel style={{ maxWidth: "900px" }}>
               {baseStyle}
               <div className="flex">
-                <div className="w-50">
+                <div className="w-100 w-50-ns">
                   <h1 className="mt0">Admin</h1>
                 </div>
               </div>
               <div className="flex bb pb3">
-                <div className="w-50">
+                <div className="w-100  w-50-l">
                   <h3>Store address</h3>
                   <HashColorInput
                     variant="rounded"
