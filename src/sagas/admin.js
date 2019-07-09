@@ -76,7 +76,7 @@ function sendTxWrapper({ txObject, gasPrice, gasLimit, fromAddress }) {
 
 export function* deployStore({ payload }) {
   try {
-    const { fromAddress, name } = payload;
+    const { fromAddress, name, accountBalance } = payload;
     const web3 = yield getSelectedWeb3();
 
     const { abi, bytecode } = DocumentStoreDefinition;
@@ -89,33 +89,44 @@ export function* deployStore({ payload }) {
     });
     const gasPrice = (yield web3.eth.getGasPrice()) * 5;
     const gasLimit = (yield deployment.estimateGas()) * 2;
+    const transactionCostInEthers = web3.utils.fromWei(
+      (gasPrice * gasLimit).toString(),
+      "ether"
+    );
 
-    const txHash = yield sendTxWrapper({
-      txObject: deployment,
-      gasPrice,
-      gasLimit,
-      fromAddress
-    });
+    if (accountBalance >= transactionCostInEthers) {
+      const txHash = yield sendTxWrapper({
+        txObject: deployment,
+        gasPrice,
+        gasLimit,
+        fromAddress
+      });
 
-    yield put({
-      type: types.DEPLOYING_STORE_TX_SUBMITTED,
-      payload: txHash
-    });
+      yield put({
+        type: types.DEPLOYING_STORE_TX_SUBMITTED,
+        payload: txHash
+      });
 
-    let txReceipt;
+      let txReceipt;
 
-    while (!txReceipt) {
-      yield take(applicationTypes.TRANSACTION_MINED);
-      txReceipt = yield select(getTransactionReceipt, txHash); // this returns undefined if the transaction mined doesn't match the txHash we're waiting for
-    }
-
-    yield put({
-      type: types.DEPLOYING_STORE_SUCCESS,
-      payload: {
-        contractAddress: txReceipt.contractAddress,
-        txHash: txReceipt.transactionHash
+      while (!txReceipt) {
+        yield take(applicationTypes.TRANSACTION_MINED);
+        txReceipt = yield select(getTransactionReceipt, txHash); // this returns undefined if the transaction mined doesn't match the txHash we're waiting for
       }
-    });
+
+      yield put({
+        type: types.DEPLOYING_STORE_SUCCESS,
+        payload: {
+          contractAddress: txReceipt.contractAddress,
+          txHash: txReceipt.transactionHash
+        }
+      });
+    } else {
+      yield put({
+        type: types.DEPLOYING_STORE_FAILURE,
+        payload: "Insufficient Ethers in wallet."
+      });
+    }
   } catch (e) {
     yield put({
       type: types.DEPLOYING_STORE_FAILURE,
@@ -127,7 +138,12 @@ export function* deployStore({ payload }) {
 
 export function* issueCertificate({ payload }) {
   try {
-    const { fromAddress, storeAddress, certificateHash } = payload;
+    const {
+      fromAddress,
+      storeAddress,
+      certificateHash,
+      accountBalance
+    } = payload;
     const web3 = yield getSelectedWeb3();
 
     const { abi } = DocumentStoreDefinition;
@@ -138,30 +154,41 @@ export function* issueCertificate({ payload }) {
     const issueMsg = contract.methods.issue(certificateHash);
     const gasPrice = (yield web3.eth.getGasPrice()) * 5;
     const gasLimit = (yield issueMsg.estimateGas()) * 2;
+    const transactionCostInEthers = web3.utils.from(
+      (gasPrice * gasLimit).toString(),
+      "ether"
+    );
 
-    const txHash = yield sendTxWrapper({
-      txObject: issueMsg,
-      gasPrice,
-      gasLimit,
-      fromAddress
-    });
+    if (accountBalance >= transactionCostInEthers) {
+      const txHash = yield sendTxWrapper({
+        txObject: issueMsg,
+        gasPrice,
+        gasLimit,
+        fromAddress
+      });
 
-    yield put({
-      type: types.ISSUING_CERTIFICATE_TX_SUBMITTED,
-      payload: txHash
-    });
+      yield put({
+        type: types.ISSUING_CERTIFICATE_TX_SUBMITTED,
+        payload: txHash
+      });
 
-    let txReceipt;
+      let txReceipt;
 
-    while (!txReceipt) {
-      yield take(applicationTypes.TRANSACTION_MINED);
-      txReceipt = yield select(getTransactionReceipt, txHash); // this returns undefined if the transaction mined doesn't match the txHash we're waiting for
+      while (!txReceipt) {
+        yield take(applicationTypes.TRANSACTION_MINED);
+        txReceipt = yield select(getTransactionReceipt, txHash); // this returns undefined if the transaction mined doesn't match the txHash we're waiting for
+      }
+
+      yield put({
+        type: types.ISSUING_CERTIFICATE_SUCCESS,
+        payload: txReceipt.transactionHash
+      });
+    } else {
+      yield put({
+        type: types.ISSUING_CERTIFICATE_FAILURE,
+        payload: "Insufficient Ethers in wallet."
+      });
     }
-
-    yield put({
-      type: types.ISSUING_CERTIFICATE_SUCCESS,
-      payload: txReceipt.transactionHash
-    });
   } catch (e) {
     yield put({
       type: types.ISSUING_CERTIFICATE_FAILURE,
@@ -173,7 +200,12 @@ export function* issueCertificate({ payload }) {
 
 export function* revokeCertificate({ payload }) {
   try {
-    const { fromAddress, storeAddress, certificateHash } = payload;
+    const {
+      fromAddress,
+      storeAddress,
+      certificateHash,
+      accountBalance
+    } = payload;
     const web3 = yield getSelectedWeb3();
 
     const { abi } = DocumentStoreDefinition;
@@ -183,29 +215,40 @@ export function* revokeCertificate({ payload }) {
     const revokeMsg = contract.methods.revoke(certificateHash);
     const gasPrice = (yield web3.eth.getGasPrice()) * 5;
     const gasLimit = (yield revokeMsg.estimateGas()) * 2;
+    const transactionCostInEthers = web3.utils.from(
+      (gasPrice * gasLimit).toString(),
+      "ether"
+    );
 
-    const txHash = yield sendTxWrapper({
-      txObject: revokeMsg,
-      gasPrice,
-      gasLimit,
-      fromAddress
-    });
+    if (accountBalance >= transactionCostInEthers) {
+      const txHash = yield sendTxWrapper({
+        txObject: revokeMsg,
+        gasPrice,
+        gasLimit,
+        fromAddress
+      });
 
-    yield put({
-      type: types.REVOKING_CERTIFICATE_TX_SUBMITTED,
-      payload: txHash
-    });
+      yield put({
+        type: types.REVOKING_CERTIFICATE_TX_SUBMITTED,
+        payload: txHash
+      });
 
-    let txReceipt;
+      let txReceipt;
 
-    while (!txReceipt) {
-      yield take(applicationTypes.TRANSACTION_MINED);
-      txReceipt = yield select(getTransactionReceipt, txHash); // this returns undefined if the transaction mined doesn't match the txHash we're waiting for
+      while (!txReceipt) {
+        yield take(applicationTypes.TRANSACTION_MINED);
+        txReceipt = yield select(getTransactionReceipt, txHash); // this returns undefined if the transaction mined doesn't match the txHash we're waiting for
+      }
+      yield put({
+        type: types.REVOKING_CERTIFICATE_SUCCESS,
+        payload: txReceipt.transactionHash
+      });
+    } else {
+      yield put({
+        type: types.REVOKING_CERTIFICATE_FAILURE,
+        payload: "Insufficient Ethers in wallet."
+      });
     }
-    yield put({
-      type: types.REVOKING_CERTIFICATE_SUCCESS,
-      payload: txReceipt.transactionHash
-    });
   } catch (e) {
     yield put({
       type: types.REVOKING_CERTIFICATE_FAILURE,

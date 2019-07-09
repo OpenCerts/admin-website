@@ -25,13 +25,19 @@ class StoreIssueBlock extends Component {
   }
 
   onIssueClick() {
-    const { adminAddress, storeAddress, handleCertificateIssue } = this.props;
+    const {
+      adminAddress,
+      storeAddress,
+      accountBalance,
+      handleCertificateIssue
+    } = this.props;
     const { certificateHash } = this.state;
     if (isValidCertificateHash(certificateHash)) {
       handleCertificateIssue({
         storeAddress,
         fromAddress: adminAddress,
-        certificateHash
+        certificateHash,
+        accountBalance
       });
     } else {
       this.setState({
@@ -90,6 +96,7 @@ export default StoreIssueBlock;
 StoreIssueBlock.propTypes = {
   issuingCertificate: PropTypes.bool,
   issuedTx: PropTypes.string,
+  accountBalance: PropTypes.string,
   storeAddress: PropTypes.string,
   adminAddress: PropTypes.string,
   handleCertificateIssue: PropTypes.func,

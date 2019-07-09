@@ -237,6 +237,7 @@ class AdminContainer extends Component {
                     <StoreDeployBlock
                       adminAddress={adminAddress}
                       storeAddress={storeAddress}
+                      accountBalance={accountBalance}
                       handleStoreDeploy={this.handleStoreDeploy}
                       deploying={deploying}
                       networkId={networkId}
@@ -250,6 +251,7 @@ class AdminContainer extends Component {
                         issuedTx={issuedTx}
                         adminAddress={adminAddress}
                         storeAddress={storeAddress}
+                        accountBalance={accountBalance}
                         handleCertificateIssue={this.handleCertificateIssue}
                         issuingCertificate={issuingCertificate}
                       />
@@ -265,6 +267,7 @@ class AdminContainer extends Component {
                         revokedTx={revokedTx}
                         adminAddress={adminAddress}
                         storeAddress={storeAddress}
+                        accountBalance={accountBalance}
                         handleCertificateRevoke={this.handleCertificateRevoke}
                       />
                     ) : (
