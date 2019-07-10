@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import { ToastContainer } from "react-toastify";
 /** @jsx jsx */
 import { Global, css, jsx } from "@emotion/core";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
@@ -195,6 +196,7 @@ class AdminContainer extends Component {
                 <NetworkSelectorContainer />
               </div>
             </nav>
+            <ToastContainer autoClose={2000} />
             <Panel style={{ maxWidth: "900px" }}>
               {baseStyle}
               <div className="flex">

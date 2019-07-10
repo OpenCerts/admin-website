@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { isEmpty } from "lodash";
 import PropTypes from "prop-types";
+import { toast } from "react-toastify";
 import HashColor from "./UI/HashColor";
 import Input from "./UI/Input";
 import { OrangeButton } from "./UI/Button";
@@ -36,6 +37,7 @@ class StoreDeployBlock extends Component {
       this.setState({
         issuerIsValid: isEmpty(issuerName)
       });
+      toast.error("Issuer name cannot be empty.");
     }
   }
 

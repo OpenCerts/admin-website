@@ -1,4 +1,5 @@
 import { put, take, select } from "redux-saga/effects";
+import { toast } from "react-toastify";
 import { types, getAdminAddress } from "../reducers/admin";
 import {
   types as applicationTypes,
@@ -95,6 +96,10 @@ export function* deployStore({ payload }) {
     );
 
     if (accountBalance >= transactionCostInEthers) {
+      let messageToast = null;
+      messageToast = toast("Deploying new certificate store...", {
+        autoClose: false
+      });
       const txHash = yield sendTxWrapper({
         txObject: deployment,
         gasPrice,
@@ -121,11 +126,19 @@ export function* deployStore({ payload }) {
           txHash: txReceipt.transactionHash
         }
       });
+      toast.update(messageToast, {
+        render: "Successfully deployed a new certificate store.",
+        type: toast.TYPE.SUCCESS,
+        className: "rotateY animated",
+        autoClose: 2000
+      });
     } else {
+      const errorMessage = "Insufficient Ethers in wallet.";
       yield put({
         type: types.DEPLOYING_STORE_FAILURE,
-        payload: "Insufficient Ethers in wallet."
+        payload: errorMessage
       });
+      toast.error(errorMessage);
     }
   } catch (e) {
     yield put({
@@ -154,12 +167,16 @@ export function* issueCertificate({ payload }) {
     const issueMsg = contract.methods.issue(certificateHash);
     const gasPrice = (yield web3.eth.getGasPrice()) * 5;
     const gasLimit = (yield issueMsg.estimateGas()) * 2;
-    const transactionCostInEthers = web3.utils.from(
+    const transactionCostInEthers = web3.utils.fromWei(
       (gasPrice * gasLimit).toString(),
       "ether"
     );
 
     if (accountBalance >= transactionCostInEthers) {
+      let messageToast = null;
+      messageToast = toast("Issuing certificates...", {
+        autoClose: false
+      });
       const txHash = yield sendTxWrapper({
         txObject: issueMsg,
         gasPrice,
@@ -182,6 +199,12 @@ export function* issueCertificate({ payload }) {
       yield put({
         type: types.ISSUING_CERTIFICATE_SUCCESS,
         payload: txReceipt.transactionHash
+      });
+      toast.update(messageToast, {
+        render: "Successfully issued certificate(s).",
+        type: toast.TYPE.SUCCESS,
+        className: "rotateY animated",
+        autoClose: 2000
       });
     } else {
       yield put({
@@ -215,12 +238,16 @@ export function* revokeCertificate({ payload }) {
     const revokeMsg = contract.methods.revoke(certificateHash);
     const gasPrice = (yield web3.eth.getGasPrice()) * 5;
     const gasLimit = (yield revokeMsg.estimateGas()) * 2;
-    const transactionCostInEthers = web3.utils.from(
+    const transactionCostInEthers = web3.utils.fromWei(
       (gasPrice * gasLimit).toString(),
       "ether"
     );
 
     if (accountBalance >= transactionCostInEthers) {
+      let messageToast = null;
+      messageToast = toast("Revoking certificates...", {
+        autoClose: false
+      });
       const txHash = yield sendTxWrapper({
         txObject: revokeMsg,
         gasPrice,
@@ -242,6 +269,12 @@ export function* revokeCertificate({ payload }) {
       yield put({
         type: types.REVOKING_CERTIFICATE_SUCCESS,
         payload: txReceipt.transactionHash
+      });
+      toast.update(messageToast, {
+        render: "Successfully revoked certificate(s).",
+        type: toast.TYPE.SUCCESS,
+        className: "rotateY animated",
+        autoClose: 2000
       });
     } else {
       yield put({

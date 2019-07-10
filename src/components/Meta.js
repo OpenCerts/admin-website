@@ -1,4 +1,5 @@
 import Head from "next/head";
+
 /** @jsx jsx */
 import { Global, css, jsx } from "@emotion/core";
 import { faintBlue } from "../styles/variables";
@@ -19,6 +20,17 @@ const Meta = () => (
       />
       <link
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro"
+        rel="stylesheet"
+        type="text/css"
+      />
+      <link
+        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro"
+        rel="stylesheet"
+        type="text/css"
+      />
+      <link
+        href="
+        https://cdn.jsdelivr.net/npm/react-toastify@4.5.2/dist/ReactToastify.min.css"
         rel="stylesheet"
         type="text/css"
       />
