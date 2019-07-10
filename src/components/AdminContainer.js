@@ -151,8 +151,8 @@ class AdminContainer extends Component {
       <React.Fragment>
         {adminAddress ? (
           <React.Fragment>
-            <nav className="dt pa3 w-100 border-box pa3 ph5-ns bg-white shadow-1-ns flex-l flex-row-l items-center justify-center">
-              <a className="w-100 w-20-l" href="/" title="Home">
+            <nav className="dt pa3 pl6-l pr6-l w-100 border-box ph5-ns bg-white shadow-1-ns items-center flex-l flex-row-l">
+              <a href="/" title="Home">
                 <img
                   src={"../../static/images/logo.svg"}
                   className="dtc v-mid mid-gray link dim pa3"
@@ -160,40 +160,44 @@ class AdminContainer extends Component {
                   alt="OpenCerts"
                 />
               </a>
-              <div className="w-100 w-30-l">
-                <h3 className="ma0">
-                  Current Account{" "}
-                  <div
-                    style={{ cursor: "pointer" }}
-                    className="dib click-to-refresh"
-                    onClick={this.refreshCurrentAddress}
-                    title="Try to grab current account"
-                    tabIndex={1}
-                  >
-                    <i className="fas fa-sync-alt" />
+              <div className="w-80-ns flex-l flex-row-l justify-end">
+                <div className="w-100-s pl2-l pr2-l">
+                  <h3 className="ma0">
+                    Current Account{" "}
+                    <div
+                      style={{ cursor: "pointer" }}
+                      className="dib click-to-refresh"
+                      onClick={this.refreshCurrentAddress}
+                      title="Try to grab current account"
+                      tabIndex={1}
+                    >
+                      <i className="fas fa-sync-alt" />
+                    </div>
+                  </h3>
+                  <div className="pa2">
+                    {adminAddress ? (
+                      <HashColor hashee={adminAddress} networkId={networkId} />
+                    ) : (
+                      <div className="red">No wallet address found.</div>
+                    )}
                   </div>
-                </h3>
-                <div className="pa2">
-                  {adminAddress ? (
-                    <HashColor hashee={adminAddress} networkId={networkId} />
-                  ) : (
-                    <div className="red">No wallet address found.</div>
-                  )}
                 </div>
-              </div>
-              <div className="w-100 w-20-l">
-                <h3 className="ma0">Account Balance</h3>
-                <div className="pa2">
-                  {accountBalance ? (
-                    <div>{accountBalance} ETH</div>
-                  ) : (
-                    <div className="red">Unable to load account balance.</div>
-                  )}
+                <div className="w-100-s pl2-l pr2-l">
+                  <h3 className="ma0">Account Balance</h3>
+                  <div className="pa2">
+                    {accountBalance ? (
+                      <div>{accountBalance} ETH</div>
+                    ) : (
+                      <div className="red">Unable to load account balance.</div>
+                    )}
+                  </div>
                 </div>
-              </div>
-              <div className="w-100 w-20-l">
-                <h3 className="ma0">Wallet Provider</h3>
-                <NetworkSelectorContainer />
+                <div className="w-100-s pl2-l">
+                  <h3 className="ma0">Wallet Provider</h3>
+                  <div className="pa1">
+                    <NetworkSelectorContainer />
+                  </div>
+                </div>
               </div>
             </nav>
             <ToastContainer autoClose={2000} />
