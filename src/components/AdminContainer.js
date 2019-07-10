@@ -151,7 +151,7 @@ class AdminContainer extends Component {
       <React.Fragment>
         {adminAddress ? (
           <React.Fragment>
-            <nav className="dt pa3 w-100 border-box pa3 ph5-ns bg-white shadow-1-ns flex-l flex-row-l">
+            <nav className="dt pa3 w-100 border-box pa3 ph5-ns bg-white shadow-1-ns flex-l flex-row-l items-center justify-center">
               <a className="w-100 w-20-l" href="/" title="Home">
                 <img
                   src={"../../static/images/logo.svg"}
@@ -160,7 +160,7 @@ class AdminContainer extends Component {
                   alt="OpenCerts"
                 />
               </a>
-              <div className="w-100 w-40-l">
+              <div className="w-100 w-30-l">
                 <h3 className="ma0">
                   Current Account{" "}
                   <div

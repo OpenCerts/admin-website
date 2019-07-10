@@ -14,6 +14,7 @@ const divBase = css`
 `;
 
 const selectorBase = css`
+  width: 100%;
   background: ${white};
   border: none;
   :focus {
