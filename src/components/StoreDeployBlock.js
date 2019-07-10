@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { isEmpty } from "lodash";
 import PropTypes from "prop-types";
-import { toast } from "react-toastify";
 import HashColor from "./UI/HashColor";
 import Input from "./UI/Input";
 import { OrangeButton } from "./UI/Button";
