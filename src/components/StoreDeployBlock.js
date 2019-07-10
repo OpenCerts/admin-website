@@ -37,7 +37,6 @@ class StoreDeployBlock extends Component {
       this.setState({
         issuerIsValid: isEmpty(issuerName)
       });
-      toast.error("Issuer name cannot be empty.");
     }
   }
 

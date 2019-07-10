@@ -49,7 +49,9 @@ class StoreRevokeBlock extends Component {
         });
       }
     } else {
-      toast.error("Merkle root/target hash is not valid.");
+      this.setState({
+        certificateHashIsValid: isValidCertificateHash(certificateHash)
+      });
     }
   }
 

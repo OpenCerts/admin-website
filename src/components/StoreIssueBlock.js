@@ -44,7 +44,6 @@ class StoreIssueBlock extends Component {
       this.setState({
         certificateHashIsValid: isValidCertificateHash(certificateHash)
       });
-      toast.error("Merkle root is not valid.");
     }
   }
 

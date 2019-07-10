@@ -56,7 +56,13 @@ export function* loadAccountBalance() {
   }
 }
 
-function sendTxWrapper({ txObject, gasPrice, gasLimit, fromAddress }) {
+function sendTxWrapper({
+  txObject,
+  gasPrice,
+  gasLimit,
+  fromAddress,
+  message = "Transaction is submitted."
+}) {
   return new Promise((resolve, reject) => {
     txObject.send(
       {
@@ -69,6 +75,7 @@ function sendTxWrapper({ txObject, gasPrice, gasLimit, fromAddress }) {
         if (err) {
           reject(err);
         }
+        toast(message);
         resolve(res);
       }
     );
@@ -96,15 +103,12 @@ export function* deployStore({ payload }) {
     );
 
     if (accountBalance >= transactionCostInEthers) {
-      let messageToast = null;
-      messageToast = toast("Deploying new certificate store...", {
-        autoClose: false
-      });
       const txHash = yield sendTxWrapper({
         txObject: deployment,
         gasPrice,
         gasLimit,
-        fromAddress
+        fromAddress,
+        message: "Deploying new certificate store..."
       });
 
       yield put({
@@ -126,12 +130,7 @@ export function* deployStore({ payload }) {
           txHash: txReceipt.transactionHash
         }
       });
-      toast.update(messageToast, {
-        render: "Successfully deployed a new certificate store.",
-        type: toast.TYPE.SUCCESS,
-        className: "rotateY animated",
-        autoClose: 2000
-      });
+      toast.success("Successfully deployed a new certificate store.");
     } else {
       const errorMessage = "Insufficient Ethers in wallet.";
       yield put({
@@ -173,15 +172,12 @@ export function* issueCertificate({ payload }) {
     );
 
     if (accountBalance >= transactionCostInEthers) {
-      let messageToast = null;
-      messageToast = toast("Issuing certificates...", {
-        autoClose: false
-      });
       const txHash = yield sendTxWrapper({
         txObject: issueMsg,
         gasPrice,
         gasLimit,
-        fromAddress
+        fromAddress,
+        message: "Issuing certificates..."
       });
 
       yield put({
@@ -200,17 +196,14 @@ export function* issueCertificate({ payload }) {
         type: types.ISSUING_CERTIFICATE_SUCCESS,
         payload: txReceipt.transactionHash
       });
-      toast.update(messageToast, {
-        render: "Successfully issued certificate(s).",
-        type: toast.TYPE.SUCCESS,
-        className: "rotateY animated",
-        autoClose: 2000
-      });
+      toast.success("Successfully issued certificate(s).");
     } else {
+      const errorMessage = "Insufficient Ethers in wallet.";
       yield put({
         type: types.ISSUING_CERTIFICATE_FAILURE,
-        payload: "Insufficient Ethers in wallet."
+        payload: errorMessage
       });
+      toast.error(errorMessage);
     }
   } catch (e) {
     yield put({
@@ -244,15 +237,12 @@ export function* revokeCertificate({ payload }) {
     );
 
     if (accountBalance >= transactionCostInEthers) {
-      let messageToast = null;
-      messageToast = toast("Revoking certificates...", {
-        autoClose: false
-      });
       const txHash = yield sendTxWrapper({
         txObject: revokeMsg,
         gasPrice,
         gasLimit,
-        fromAddress
+        fromAddress,
+        message: "Revoking certificates..."
       });
 
       yield put({
@@ -270,17 +260,14 @@ export function* revokeCertificate({ payload }) {
         type: types.REVOKING_CERTIFICATE_SUCCESS,
         payload: txReceipt.transactionHash
       });
-      toast.update(messageToast, {
-        render: "Successfully revoked certificate(s).",
-        type: toast.TYPE.SUCCESS,
-        className: "rotateY animated",
-        autoClose: 2000
-      });
+      toast.success("Successfully revoked certificate(s).");
     } else {
+      const errorMessage = "Insufficient Ethers in wallet.";
       yield put({
         type: types.REVOKING_CERTIFICATE_FAILURE,
-        payload: "Insufficient Ethers in wallet."
+        payload: errorMessage
       });
+      toast.error(errorMessage);
     }
   } catch (e) {
     yield put({
