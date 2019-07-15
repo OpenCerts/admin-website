@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import Router from "next/router";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 /** @jsx jsx */
@@ -85,12 +84,6 @@ class AdminContainer extends Component {
     this.state = {
       localStoreAddress: ""
     };
-  }
-
-  componentDidMount() {
-    if (this.props.networkId == null) {
-      Router.push("/");
-    }
   }
 
   // eslint-disable-next-line camelcase
