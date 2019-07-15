@@ -26,12 +26,7 @@ import {
   getIssuingCertificate,
   getDeployedTx
 } from "../reducers/admin";
-import {
-  getIsLoading,
-  setIsNotLoading,
-  updateNetworkId,
-  getNetworkId
-} from "../reducers/application";
+import { updateNetworkId, getNetworkId } from "../reducers/application";
 import StoreDeployBlock from "./StoreDeployBlock";
 import StoreIssueBlock from "./StoreIssueBlock";
 import StoreRevokeBlock from "./StoreRevokeBlock";
@@ -89,16 +84,6 @@ class AdminContainer extends Component {
     this.state = {
       localStoreAddress: ""
     };
-  }
-
-  componentDidMount() {
-    this.props.setIsNotLoading();
-  }
-
-  // eslint-disable-next-line camelcase
-  UNSAFE_componentWillMount() {
-    this.props.updateNetworkId();
-    this.props.loadAdminAddress();
   }
 
   // eslint-disable-next-line camelcase
@@ -254,7 +239,6 @@ class AdminContainer extends Component {
 }
 
 const mapStateToProps = store => ({
-  isLoading: getIsLoading(store),
   adminAddress: getAdminAddress(store),
   storeAddress: getStoreAddress(store),
   issuedTx: getIssuedTx(store),
@@ -267,7 +251,6 @@ const mapStateToProps = store => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  setIsNotLoading: () => dispatch(setIsNotLoading()),
   loadAdminAddress: payload => dispatch(loadAdminAddress(payload)),
   updateNetworkId: () => dispatch(updateNetworkId()),
   deployStore: payload => dispatch(deployStore(payload)),
@@ -291,7 +274,6 @@ AdminContainer.propTypes = {
   updateStoreAddress: PropTypes.func,
   adminAddress: PropTypes.string,
   storeAddress: PropTypes.string,
-  setIsNotLoading: PropTypes.func,
   issuingCertificate: PropTypes.bool,
   issuedTx: PropTypes.string,
   revokingCertificate: PropTypes.bool,
