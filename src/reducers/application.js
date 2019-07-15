@@ -1,9 +1,8 @@
 import { omit } from "lodash";
-import { NETWORK_TYPES } from "../config";
 
 export const initialState = {
   isLoading: false,
-  network: NETWORK_TYPES.INJECTED,
+  network: null,
   networkId: null,
   networkIdVerbose: "",
   customRpc: "",
