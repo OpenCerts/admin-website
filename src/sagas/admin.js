@@ -75,7 +75,7 @@ function sendTxWrapper({
         if (err) {
           reject(err);
         }
-        toast(message);
+        toast(err ? "Transaction was rejected." : message);
         resolve(res);
       }
     );
