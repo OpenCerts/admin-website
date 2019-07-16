@@ -87,8 +87,11 @@ class AdminContainer extends Component {
   }
 
   componentDidMount() {
-    this.props.updateNetworkId();
-    this.props.loadAdminAddress();
+    const { networkId, updateNetworkId, loadAdminAddress } = this.props;
+    if (networkId == null) {
+      updateNetworkId();
+      loadAdminAddress();
+    }
   }
 
   // eslint-disable-next-line camelcase
