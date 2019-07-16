@@ -87,7 +87,7 @@ class AdminContainer extends Component {
   }
 
   componentDidMount() {
-    if (this.props.networkId == null) {
+    if (!this.props.networkId) {
       this.props.updateNetworkId();
       this.props.loadAdminAddress();
     }
