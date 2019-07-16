@@ -17,6 +17,7 @@ const selectorBase = css`
   width: 100%;
   background: ${white};
   border: none;
+  font-size: 15px;
   :focus {
     outline: 0;
   }
