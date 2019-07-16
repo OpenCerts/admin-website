@@ -86,6 +86,11 @@ class AdminContainer extends Component {
     };
   }
 
+  componentDidMount() {
+    this.props.updateNetworkId();
+    this.props.loadAdminAddress();
+  }
+
   // eslint-disable-next-line camelcase
   UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.storeAddress !== this.state.localStoreAddress) {
@@ -279,5 +284,6 @@ AdminContainer.propTypes = {
   revokingCertificate: PropTypes.bool,
   revokedTx: PropTypes.string,
   revokeCertificate: PropTypes.func,
+  network: PropTypes.string,
   networkId: PropTypes.number
 };

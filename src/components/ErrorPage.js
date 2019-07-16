@@ -2,6 +2,8 @@ import { Component } from "react";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { loadAdminAddress } from "../reducers/admin";
 import { OrangeOutlineButton, OrangeButton } from "./UI/Button";
 import Panel from "./UI/Panel";
 import WalletProviderSelector from "./WalletProviderSelector";
@@ -17,7 +19,6 @@ const walletError = css`
 class ErrorPage extends Component {
   constructor(props) {
     super(props);
-    this.refreshPage = this.refreshPage.bind(this);
     this.toggleWalletProviderSelector = this.toggleWalletProviderSelector.bind(
       this
     );
@@ -25,11 +26,6 @@ class ErrorPage extends Component {
     this.state = {
       showWalletProviderSelector: false
     };
-  }
-
-  // eslint-disable-next-line class-methods-use-this
-  refreshPage() {
-    window.location.reload();
   }
 
   toggleWalletProviderSelector() {
@@ -64,7 +60,10 @@ class ErrorPage extends Component {
               >
                 Change Wallet Provider
               </OrangeButton>
-              <OrangeOutlineButton variant="pill" onClick={this.refreshPage}>
+              <OrangeOutlineButton
+                variant="pill"
+                onClick={() => this.props.loadAdminAddress()}
+              >
                 Retry
               </OrangeOutlineButton>
             </div>
@@ -80,12 +79,20 @@ class ErrorPage extends Component {
   }
 }
 
-export default ErrorPage;
+const mapDispatchToProps = dispatch => ({
+  loadAdminAddress: payload => dispatch(loadAdminAddress(payload))
+});
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(ErrorPage);
 
 ErrorPage.propTypes = {
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node
   ]),
-  rest: PropTypes.object
+  rest: PropTypes.object,
+  loadAdminAddress: PropTypes.func
 };
