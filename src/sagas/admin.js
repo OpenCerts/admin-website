@@ -16,20 +16,28 @@ const { error } = getLogger("admin.js:");
 
 export function* loadAdminAddress() {
   try {
+    yield put({
+      type: applicationTypes.IS_LOADING
+    });
     const web3 = yield getSelectedWeb3();
     const accounts = yield getAccounts(web3);
 
     if (!accounts || !accounts.length || accounts.length === 0)
       throw new Error("Accounts not found");
-
     yield put({
       type: types.LOADING_ADMIN_ADDRESS_SUCCESS,
       payload: accounts[0]
+    });
+    yield put({
+      type: applicationTypes.IS_NOT_LOADING
     });
   } catch (e) {
     yield put({
       type: types.LOADING_ADMIN_ADDRESS_FAILURE,
       payload: e.message
+    });
+    yield put({
+      type: applicationTypes.IS_NOT_LOADING
     });
     error("loadAdminAddress:", e);
   }

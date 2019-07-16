@@ -3,7 +3,12 @@ import PropTypes from "prop-types";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 import { connect } from "react-redux";
-import { updateWeb3, getNetwork, getCustomRpc } from "../reducers/application";
+import {
+  updateWeb3,
+  getNetwork,
+  getCustomRpc,
+  setIsLoading
+} from "../reducers/application";
 import { NETWORK_TYPES } from "../config";
 import { white } from "./../styles/variables";
 
@@ -31,6 +36,7 @@ class AdminContainer extends Component {
   }
 
   handleNetworkChange(e) {
+    this.props.setIsLoading();
     this.props.updateWeb3({
       network: e.target.value
     });
@@ -62,7 +68,8 @@ const mapStateToProps = store => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  updateWeb3: payload => dispatch(updateWeb3(payload))
+  updateWeb3: payload => dispatch(updateWeb3(payload)),
+  setIsLoading: () => dispatch(setIsLoading())
 });
 
 export default connect(
@@ -74,5 +81,6 @@ AdminContainer.propTypes = {
   style: PropTypes.object,
   network: PropTypes.string,
   customRpc: PropTypes.string,
-  updateWeb3: PropTypes.func
+  updateWeb3: PropTypes.func,
+  setIsLoading: PropTypes.func
 };
