@@ -81,16 +81,15 @@ function sendTxWrapper({
       (err, res) => {
         // callback passed into eth.contract.send() to get the txhash
         if (err) {
-          reject(err);
           if (
             err.message ===
             "Returned error: Error: MetaMask Tx Signature: User denied transaction signature."
           ) {
             toast.error("Transaction was rejected.");
           }
-        } else {
-          toast(message);
+          return reject(err);
         }
+        toast(message);
         resolve(res);
       }
     );
