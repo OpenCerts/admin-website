@@ -284,6 +284,5 @@ AdminContainer.propTypes = {
   revokingCertificate: PropTypes.bool,
   revokedTx: PropTypes.string,
   revokeCertificate: PropTypes.func,
-  network: PropTypes.string,
   networkId: PropTypes.number
 };
