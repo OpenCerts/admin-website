@@ -74,8 +74,15 @@ function sendTxWrapper({
         // callback passed into eth.contract.send() to get the txhash
         if (err) {
           reject(err);
+          if (
+            err.message ===
+            "Returned error: Error: MetaMask Tx Signature: User denied transaction signature."
+          ) {
+            toast.error("Transaction was rejected.");
+          }
+        } else {
+          toast(message);
         }
-        toast(err ? "Transaction was rejected." : message);
         resolve(res);
       }
     );
@@ -103,6 +110,7 @@ export function* deployStore({ payload }) {
     );
 
     if (accountBalance >= transactionCostInEthers) {
+      toast("Please confirm the transaction on your wallet/ledger.");
       const txHash = yield sendTxWrapper({
         txObject: deployment,
         gasPrice,
@@ -172,6 +180,7 @@ export function* issueCertificate({ payload }) {
     );
 
     if (accountBalance >= transactionCostInEthers) {
+      toast("Please confirm the transaction on your wallet/ledger.");
       const txHash = yield sendTxWrapper({
         txObject: issueMsg,
         gasPrice,
@@ -237,6 +246,7 @@ export function* revokeCertificate({ payload }) {
     );
 
     if (accountBalance >= transactionCostInEthers) {
+      toast("Please confirm the transaction on your wallet/ledger.");
       const txHash = yield sendTxWrapper({
         txObject: revokeMsg,
         gasPrice,

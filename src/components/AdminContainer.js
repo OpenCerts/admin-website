@@ -200,7 +200,7 @@ class AdminContainer extends Component {
                 </div>
               </div>
             </nav>
-            <ToastContainer autoClose={2000} />
+            <ToastContainer autoClose={4000} />
             <Panel style={{ maxWidth: "900px" }}>
               {baseStyle}
               <div className="flex">
