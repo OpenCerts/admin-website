@@ -90,7 +90,7 @@ function sendTxWrapper({
           return reject(err);
         }
         toast(message);
-        resolve(res);
+        return resolve(res);
       }
     );
   });
