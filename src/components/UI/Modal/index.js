@@ -20,11 +20,23 @@ const style = (
         background-color: rgb(0, 0, 0);
         background-color: rgba(0, 0, 0, 0.4);
       }
+      .close-button {
+        float: right;
+      }
       .modal-content {
         position: relative;
         min-height: 50vh;
         min-width: 50vh;
         margin-top: 5vh;
+      }
+      .modal-header {
+        display: inline-block;
+        width: 100%;
+
+        h3 {
+          float: left;
+          margin: 0;
+        }
       }
       .modal-footer {
         position: absolute;
@@ -58,7 +70,6 @@ class Modal extends Component {
     this.setState({
       isOpen: !this.state.isOpen
     });
-    console.log(this.state.isOpen);
   }
 
   render() {
@@ -79,16 +90,14 @@ class Modal extends Component {
         {isOpen && (
           <div className="modal">
             <Panel className="modal-content">
-              <div>
-                <a onClick={this.toggleModal}>
+              <div className="modal-header">
+                <h3>{titleText}</h3>
+                <a className="close-button" onClick={this.toggleModal}>
                   <i className="closeButton fas fa-times" />
                 </a>
               </div>
-              <div className="modal-content">
-                <div>
-                  <h3>{titleText}</h3>
-                </div>
-                {children}
+              <div>{children}</div>
+              <div>
                 {confirmText && (
                   <div className="modal-footer">
                     <OrangeOutlineButton
