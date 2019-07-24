@@ -108,7 +108,7 @@ export function* deployStore({ payload }) {
       type: types.DEPLOYING_STORE_FAILURE,
       payload: e.message
     });
-    throw e;
+    error("deployStore:", e);
   }
 }
 
