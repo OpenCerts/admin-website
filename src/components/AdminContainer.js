@@ -88,6 +88,13 @@ class AdminContainer extends Component {
     };
   }
 
+  componentDidMount() {
+    if (!this.props.networkId) {
+      this.props.updateNetworkId();
+      this.props.loadAdminAddress();
+    }
+  }
+
   // eslint-disable-next-line camelcase
   UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.storeAddress !== this.state.localStoreAddress) {
