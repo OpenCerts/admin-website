@@ -32,6 +32,8 @@ const style = (
       .modal-header {
         display: inline-block;
         width: 100%;
+        padding-bottom: 16px;
+        word-wrap: break-word;
 
         h3 {
           float: left;
@@ -58,33 +60,27 @@ const style = (
 );
 
 class Modal extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isOpen: false
-    };
-    this.toggleModal = this.toggleModal.bind(this);
-  }
-
-  toggleModal() {
-    this.setState({
-      isOpen: !this.state.isOpen
-    });
-  }
-
   render() {
     const {
       buttonText,
+      buttonTextIcon,
       confirmText,
       titleText,
       confirmOnClick,
-      children
+      children,
+      isOpen,
+      toggleModal,
+      isTriggerDisabled
     } = this.props;
-    const { isOpen } = this.state;
+
     return (
       <React.Fragment>
         {style}
-        <OrangeButton variant="pill" onClick={this.toggleModal}>
+        <OrangeButton
+          variant="pill"
+          onClick={toggleModal}
+          disabled={isTriggerDisabled}
+        >
           {buttonText}
         </OrangeButton>
         {isOpen && (
@@ -92,7 +88,7 @@ class Modal extends Component {
             <Panel className="modal-content">
               <div className="modal-header">
                 <h3>{titleText}</h3>
-                <a className="close-button" onClick={this.toggleModal}>
+                <a className="close-button" onClick={toggleModal}>
                   <i className="closeButton fas fa-times" />
                 </a>
               </div>
@@ -100,14 +96,14 @@ class Modal extends Component {
               <div>
                 {confirmText && (
                   <div className="modal-footer">
-                    <OrangeOutlineButton
-                      variant="pill"
-                      onClick={this.toggleModal}
-                    >
+                    <OrangeOutlineButton variant="pill" onClick={toggleModal}>
                       Close
                     </OrangeOutlineButton>
                     <OrangeButton variant="pill" onClick={confirmOnClick}>
-                      {confirmText}
+                      {buttonTextIcon && (
+                        <i className={`fas ${buttonTextIcon}`} />
+                      )}
+                      {` ${confirmText}`}
                     </OrangeButton>
                   </div>
                 )}
@@ -124,9 +120,13 @@ export default Modal;
 
 Modal.propTypes = {
   buttonText: PropTypes.string,
+  buttonTextIcon: PropTypes.string,
+  confirmOnClick: PropTypes.func,
   confirmText: PropTypes.string,
   titleText: PropTypes.string,
-  confirmOnClick: PropTypes.func,
+  toggleModal: PropTypes.func,
+  isOpen: PropTypes.bool,
+  isTriggerDisabled: PropTypes.bool,
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node
