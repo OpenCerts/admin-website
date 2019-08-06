@@ -82,10 +82,7 @@ class StoreRevokeBlock extends Component {
     });
   }
 
-  getCertificateHash = payload => `0x${payload.signature.targetHash}`;
-
   handleCertificateSelected(payload) {
-    const { verifyCertificateValidity } = this.props;
     this.setState({
       certificate: payload,
       certificateHashIsValid: isValidCertificateHash(
@@ -130,7 +127,7 @@ class StoreRevokeBlock extends Component {
       certificate.signature &&
       revokeCertificateValidity.valid
     ) {
-      certificateHash = this.getCertificateHash(certificate);
+      certificateHash = `0x${certificate.signature.targetHash}`;
     }
 
     return (

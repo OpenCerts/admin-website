@@ -29,7 +29,8 @@
     "assert": false,
     "expect": true,
     "window": true,
-    "document": true
+    "document": true,
+    "fetch": false
   },
   "rules": {
     "no-console": "off",
