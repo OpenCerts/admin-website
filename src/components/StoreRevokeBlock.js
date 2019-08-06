@@ -1,64 +1,142 @@
 import React, { Component } from "react";
+/** @jsx jsx */
+import { css, jsx } from "@emotion/core";
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
 import HashColor from "./UI/HashColor";
 import HashColorInput from "./UI/HashColorInput";
 import { OrangeButton } from "./UI/Button";
-import { isValidCertificateHash } from "../components/utils";
 import Modal from "./UI/Modal";
+import { isValidCertificateHash } from "../components/utils";
+import {
+  verifyCertificateValidity,
+  getCertificateValidity
+} from "../reducers/api";
+import Divider from "./UI/Divider";
+import CertificateDropZone from "./CertificateDropZone";
+import { getIsVerifying } from "../reducers/application";
+
+const certificateDropzone = css`
+  width: 100%;
+  text-align: center;
+`;
+let certificateHash = "";
 
 class StoreRevokeBlock extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      certificateHash: "",
-      certificateHashIsValid: true
+      certificateHashIsValid: false,
+      isModalVisible: false,
+      revokeCertificateValidity: {
+        valid: false
+      }
     };
-
     this.onHashChange = this.onHashChange.bind(this);
     this.onRevokeClick = this.onRevokeClick.bind(this);
+    this.handleCertificateSelected = this.handleCertificateSelected.bind(this);
+    this.toggleModal = this.toggleModal.bind(this);
+  }
+
+  getHashStatus() {
+    const { hash } = this.props.revokeCertificateValidity;
+    const hashStatus = {
+      verified: hash ? hash.valid : true,
+      verifying: false,
+      error: ""
+    };
+    return hashStatus;
+  }
+
+  getIssuedStatus() {
+    const { issued } = this.props.revokeCertificateValidity;
+    const issuedStatus = {
+      verified: issued ? issued.valid : true,
+      verifying: false,
+      error: ""
+    };
+    return issuedStatus;
+  }
+
+  getRevokedStatus() {
+    const { revoked } = this.props.revokeCertificateValidity;
+    const revokedStatus = {
+      verified: revoked ? revoked.valid : true,
+      verifying: false,
+      error: ""
+    };
+    return revokedStatus;
   }
 
   onHashChange(event) {
+    certificateHash = event.target.value;
     this.setState({
-      certificateHash: event.target.value,
+      certificate: {},
       certificateHashIsValid: isValidCertificateHash(event.target.value)
     });
   }
 
+  toggleModal() {
+    this.setState({
+      isModalVisible: !this.state.isModalVisible
+    });
+  }
+
+  getCertificateHash = payload => `0x${payload.signature.targetHash}`;
+
+  handleCertificateSelected(payload) {
+    const { verifyCertificateValidity } = this.props;
+    this.setState({
+      certificate: payload,
+      certificateHashIsValid: isValidCertificateHash(
+        `0x${payload.signature.targetHash}`
+      )
+    });
+    verifyCertificateValidity(payload);
+  }
+
   onRevokeClick() {
-    const { storeAddress, handleCertificateRevoke } = this.props;
-    const { certificateHash } = this.state;
+    const { adminAddress, storeAddress, handleCertificateRevoke } = this.props;
 
     this.setState({
       certificateHashIsValid: isValidCertificateHash(certificateHash)
     });
     if (isValidCertificateHash(certificateHash)) {
-      // eslint-disable-next-line no-alert
-      const yes = window.confirm("Are you sure you want to revoke this hash?");
-      if (yes) {
-        handleCertificateRevoke({
-          storeAddress,
-          certificateHash
-        });
-      }
-    } else {
-      this.setState({
-        certificateHashIsValid: isValidCertificateHash(certificateHash)
+      this.toggleModal();
+      handleCertificateRevoke({
+        storeAddress,
+        fromAddress: adminAddress,
+        certificateHash
       });
     }
   }
 
   render() {
-    const { certificateHash, certificateHashIsValid } = this.state;
-    const { revokedTx, networkId } = this.props;
+    const { certificateHashIsValid, certificate, isModalVisible } = this.state;
+    const {
+      revokedTx,
+      networkId,
+      isVerifying,
+      revokingCertificate,
+      revokeCertificateValidity
+    } = this.props;
     const certificateHashMessage = certificateHashIsValid
       ? ""
       : "Merkle root/target hash is not valid.";
 
+    if (
+      certificate &&
+      !isVerifying &&
+      certificate.signature &&
+      revokeCertificateValidity.valid
+    ) {
+      certificateHash = this.getCertificateHash(certificate);
+    }
+
     return (
-      <div>
+      <React.Fragment>
         <div>
-          Certificate hash to revoke
+          Certificate or batch hash to revoke
           <HashColorInput
             className="mt2"
             variant="pill"
@@ -70,22 +148,32 @@ class StoreRevokeBlock extends Component {
             placeholder="0x…"
           />
         </div>
-        <OrangeButton
-          variant="pill"
-          className="mt4"
-          onClick={this.onRevokeClick}
-        >
-          <i className="fas fa-exclamation-triangle" />
-          &nbsp;
-          {this.props.revokingCertificate ? "Revoking…" : "Revoke"}
-        </OrangeButton>
-
         <Modal
-          buttonText="Select Certificate"
-          titleText="Please select a certificate or drag and drop it below."
+          className="mt4"
+          titleText="Revoke Confirmation"
+          confirmText="Revoke"
+          isOpen={isModalVisible}
+          toggleModal={this.toggleModal}
+          buttonTextIcon="fa-exclamation-triangle"
+          buttonText={revokingCertificate ? "Revoking…" : "Revoke"}
+          confirmOnClick={this.onRevokeClick}
+          isTriggerDisabled={revokingCertificate || !certificateHashIsValid}
         >
-          Hello world
+          <p>Are you sure you want to revoke this certificate?</p>
         </Modal>
+        <Divider text="OR" />
+        <div css={css(certificateDropzone)}>
+          <CertificateDropZone
+            document={certificate}
+            handleCertificateValidation={this.handleCertificateSelected}
+            hashStatus={this.getHashStatus()}
+            issuedStatus={this.getIssuedStatus()}
+            notRevokedStatus={this.getRevokedStatus()}
+            issuerIdentityStatus={this.getIssuedStatus()}
+            storeStatus={this.getIssuedStatus()}
+            verifying={isVerifying}
+          />
+        </div>
 
         {revokedTx ? (
           <div className="mt5">
@@ -96,17 +184,34 @@ class StoreRevokeBlock extends Component {
             </div>
           </div>
         ) : null}
-      </div>
+      </React.Fragment>
     );
   }
 }
 
-export default StoreRevokeBlock;
+const mapStateToProps = store => ({
+  revokeCertificateValidity: getCertificateValidity(store),
+  isVerifying: getIsVerifying(store)
+});
+
+const mapDispatchToProps = dispatch => ({
+  verifyCertificateValidity: payload =>
+    dispatch(verifyCertificateValidity({ payload }))
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(StoreRevokeBlock);
 
 StoreRevokeBlock.propTypes = {
   revokingCertificate: PropTypes.bool,
+  isVerifying: PropTypes.bool,
   revokedTx: PropTypes.string,
   storeAddress: PropTypes.string,
+  adminAddress: PropTypes.string,
+  verifyCertificateValidity: PropTypes.func,
+  revokeCertificateValidity: PropTypes.object,
   handleCertificateRevoke: PropTypes.func,
   networkId: PropTypes.number
 };
