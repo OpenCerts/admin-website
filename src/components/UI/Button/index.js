@@ -21,6 +21,13 @@ const base = css`
   background: ${black};
   min-width: 10rem;
   margin: 8px;
+
+  :disabled,
+  [disabled] {
+    cursor: not-allowed;
+    opacity: 0.5;
+    filter: alpha(opacity=50);
+  }
 `;
 
 const rounded = css`
@@ -53,7 +60,7 @@ export const OrangeButton = ({ children, variant, onClick, ...rest }) => {
     background: ${brandOrange};
     border: 1px solid ${brandOrange};
 
-    :hover {
+    :hover:enabled {
       background-color: ${brandDarkOrange};
     }
   `;
@@ -75,7 +82,7 @@ export const OrangeOutlineButton = ({
     background: transparent;
     border: 1px solid ${brandOrange};
 
-    :hover {
+    :hover:enabled {
       color: ${white};
       background-color: ${brandDarkOrange};
     }
@@ -93,7 +100,7 @@ export const BlueButton = ({ children, variant, onClick, ...rest }) => {
     background: ${brandBlue};
     border: 1px solid ${brandBlue};
 
-    :hover {
+    :hover:enabled {
       background-color: ${brandDarkBlue};
     }
   `;
@@ -110,7 +117,7 @@ export const BlueOutlineButton = ({ children, variant, onClick, ...rest }) => {
     background: transparent;
     border: 1px solid ${brandBlue};
 
-    :hover {
+    :hover:enabled {
       color: ${white};
       background-color: ${brandDarkBlue};
     }
