@@ -6,6 +6,9 @@ import * as applicationSaga from "../sagas/application";
 import { types as adminType } from "../reducers/admin";
 import * as adminSaga from "../sagas/admin";
 
+import { types as apiType } from "../reducers/api";
+import * as apiSaga from "../sagas/api";
+
 export default function* rootSaga() {
   yield all([
     takeEvery(adminType.LOADING_ADMIN_ADDRESS, adminSaga.loadAdminAddress),
@@ -47,7 +50,8 @@ export default function* rootSaga() {
     takeEvery(
       applicationType.TRANSACTION_MINED,
       applicationSaga.removeTxHashFromPolling
-    )
+    ),
+    takeEvery(apiType.VALIDATE_CERTIFICATE, apiSaga.verifyCertificateValidity)
     // takeEvery(applicationType.UPDATE_NETWORK_ID_SUCCESS, applicationSaga.startLedgerProviderPolling)
   ]);
 }

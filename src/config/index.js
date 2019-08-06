@@ -9,3 +9,5 @@ export const NETWORK_TYPES = {
 };
 
 export const INFURA_PROJECT_ID = "1f1ff2b3fca04f8d99f67d465c59e4ef";
+
+export const API_URL = "https://api-ropsten.opencerts.io";
