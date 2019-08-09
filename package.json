@@ -34,7 +34,7 @@
     "next-redux-wrapper": "^2.0.0",
     "prop-types": "^15.6.1",
     "react": "^16.2.0",
-    "react-dom": "^16.2.0",
+    "react-dom": "^16.9.0",
     "react-redux": "^5.0.1",
     "react-spinners": "^0.5.4",
     "react-tabs": "^2.2.1",
