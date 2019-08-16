@@ -26,6 +26,7 @@ class StoreRevokeBlock extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      certificate: {},
       certificateHashIsValid: false,
       isModalVisible: false,
       revokeCertificateValidity: {
@@ -71,7 +72,6 @@ class StoreRevokeBlock extends Component {
   onHashChange(event) {
     certificateHash = event.target.value;
     this.setState({
-      certificate: {},
       certificateHashIsValid: isValidCertificateHash(event.target.value)
     });
   }
@@ -89,7 +89,7 @@ class StoreRevokeBlock extends Component {
         `0x${payload.signature.targetHash}`
       )
     });
-    verifyCertificateValidity(payload);
+    this.props.verifyCertificateValidity(payload);
   }
 
   onRevokeClick() {
