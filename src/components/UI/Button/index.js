@@ -21,6 +21,7 @@ const base = css`
   background: ${black};
   min-width: 10rem;
   margin: 8px;
+  outline: none;
 
   :disabled,
   [disabled] {
