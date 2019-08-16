@@ -11,8 +11,7 @@ import {
   warningColor,
   white,
   invalidBackground,
-  invalidColor,
-  black
+  invalidColor
 } from "../../../styles/variables";
 
 const View = ({ hover, accept }) => (
