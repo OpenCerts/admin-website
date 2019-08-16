@@ -145,6 +145,11 @@ const View = ({
             margin-bottom: 0.5rem;
             color: ${black};
 
+            img {
+              margin-bottom: -15px;
+              margin-right: 16px;
+            }
+
             span {
               vertical-align: middle;
             }

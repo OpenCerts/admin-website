@@ -82,43 +82,15 @@ const View = ({ hover, accept }) => (
           }
         }
 
-        .message-container {
-          margin-top: 1.5rem;
-          margin-bottom: 0.5rem;
-          color: ${black};
-
-          span {
-            vertical-align: middle;
-          }
-        }
-
-        .verifications {
-          margin-bottom: 2rem;
-
-          .messages {
-            font-size: 18px;
-            font-weight: 600;
-            margin-bottom: 0;
-          }
+        .message {
+          font-size: 1.375rem;
+          font-weight: 500;
         }
 
         .btn {
           @include btn(${brandBlue});
           background-color: ${white};
           margin: 0 auto;
-        }
-
-        .secondary-links {
-          width: 50%;
-          display: flex;
-          margin: 1rem auto 0 auto;
-
-          span {
-            margin: auto;
-            a {
-              font-size: 14px;
-            }
-          }
         }
 
         .text-link {
@@ -149,12 +121,7 @@ const View = ({ hover, accept }) => (
           File cannot be read. Please check that you have a valid .opencert file
         </div>
       )}
-      <div
-        className="text-brand-dark"
-        style={{ fontSize: "1.375rem", fontWeight: 500 }}
-      >
-        Drag and drop your opencert file
-      </div>
+      <div className="message">Drag and drop your opencert file</div>
       <Divider text="or" />
       <div className="text-muted row">
         <div className="mx-auto">
