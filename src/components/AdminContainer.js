@@ -23,7 +23,7 @@ import {
   getIssuedTx,
   getRevokedTx,
   revokeCertificate,
-  getrevokingCertificate,
+  getRevokingCertificate,
   getDeploying,
   getIssuingCertificate,
   getDeployedTx
@@ -284,7 +284,7 @@ const mapStateToProps = store => ({
   accountBalance: getAccountBalance(store),
   storeAddress: getStoreAddress(store),
   issuedTx: getIssuedTx(store),
-  revokingCertificate: getrevokingCertificate(store),
+  revokingCertificate: getRevokingCertificate(store),
   revokedTx: getRevokedTx(store),
   networkId: getNetworkId(store),
   deploying: getDeploying(store),
