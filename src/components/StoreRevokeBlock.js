@@ -30,7 +30,6 @@ class StoreRevokeBlock extends Component {
     super(props);
     this.state = {
       certificate: {},
-      inputCertificateHash: "",
       certificateHashIsValid: true,
       isModalVisible: false
     };
@@ -38,15 +37,6 @@ class StoreRevokeBlock extends Component {
     this.onRevokeClick = this.onRevokeClick.bind(this);
     this.handleCertificateSelected = this.handleCertificateSelected.bind(this);
     this.toggleModal = this.toggleModal.bind(this);
-  }
-
-  componentDidUpdate(prevProps) {
-    if (prevProps.revokeCertificateHash !== this.props.revokeCertificateHash) {
-      this.setState({
-        inputCertificateHash: this.props.revokeCertificateHash,
-        certificateHashIsValid: this.props.revokeCertificateValidity.valid
-      });
-    }
   }
 
   getHashStatus() {
@@ -81,18 +71,16 @@ class StoreRevokeBlock extends Component {
 
   onHashChange(event) {
     const inputCertificateHash = event.target.value;
-    this.setState({
-      inputCertificateHash,
-      certificateHashIsValid: isValidCertificateHash(inputCertificateHash)
-    });
+    this.props.updateRevokeCertificateHash(inputCertificateHash);
   }
 
   toggleModal() {
-    const { isModalVisible, inputCertificateHash } = this.state;
+    const { isModalVisible } = this.state;
+    const { revokeCertificateHash } = this.props;
     this.setState({
-      certificateHashIsValid: isValidCertificateHash(inputCertificateHash)
+      certificateHashIsValid: isValidCertificateHash(revokeCertificateHash)
     });
-    if (isValidCertificateHash(inputCertificateHash)) {
+    if (isValidCertificateHash(revokeCertificateHash)) {
       this.setState({
         isModalVisible: !isModalVisible
       });
@@ -104,26 +92,30 @@ class StoreRevokeBlock extends Component {
   }
 
   onRevokeClick() {
-    const { adminAddress, storeAddress, handleCertificateRevoke } = this.props;
-    const { inputCertificateHash } = this.state;
-    if (isValidCertificateHash(inputCertificateHash)) {
+    const {
+      adminAddress,
+      storeAddress,
+      handleCertificateRevoke,
+      revokeCertificateHash
+    } = this.props;
+    if (isValidCertificateHash(revokeCertificateHash)) {
       const payload = {
         storeAddress,
         fromAddress: adminAddress,
-        certificateHash: inputCertificateHash
+        certificateHash: revokeCertificateHash
       };
       handleCertificateRevoke(payload);
     }
   }
 
   render() {
+    const { revokingCertificate, certificate, isModalVisible } = this.state;
     const {
-      revokingCertificate,
-      certificate,
-      inputCertificateHash,
-      isModalVisible
-    } = this.state;
-    const { revokedTx, networkId, isVerifying } = this.props;
+      revokeCertificateHash,
+      revokedTx,
+      networkId,
+      isVerifying
+    } = this.props;
 
     const certificateHashMessage =
       this.state.certificateHashIsValid === true
@@ -138,9 +130,9 @@ class StoreRevokeBlock extends Component {
             className="mt2"
             variant="pill"
             type="hash"
-            hashee={inputCertificateHash}
+            hashee={revokeCertificateHash}
             onChange={this.onHashChange}
-            value={inputCertificateHash}
+            value={revokeCertificateHash}
             message={certificateHashMessage}
             placeholder="0x…"
           />
@@ -196,7 +188,7 @@ const mapDispatchToProps = dispatch => ({
   verifyCertificateValidity: payload =>
     dispatch(verifyCertificateValidity({ payload })),
   updateRevokeCertificateHash: payload =>
-    dispatch(updateRevokeCertificateHash({ payload }))
+    dispatch(updateRevokeCertificateHash(payload))
 });
 
 export default connect(
