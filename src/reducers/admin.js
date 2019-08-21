@@ -13,6 +13,7 @@ export const initialState = {
   issuingError: null,
 
   revokedTx: "",
+  revokeCertificateHash: "",
   revokingCertificate: false,
   revokingError: null
 };
@@ -40,6 +41,7 @@ export const types = {
   ISSUING_CERTIFICATE_SUCCESS: "ISSUING_CERTIFICATE_SUCCESS",
   ISSUING_CERTIFICATE_FAILURE: "ISSUING_CERTIFICATE_FAILURE",
 
+  UPDATE_REVOKE_CERTIFICATE_HASH: "UPDATE_REVOKE_CERTIFICATE_HASH",
   REVOKING_CERTIFICATE: "REVOKING_CERTIFICATE",
   REVOKING_CERTIFICATE_SUCCESS: "REVOKING_CERTIFICATE_SUCCESS",
   REVOKING_CERTIFICATE_TX_SUBMITTED: "REVOKING_CERTIFICATE_TX_SUBMITTED",
@@ -135,6 +137,11 @@ export default function reducer(state = initialState, action) {
         revokingError: action.payload,
         revokedTx: ""
       };
+    case types.UPDATE_REVOKE_CERTIFICATE_HASH:
+      return {
+        ...state,
+        revokeCertificateHash: action.payload
+      };
     default:
       return state;
   }
@@ -181,6 +188,13 @@ export function revokeCertificate(payload) {
   };
 }
 
+export function updateRevokeCertificateHash(payload) {
+  return {
+    type: types.UPDATE_REVOKE_CERTIFICATE_HASH,
+    payload
+  };
+}
+
 // Selectors
 export function getAdminAddress(store) {
   return store.admin.adminAddress;
@@ -216,4 +230,8 @@ export function getIssuingCertificate(store) {
 
 export function getrevokingCertificate(store) {
   return store.admin.revokingCertificate;
+}
+
+export function getRevokeCertificateHash(store) {
+  return store.admin.revokeCertificateHash;
 }

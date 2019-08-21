@@ -228,7 +228,6 @@ export function* revokeCertificate({ payload }) {
     const adminAddress = yield select(getAdminAddress);
     const accountBalance = yield select(getAccountBalance);
     const web3 = yield getSelectedWeb3();
-
     const { abi } = DocumentStoreDefinition;
     const contract = new web3.eth.Contract(abi, storeAddress, {
       from: adminAddress
