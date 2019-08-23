@@ -39,34 +39,14 @@ class StoreRevokeBlock extends Component {
     this.toggleModal = this.toggleModal.bind(this);
   }
 
-  getHashStatus() {
-    const { hash } = this.props.revokeCertificateValidity;
-    const hashStatus = {
-      verified: hash ? hash.valid : true,
+  getCertificateStatus(certValidator) {
+    const validaor = this.props.revokeCertificateValidity[certValidator];
+    const status = {
+      verified: validaor ? validaor.valid : true,
       verifying: false,
       error: ""
     };
-    return hashStatus;
-  }
-
-  getIssuedStatus() {
-    const { issued } = this.props.revokeCertificateValidity;
-    const issuedStatus = {
-      verified: issued ? issued.valid : true,
-      verifying: false,
-      error: ""
-    };
-    return issuedStatus;
-  }
-
-  getRevokedStatus() {
-    const { revoked } = this.props.revokeCertificateValidity;
-    const revokedStatus = {
-      verified: revoked ? revoked.valid : true,
-      verifying: false,
-      error: ""
-    };
-    return revokedStatus;
+    return status;
   }
 
   onHashChange(event) {
@@ -105,11 +85,17 @@ class StoreRevokeBlock extends Component {
         certificateHash: revokeCertificateHash
       };
       handleCertificateRevoke(payload);
+      this.toggleModal();
     }
   }
 
   render() {
-    const { revokingCertificate, certificate, isModalVisible } = this.state;
+    const {
+      revokingCertificate,
+      certificate,
+      isModalVisible,
+      certificateHashIsValid
+    } = this.state;
     const {
       revokeCertificateHash,
       revokedTx,
@@ -117,10 +103,9 @@ class StoreRevokeBlock extends Component {
       isVerifying
     } = this.props;
 
-    const certificateHashMessage =
-      this.state.certificateHashIsValid === true
-        ? ""
-        : "Merkle root/target hash is not valid.";
+    const certificateHashMessage = certificateHashIsValid
+      ? ""
+      : "Merkle root/target hash is not valid.";
 
     return (
       <React.Fragment>
@@ -155,11 +140,11 @@ class StoreRevokeBlock extends Component {
           <CertificateDropZone
             document={certificate}
             handleCertificateValidation={this.handleCertificateSelected}
-            hashStatus={this.getHashStatus()}
-            issuedStatus={this.getIssuedStatus()}
-            notRevokedStatus={this.getRevokedStatus()}
-            issuerIdentityStatus={this.getIssuedStatus()}
-            storeStatus={this.getIssuedStatus()}
+            hashStatus={this.getCertificateStatus("hash")}
+            issuedStatus={this.getCertificateStatus("issued")}
+            notRevokedStatus={this.getCertificateStatus("revoked")}
+            issuerIdentityStatus={this.getCertificateStatus("issued")}
+            storeStatus={this.getCertificateStatus("issued")}
             verifying={isVerifying}
           />
         </div>
