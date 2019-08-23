@@ -89,6 +89,16 @@ class StoreRevokeBlock extends Component {
     }
   }
 
+  componentDidUpdate(prevProps) {
+    if (prevProps.revokeCertificateHash !== this.props.revokeCertificateHash) {
+      this.setState({
+        certificateHashIsValid: isValidCertificateHash(
+          this.props.revokeCertificateHash
+        )
+      });
+    }
+  }
+
   render() {
     const {
       revokingCertificate,
