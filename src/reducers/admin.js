@@ -2,7 +2,7 @@ export const initialState = {
   adminAddress: "",
   storeAddress: "",
 
-  accountBalance: "",
+  accountBalance: 0,
 
   deploying: false,
   deploymentError: null,
@@ -81,7 +81,7 @@ export default function reducer(state = initialState, action) {
     case types.LOADING_ACCOUNT_BALANCE_FAILURE:
       return {
         ...state,
-        accountBalance: ""
+        accountBalance: undefined
       };
     case types.DEPLOYING_STORE_SUCCESS:
       return {

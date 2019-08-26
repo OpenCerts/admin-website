@@ -1,6 +1,6 @@
 import { put, take, select } from "redux-saga/effects";
 import { toast } from "react-toastify";
-import { types, getAdminAddress } from "../reducers/admin";
+import { types, getAdminAddress, getAccountBalance } from "../reducers/admin";
 import {
   types as applicationTypes,
   getTransactionReceipt
@@ -53,7 +53,7 @@ export function* loadAccountBalance() {
 
     yield put({
       type: types.LOADING_ACCOUNT_BALANCE_SUCCESS,
-      payload: balanceEther
+      payload: parseFloat(balanceEther)
     });
   } catch (e) {
     yield put({
@@ -64,13 +64,7 @@ export function* loadAccountBalance() {
   }
 }
 
-function sendTxWrapper({
-  txObject,
-  gasPrice,
-  gasLimit,
-  fromAddress,
-  message = "Transaction is submitted."
-}) {
+function sendTxWrapper({ txObject, gasPrice, gasLimit, fromAddress, message }) {
   return new Promise((resolve, reject) => {
     txObject.send(
       {
@@ -89,7 +83,7 @@ function sendTxWrapper({
           }
           return reject(err);
         }
-        toast(message);
+        if (message) toast(message);
         return resolve(res);
       }
     );
@@ -98,8 +92,9 @@ function sendTxWrapper({
 
 export function* deployStore({ payload }) {
   try {
-    const { fromAddress, name, accountBalance } = payload;
+    const { fromAddress, name } = payload;
     const web3 = yield getSelectedWeb3();
+    const accountBalance = yield select(getAccountBalance);
 
     const { abi, bytecode } = DocumentStoreDefinition;
 
@@ -122,8 +117,7 @@ export function* deployStore({ payload }) {
         txObject: deployment,
         gasPrice,
         gasLimit,
-        fromAddress,
-        message: "Deploying new certificate store..."
+        fromAddress
       });
 
       yield put({
@@ -165,12 +159,8 @@ export function* deployStore({ payload }) {
 
 export function* issueCertificate({ payload }) {
   try {
-    const {
-      fromAddress,
-      storeAddress,
-      certificateHash,
-      accountBalance
-    } = payload;
+    const { fromAddress, storeAddress, certificateHash } = payload;
+    const accountBalance = yield select(getAccountBalance);
     const web3 = yield getSelectedWeb3();
 
     const { abi } = DocumentStoreDefinition;
@@ -232,12 +222,8 @@ export function* issueCertificate({ payload }) {
 
 export function* revokeCertificate({ payload }) {
   try {
-    const {
-      fromAddress,
-      storeAddress,
-      certificateHash,
-      accountBalance
-    } = payload;
+    const { fromAddress, storeAddress, certificateHash } = payload;
+    const accountBalance = yield select(getAccountBalance);
     const web3 = yield getSelectedWeb3();
 
     const { abi } = DocumentStoreDefinition;

@@ -167,7 +167,7 @@ class AdminContainer extends Component {
                       <i className="fas fa-sync-alt" />
                     </div>
                   </h3>
-                  <div className="pa2">
+                  <div className="pa2 pl0">
                     {adminAddress ? (
                       <HashColor hashee={adminAddress} networkId={networkId} />
                     ) : (
@@ -177,7 +177,7 @@ class AdminContainer extends Component {
                 </div>
                 <div className="w-100-s pl2-l pr2-l">
                   <h3 className="ma0">Account Balance</h3>
-                  <div className="pa2">
+                  <div className="pa2 pl0">
                     {accountBalance ? (
                       <div>{accountBalance} ETH</div>
                     ) : (
@@ -236,7 +236,6 @@ class AdminContainer extends Component {
                     <StoreDeployBlock
                       adminAddress={adminAddress}
                       storeAddress={storeAddress}
-                      accountBalance={accountBalance}
                       handleStoreDeploy={this.handleStoreDeploy}
                       deploying={deploying}
                       networkId={networkId}
@@ -250,7 +249,6 @@ class AdminContainer extends Component {
                         issuedTx={issuedTx}
                         adminAddress={adminAddress}
                         storeAddress={storeAddress}
-                        accountBalance={accountBalance}
                         handleCertificateIssue={this.handleCertificateIssue}
                         issuingCertificate={issuingCertificate}
                       />
@@ -266,7 +264,6 @@ class AdminContainer extends Component {
                         revokedTx={revokedTx}
                         adminAddress={adminAddress}
                         storeAddress={storeAddress}
-                        accountBalance={accountBalance}
                         handleCertificateRevoke={this.handleCertificateRevoke}
                       />
                     ) : (
@@ -321,7 +318,7 @@ AdminContainer.propTypes = {
   issueCertificate: PropTypes.func,
   updateStoreAddress: PropTypes.func,
   adminAddress: PropTypes.string,
-  accountBalance: PropTypes.string,
+  accountBalance: PropTypes.number,
   storeAddress: PropTypes.string,
   issuingCertificate: PropTypes.bool,
   issuedTx: PropTypes.string,

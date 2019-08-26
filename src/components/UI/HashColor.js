@@ -53,7 +53,7 @@ export default class HashColor extends React.Component {
               }
             : null
         }
-        title={this.props.clickable ? "Click to copy" : ""}
+        title={this.props.clickable ? "View wallet information" : ""}
       >
         {this.props.children
           ? this.props.children

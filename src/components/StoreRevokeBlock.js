@@ -25,12 +25,7 @@ class StoreRevokeBlock extends Component {
   }
 
   onRevokeClick() {
-    const {
-      adminAddress,
-      storeAddress,
-      handleCertificateRevoke,
-      accountBalance
-    } = this.props;
+    const { adminAddress, storeAddress, handleCertificateRevoke } = this.props;
     const { certificateHash } = this.state;
 
     this.setState({
@@ -43,8 +38,7 @@ class StoreRevokeBlock extends Component {
         handleCertificateRevoke({
           storeAddress,
           fromAddress: adminAddress,
-          certificateHash,
-          accountBalance
+          certificateHash
         });
       }
     } else {
@@ -107,7 +101,6 @@ StoreRevokeBlock.propTypes = {
   revokedTx: PropTypes.string,
   storeAddress: PropTypes.string,
   adminAddress: PropTypes.string,
-  accountBalance: PropTypes.string,
   handleCertificateRevoke: PropTypes.func,
   networkId: PropTypes.number
 };
