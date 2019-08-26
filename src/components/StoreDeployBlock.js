@@ -24,11 +24,10 @@ class StoreDeployBlock extends Component {
   }
 
   onDeployClick() {
-    const { adminAddress, handleStoreDeploy } = this.props;
+    const { handleStoreDeploy } = this.props;
     const { issuerName } = this.state;
     if (!isEmpty(issuerName)) {
       handleStoreDeploy({
-        fromAddress: adminAddress,
         name: issuerName
       });
     } else {
@@ -92,11 +91,9 @@ class StoreDeployBlock extends Component {
 export default StoreDeployBlock;
 
 StoreDeployBlock.propTypes = {
-  adminAddress: PropTypes.string,
   storeAddress: PropTypes.string,
   deploying: PropTypes.bool,
   deployedTx: PropTypes.string,
   networkId: PropTypes.number,
-  loadAdminAddress: PropTypes.func,
   handleStoreDeploy: PropTypes.func
 };

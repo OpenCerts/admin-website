@@ -234,7 +234,6 @@ class AdminContainer extends Component {
                 <div className="w-70 pa4 pl5">
                   <TabPanel>
                     <StoreDeployBlock
-                      adminAddress={adminAddress}
                       storeAddress={storeAddress}
                       handleStoreDeploy={this.handleStoreDeploy}
                       deploying={deploying}
@@ -247,7 +246,6 @@ class AdminContainer extends Component {
                       <StoreIssueBlock
                         networkId={networkId}
                         issuedTx={issuedTx}
-                        adminAddress={adminAddress}
                         storeAddress={storeAddress}
                         handleCertificateIssue={this.handleCertificateIssue}
                         issuingCertificate={issuingCertificate}
@@ -262,7 +260,6 @@ class AdminContainer extends Component {
                         networkId={networkId}
                         revokingCertificate={revokingCertificate}
                         revokedTx={revokedTx}
-                        adminAddress={adminAddress}
                         storeAddress={storeAddress}
                         handleCertificateRevoke={this.handleCertificateRevoke}
                       />

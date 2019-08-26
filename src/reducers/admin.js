@@ -66,7 +66,7 @@ export default function reducer(state = initialState, action) {
     case types.LOADING_ADMIN_ADDRESS_FAILURE:
       return {
         ...state,
-        adminAddress: ""
+        adminAddress: undefined
       };
     case types.DEPLOYING_STORE:
       return {
