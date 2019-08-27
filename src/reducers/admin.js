@@ -10,12 +10,7 @@ export const initialState = {
 
   issuedTx: "",
   issuingCertificate: false,
-  issuingError: null,
-
-  revokedTx: "",
-  revokeCertificateHash: "",
-  revokingCertificate: false,
-  revokingError: null
+  issuingError: null
 };
 
 // Actions
@@ -39,13 +34,7 @@ export const types = {
   ISSUING_CERTIFICATE: "ISSUING_CERTIFICATE",
   ISSUING_CERTIFICATE_TX_SUBMITTED: "ISSUING_CERTIFICATE_TX_SUBMITTED",
   ISSUING_CERTIFICATE_SUCCESS: "ISSUING_CERTIFICATE_SUCCESS",
-  ISSUING_CERTIFICATE_FAILURE: "ISSUING_CERTIFICATE_FAILURE",
-
-  UPDATE_REVOKE_CERTIFICATE_HASH: "UPDATE_REVOKE_CERTIFICATE_HASH",
-  REVOKING_CERTIFICATE: "REVOKING_CERTIFICATE",
-  REVOKING_CERTIFICATE_SUCCESS: "REVOKING_CERTIFICATE_SUCCESS",
-  REVOKING_CERTIFICATE_TX_SUBMITTED: "REVOKING_CERTIFICATE_TX_SUBMITTED",
-  REVOKING_CERTIFICATE_FAILURE: "REVOKING_CERTIFICATE_FAILURE"
+  ISSUING_CERTIFICATE_FAILURE: "ISSUING_CERTIFICATE_FAILURE"
 };
 
 // Reducers
@@ -118,30 +107,6 @@ export default function reducer(state = initialState, action) {
         issuingError: action.payload,
         issuedTx: ""
       };
-    case types.REVOKING_CERTIFICATE:
-      return {
-        ...state,
-        revokingCertificate: true
-      };
-    case types.REVOKING_CERTIFICATE_SUCCESS:
-      return {
-        ...state,
-        revokingCertificate: false,
-        revokedTx: action.payload,
-        revokingError: null
-      };
-    case types.REVOKING_CERTIFICATE_FAILURE:
-      return {
-        ...state,
-        revokingCertificate: false,
-        revokingError: action.payload,
-        revokedTx: ""
-      };
-    case types.UPDATE_REVOKE_CERTIFICATE_HASH:
-      return {
-        ...state,
-        revokeCertificateHash: action.payload
-      };
     default:
       return state;
   }
@@ -181,20 +146,6 @@ export function issueCertificate(payload) {
   };
 }
 
-export function revokeCertificate(payload) {
-  return {
-    type: types.REVOKING_CERTIFICATE,
-    payload
-  };
-}
-
-export function updateRevokeCertificateHash(payload) {
-  return {
-    type: types.UPDATE_REVOKE_CERTIFICATE_HASH,
-    payload
-  };
-}
-
 // Selectors
 export function getAdminAddress(store) {
   return store.admin.adminAddress;
@@ -212,10 +163,6 @@ export function getIssuedTx(store) {
   return store.admin.issuedTx;
 }
 
-export function getRevokedTx(store) {
-  return store.admin.revokedTx;
-}
-
 export function getDeploying(store) {
   return store.admin.deploying;
 }
@@ -226,12 +173,4 @@ export function getDeployedTx(store) {
 
 export function getIssuingCertificate(store) {
   return store.admin.issuingCertificate;
-}
-
-export function getRevokingCertificate(store) {
-  return store.admin.revokingCertificate;
-}
-
-export function getRevokeCertificateHash(store) {
-  return store.admin.revokeCertificateHash;
 }

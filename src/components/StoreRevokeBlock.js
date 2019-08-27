@@ -8,17 +8,15 @@ import HashColorInput from "./UI/HashColorInput";
 import { OrangeButton } from "./UI/Button";
 import Modal from "./UI/Modal";
 import { isValidCertificateHash } from "../components/utils";
-import {
-  verifyCertificateValidity,
-  getCertificateValidity
-} from "../reducers/api";
 import Divider from "./UI/Divider";
 import CertificateDropZone from "./CertificateDropZone";
-import { getIsVerifying } from "../reducers/application";
 import {
+  getVerifyingRevokeCertificate,
   getRevokeCertificateHash,
-  updateRevokeCertificateHash
-} from "../reducers/admin";
+  getRevokeCertificateValidity,
+  updateRevokeCertificateHash,
+  verifyRevokeCertificateValidity
+} from "../reducers/revoke";
 
 const certificateDropzone = css`
   width: 100%;
@@ -39,10 +37,10 @@ class StoreRevokeBlock extends Component {
     this.toggleModal = this.toggleModal.bind(this);
   }
 
-  getCertificateStatus(certValidator) {
-    const validaor = this.props.revokeCertificateValidity[certValidator];
+  getCertificateStatus(type) {
+    const typeStatus = this.props.revokeCertificateValidity[type];
     const status = {
-      verified: validaor ? validaor.valid : true,
+      verified: typeStatus ? typeStatus.valid : true,
       verifying: false,
       error: ""
     };
@@ -68,7 +66,7 @@ class StoreRevokeBlock extends Component {
   }
 
   handleCertificateSelected(payload) {
-    this.props.verifyCertificateValidity(payload);
+    this.props.verifyRevokeCertificateValidity(payload);
   }
 
   onRevokeClick() {
@@ -110,7 +108,7 @@ class StoreRevokeBlock extends Component {
       revokeCertificateHash,
       revokedTx,
       networkId,
-      isVerifying
+      verifyingRevokeCertificate
     } = this.props;
 
     const certificateHashMessage = certificateHashIsValid
@@ -155,7 +153,7 @@ class StoreRevokeBlock extends Component {
             notRevokedStatus={this.getCertificateStatus("revoked")}
             issuerIdentityStatus={this.getCertificateStatus("issued")}
             storeStatus={this.getCertificateStatus("issued")}
-            verifying={isVerifying}
+            verifying={verifyingRevokeCertificate}
           />
         </div>
 
@@ -175,13 +173,13 @@ class StoreRevokeBlock extends Component {
 
 const mapStateToProps = store => ({
   revokeCertificateHash: getRevokeCertificateHash(store),
-  revokeCertificateValidity: getCertificateValidity(store),
-  isVerifying: getIsVerifying(store)
+  revokeCertificateValidity: getRevokeCertificateValidity(store),
+  verifyingRevokeCertificate: getVerifyingRevokeCertificate(store)
 });
 
 const mapDispatchToProps = dispatch => ({
-  verifyCertificateValidity: payload =>
-    dispatch(verifyCertificateValidity({ payload })),
+  verifyRevokeCertificateValidity: payload =>
+    dispatch(verifyRevokeCertificateValidity({ payload })),
   updateRevokeCertificateHash: payload =>
     dispatch(updateRevokeCertificateHash(payload))
 });
@@ -195,11 +193,11 @@ StoreRevokeBlock.propTypes = {
   revokeCertificateHash: PropTypes.string,
   revokingCertificate: PropTypes.bool,
   updateRevokeCertificateHash: PropTypes.func,
-  isVerifying: PropTypes.bool,
+  verifyingRevokeCertificate: PropTypes.bool,
   revokedTx: PropTypes.string,
   storeAddress: PropTypes.string,
   adminAddress: PropTypes.string,
-  verifyCertificateValidity: PropTypes.func,
+  verifyRevokeCertificateValidity: PropTypes.func,
   revokeCertificateValidity: PropTypes.object,
   handleCertificateRevoke: PropTypes.func,
   networkId: PropTypes.number

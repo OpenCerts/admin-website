@@ -6,8 +6,8 @@ import * as applicationSaga from "../sagas/application";
 import { types as adminType } from "../reducers/admin";
 import * as adminSaga from "../sagas/admin";
 
-import { types as apiType } from "../reducers/api";
-import * as apiSaga from "../sagas/api";
+import { types as revokeType } from "../reducers/revoke";
+import * as revokeSaga from "./revoke";
 
 export default function* rootSaga() {
   yield all([
@@ -35,12 +35,12 @@ export default function* rootSaga() {
       applicationSaga.addTxHashToPolling
     ),
     takeEvery(
-      adminType.REVOKING_CERTIFICATE_TX_SUBMITTED,
+      revokeType.REVOKING_CERTIFICATE_TX_SUBMITTED,
       applicationSaga.addTxHashToPolling
     ),
     takeEvery(adminType.DEPLOYING_STORE, adminSaga.deployStore),
     takeEvery(adminType.ISSUING_CERTIFICATE, adminSaga.issueCertificate),
-    takeEvery(adminType.REVOKING_CERTIFICATE, adminSaga.revokeCertificate),
+    takeEvery(revokeType.REVOKING_CERTIFICATE, revokeSaga.revokeCertificate),
     takeEvery(applicationType.UPDATE_WEB3, adminSaga.networkReset),
     takeEvery(
       applicationType.NEW_BLOCK,
@@ -51,7 +51,10 @@ export default function* rootSaga() {
       applicationType.TRANSACTION_MINED,
       applicationSaga.removeTxHashFromPolling
     ),
-    takeEvery(apiType.VALIDATE_CERTIFICATE, apiSaga.verifyCertificateValidity)
+    takeEvery(
+      revokeType.VALIDATE_CERTIFICATE,
+      revokeSaga.verifyCertificateValidity
+    )
     // takeEvery(applicationType.UPDATE_NETWORK_ID_SUCCESS, applicationSaga.startLedgerProviderPolling)
   ]);
 }

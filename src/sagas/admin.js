@@ -64,7 +64,7 @@ export function* loadAccountBalance() {
   }
 }
 
-function sendTxWrapper({ txObject, gasPrice, gasLimit, fromAddress, message }) {
+export function sendTxWrapper({ txObject, gasPrice, gasLimit, fromAddress }) {
   return new Promise((resolve, reject) => {
     txObject.send(
       {
@@ -219,66 +219,6 @@ export function* issueCertificate({ payload }) {
       payload: e.message
     });
     error("issueCertificate:", e);
-  }
-}
-
-export function* revokeCertificate({ payload }) {
-  try {
-    const { storeAddress, certificateHash } = payload;
-    const adminAddress = yield select(getAdminAddress);
-    const accountBalance = yield select(getAccountBalance);
-    const web3 = yield getSelectedWeb3();
-    const { abi } = DocumentStoreDefinition;
-    const contract = new web3.eth.Contract(abi, storeAddress, {
-      from: adminAddress
-    });
-    const revokeMsg = contract.methods.revoke(certificateHash);
-    const gasPrice = (yield web3.eth.getGasPrice()) * 5;
-    const gasLimit = (yield revokeMsg.estimateGas()) * 2;
-    const transactionCostInEthers = web3.utils.fromWei(
-      (gasPrice * gasLimit).toString(),
-      "ether"
-    );
-
-    if (accountBalance >= transactionCostInEthers) {
-      toast("Please confirm the transaction on your wallet/ledger.");
-      const txHash = yield sendTxWrapper({
-        txObject: revokeMsg,
-        gasPrice,
-        gasLimit,
-        fromAddress: adminAddress
-      });
-
-      yield put({
-        type: types.REVOKING_CERTIFICATE_TX_SUBMITTED,
-        payload: txHash
-      });
-
-      let txReceipt;
-
-      while (!txReceipt) {
-        yield take(applicationTypes.TRANSACTION_MINED);
-        txReceipt = yield select(getTransactionReceipt, txHash); // this returns undefined if the transaction mined doesn't match the txHash we're waiting for
-      }
-      yield put({
-        type: types.REVOKING_CERTIFICATE_SUCCESS,
-        payload: txReceipt.transactionHash
-      });
-      toast.success("Successfully revoked certificate(s).");
-    } else {
-      const errorMessage = "Insufficient Ethers in wallet.";
-      yield put({
-        type: types.REVOKING_CERTIFICATE_FAILURE,
-        payload: errorMessage
-      });
-      toast.error(errorMessage);
-    }
-  } catch (e) {
-    yield put({
-      type: types.REVOKING_CERTIFICATE_FAILURE,
-      payload: e.message
-    });
-    error("revokeCertificate:", e);
   }
 }
 

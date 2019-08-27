@@ -21,13 +21,15 @@ import {
   updateStoreAddress,
   issueCertificate,
   getIssuedTx,
-  getRevokedTx,
-  revokeCertificate,
-  getRevokingCertificate,
   getDeploying,
   getIssuingCertificate,
   getDeployedTx
 } from "../reducers/admin";
+import {
+  getRevokedTx,
+  getRevokingCertificate,
+  revokeCertificate
+} from "../reducers/revoke";
 import { updateNetworkId, getNetworkId } from "../reducers/application";
 import StoreDeployBlock from "./StoreDeployBlock";
 import StoreIssueBlock from "./StoreIssueBlock";

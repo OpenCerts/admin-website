@@ -3,7 +3,6 @@ import { NETWORK_TYPES } from "../config";
 
 export const initialState = {
   isLoading: false,
-  isVerifying: false,
   network: NETWORK_TYPES.INJECTED,
   networkId: null,
   networkIdVerbose: "",
@@ -29,10 +28,7 @@ export const types = {
   TX_POLLING_REMOVE: "TX_POLLING_REMOVE",
 
   IS_LOADING: "IS_LOADING",
-  IS_NOT_LOADING: "IS_NOT_LOADING",
-
-  IS_VERIFYING: "IS_VERIFYING",
-  IS_NOT_VERIFYING: "IS_NOT_VERIFYING"
+  IS_NOT_LOADING: "IS_NOT_LOADING"
 
   // polling_started
   // add to poll : should take a tx hash and a callback action
@@ -52,16 +48,6 @@ export default function reducer(state = initialState, action) {
       return {
         ...state,
         isLoading: false
-      };
-    case types.IS_VERIFYING:
-      return {
-        ...state,
-        isVerifying: true
-      };
-    case types.IS_NOT_VERIFYING:
-      return {
-        ...state,
-        isVerifying: false
       };
     case types.UPDATE_WEB3:
       return {
@@ -136,18 +122,6 @@ export function setIsNotLoading() {
   };
 }
 
-export function setIsVerifying() {
-  return {
-    type: types.IS_VERIFYING
-  };
-}
-
-export function setIsNotVerifying() {
-  return {
-    type: types.IS_NOT_VERIFYING
-  };
-}
-
 export function updateWeb3(payload) {
   return {
     type: types.UPDATE_WEB3,
@@ -185,10 +159,6 @@ export function removeTxFromPollingList(payload) {
 // Selectors
 export function getIsLoading(store) {
   return store.application.isLoading;
-}
-
-export function getIsVerifying(store) {
-  return store.application.isVerifying;
 }
 
 export function getNetwork(store) {
