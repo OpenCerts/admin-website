@@ -33,7 +33,7 @@
     "fetch": false
   },
   "rules": {
-    "no-console": "off",
+    "no-console": "error",
     "no-unused-vars": [
       "error",
       {
