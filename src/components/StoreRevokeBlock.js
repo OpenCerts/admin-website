@@ -17,6 +17,7 @@ import {
   updateRevokeCertificateHash,
   verifyRevokeCertificateValidity
 } from "../reducers/revoke";
+import { OrangeButton } from "./UI/Button";
 
 const certificateDropzone = css`
   width: 100%;
@@ -28,8 +29,10 @@ class StoreRevokeBlock extends Component {
     super(props);
     this.state = {
       certificate: {},
+      inputCertificateHash: "",
       certificateHashIsValid: true,
-      isModalVisible: false
+      isModalVisible: false,
+      isInputActive: false
     };
     this.onHashChange = this.onHashChange.bind(this);
     this.onRevokeClick = this.onRevokeClick.bind(this);
@@ -49,16 +52,24 @@ class StoreRevokeBlock extends Component {
 
   onHashChange(event) {
     const inputCertificateHash = event.target.value;
-    this.props.updateRevokeCertificateHash(inputCertificateHash);
+    this.setState({
+      isInputActive: true,
+      certificateHashIsValid: isValidCertificateHash(inputCertificateHash)
+    });
+    this.setState({ inputCertificateHash });
   }
 
   toggleModal() {
-    const { isModalVisible } = this.state;
-    const { revokeCertificateHash } = this.props;
-    this.setState({
-      certificateHashIsValid: isValidCertificateHash(revokeCertificateHash)
-    });
-    if (isValidCertificateHash(revokeCertificateHash)) {
+    const { isModalVisible, inputCertificateHash, isInputActive } = this.state;
+    if (isInputActive) {
+      this.setState({
+        certificateHashIsValid: isValidCertificateHash(inputCertificateHash)
+      });
+    }
+    const certificateHash = isInputActive
+      ? inputCertificateHash
+      : this.props.revokeCertificateHash;
+    if (isValidCertificateHash(certificateHash)) {
       this.setState({
         isModalVisible: !isModalVisible
       });
@@ -76,11 +87,16 @@ class StoreRevokeBlock extends Component {
       handleCertificateRevoke,
       revokeCertificateHash
     } = this.props;
-    if (isValidCertificateHash(revokeCertificateHash)) {
+    const { isInputActive, inputCertificateHash } = this.state;
+    const certificateHash = isInputActive
+      ? inputCertificateHash
+      : revokeCertificateHash;
+
+    if (isValidCertificateHash(certificateHash)) {
       const payload = {
         storeAddress,
         fromAddress: adminAddress,
-        certificateHash: revokeCertificateHash
+        certificateHash
       };
       handleCertificateRevoke(payload);
       this.toggleModal();
@@ -90,26 +106,21 @@ class StoreRevokeBlock extends Component {
   componentDidUpdate(prevProps) {
     if (prevProps.revokeCertificateHash !== this.props.revokeCertificateHash) {
       this.setState({
-        certificateHashIsValid: isValidCertificateHash(
-          this.props.revokeCertificateHash
-        )
+        isInputActive: false
       });
+      this.toggleModal();
     }
   }
 
   render() {
     const {
       revokingCertificate,
+      inputCertificateHash,
       certificate,
       isModalVisible,
       certificateHashIsValid
     } = this.state;
-    const {
-      revokeCertificateHash,
-      revokedTx,
-      networkId,
-      verifyingRevokeCertificate
-    } = this.props;
+    const { revokedTx, networkId, verifyingRevokeCertificate } = this.props;
 
     const certificateHashMessage = certificateHashIsValid
       ? ""
@@ -123,23 +134,27 @@ class StoreRevokeBlock extends Component {
             className="mt2"
             variant="pill"
             type="hash"
-            hashee={revokeCertificateHash}
+            hashee={inputCertificateHash}
             onChange={this.onHashChange}
-            value={revokeCertificateHash}
+            value={inputCertificateHash}
             message={certificateHashMessage}
             placeholder="0x…"
           />
         </div>
+        <OrangeButton
+          variant="pill"
+          onClick={this.toggleModal}
+          disabled={revokingCertificate}
+        >
+          {revokingCertificate ? "Revoking…" : "Revoke"}
+        </OrangeButton>
         <Modal
           className="mt4"
           titleText="Revoke Confirmation"
           confirmText="Revoke"
           isOpen={isModalVisible}
           toggleModal={this.toggleModal}
-          buttonTextIcon="fa-exclamation-triangle"
-          buttonText={revokingCertificate ? "Revoking…" : "Revoke"}
           confirmOnClick={this.onRevokeClick}
-          isTriggerDisabled={revokingCertificate}
         >
           <p>Are you sure you want to revoke this certificate?</p>
         </Modal>
@@ -191,6 +206,7 @@ export default connect(
 
 StoreRevokeBlock.propTypes = {
   revokeCertificateHash: PropTypes.string,
+  getRevokeCertificateHash: PropTypes.func,
   revokingCertificate: PropTypes.bool,
   updateRevokeCertificateHash: PropTypes.func,
   verifyingRevokeCertificate: PropTypes.bool,
