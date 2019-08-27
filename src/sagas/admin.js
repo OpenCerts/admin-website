@@ -75,10 +75,7 @@ function sendTxWrapper({ txObject, gasPrice, gasLimit, fromAddress, message }) {
       (err, res) => {
         // callback passed into eth.contract.send() to get the txhash
         if (err) {
-          if (
-            err.message ===
-            "Returned error: Error: MetaMask Tx Signature: User denied transaction signature."
-          ) {
+          if (err.message.includes("User denied transaction signature.")) {
             toast.error("Transaction was rejected.");
           }
           return reject(err);
