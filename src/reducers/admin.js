@@ -2,7 +2,7 @@ export const initialState = {
   adminAddress: "",
   storeAddress: "",
 
-  accountBalance: 0,
+  accountBalance: undefined,
 
   deploying: false,
   deploymentError: null,
