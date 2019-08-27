@@ -5,8 +5,8 @@ import enzyme from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 import { matchers } from "jest-emotion";
 import renderer from "react-test-renderer";
-import { Button, OrangeButton, BlueButton } from ".";
-import { brandOrange, brandBlue } from "../../../styles/variables";
+import { Button, OrangeButton, BlueButton, RedButton } from ".";
+import { red, brandOrange, brandBlue } from "../../../styles/variables";
 
 expect.extend(matchers);
 
@@ -45,6 +45,12 @@ describe("Button component", () => {
     const button = renderer.create(<BlueButton>Test Button</BlueButton>);
     const tree = button.toJSON();
     expect(tree).toHaveStyleRule("background", brandBlue);
+  });
+
+  it("shows red button", () => {
+    const button = renderer.create(<RedButton>Test Button</RedButton>);
+    const tree = button.toJSON();
+    expect(tree).toHaveStyleRule("background", red);
   });
 
   it("should call mock function when button is clicked", () => {

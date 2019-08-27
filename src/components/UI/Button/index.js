@@ -4,10 +4,13 @@ import { css, jsx } from "@emotion/core";
 import {
   white,
   black,
+  red,
+  darkRed,
   brandBlue,
   brandDarkBlue,
   brandOrange,
-  brandDarkOrange
+  brandDarkOrange,
+  darkGrey
 } from "../../../styles/variables";
 
 const base = css`
@@ -130,6 +133,41 @@ export const BlueOutlineButton = ({ children, variant, onClick, ...rest }) => {
   );
 };
 
+export const RedButton = ({ children, variant, onClick, ...rest }) => {
+  const custom = css`
+    color: ${white};
+    background: ${red};
+    border: 1px solid ${red};
+
+    :hover:enabled {
+      background-color: ${darkRed};
+    }
+  `;
+  return (
+    <Button custom={custom} variant={variant} onClick={onClick} {...rest}>
+      {children}
+    </Button>
+  );
+};
+
+export const GreyOutlineButton = ({ children, variant, onClick, ...rest }) => {
+  const custom = css`
+    color: ${darkGrey};
+    background: transparent;
+    border: 1px solid ${darkGrey};
+
+    :hover:enabled {
+      color: ${white};
+      background-color: ${darkGrey};
+    }
+  `;
+  return (
+    <Button custom={custom} variant={variant} onClick={onClick} {...rest}>
+      {children}
+    </Button>
+  );
+};
+
 Button.propTypes = {
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
@@ -172,6 +210,24 @@ BlueButton.propTypes = {
 };
 
 BlueOutlineButton.propTypes = {
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node
+  ]).isRequired,
+  variant: PropTypes.string,
+  onClick: PropTypes.func
+};
+
+RedButton.propTypes = {
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node
+  ]).isRequired,
+  variant: PropTypes.string,
+  onClick: PropTypes.func
+};
+
+GreyOutlineButton.propTypes = {
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node

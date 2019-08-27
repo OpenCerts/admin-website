@@ -1,10 +1,12 @@
 export const black = "#000000";
+export const darkGrey = "#343a40";
 export const white = "#ffffff";
 export const brandBlue = "#0099cc";
-
 export const brandDarkBlue = "#005f7f";
 export const brandOrange = "#ff9933";
 export const brandDarkOrange = "#ff6a33";
+export const red = "#dc3545";
+export const darkRed = "#c82333";
 export const lightGrey = "#e5e5e5";
 export const greyBlue = "#c1c9d1";
 export const brandDark = "#324353";

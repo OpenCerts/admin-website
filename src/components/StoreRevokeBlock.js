@@ -17,7 +17,7 @@ import {
   updateRevokeCertificateHash,
   verifyRevokeCertificateValidity
 } from "../reducers/revoke";
-import { OrangeButton } from "./UI/Button";
+import { RedButton } from "./UI/Button";
 
 const certificateDropzone = css`
   width: 100%;
@@ -141,13 +141,13 @@ class StoreRevokeBlock extends Component {
             placeholder="0x…"
           />
         </div>
-        <OrangeButton
+        <RedButton
           variant="pill"
           onClick={this.toggleModal}
           disabled={revokingCertificate}
         >
           {revokingCertificate ? "Revoking…" : "Revoke"}
-        </OrangeButton>
+        </RedButton>
         <Modal
           className="mt4"
           titleText="Revoke Confirmation"

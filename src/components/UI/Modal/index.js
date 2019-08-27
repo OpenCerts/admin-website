@@ -2,7 +2,7 @@ import React, { Component } from "react";
 /** @jsx jsx */
 import { Global, css, jsx } from "@emotion/core";
 import PropTypes from "prop-types";
-import { OrangeButton, OrangeOutlineButton } from "../Button";
+import { RedButton, GreyOutlineButton } from "../Button";
 import Panel from "../Panel";
 import { brandDarkOrange, lightGrey } from "../../../styles/variables";
 
@@ -92,15 +92,15 @@ class Modal extends Component {
               <div>
                 {confirmText && (
                   <div className="modal-footer">
-                    <OrangeOutlineButton variant="pill" onClick={toggleModal}>
+                    <GreyOutlineButton variant="pill" onClick={toggleModal}>
                       Close
-                    </OrangeOutlineButton>
-                    <OrangeButton variant="pill" onClick={confirmOnClick}>
+                    </GreyOutlineButton>
+                    <RedButton variant="pill" onClick={confirmOnClick}>
                       {buttonTextIcon && (
                         <i className={`fas ${buttonTextIcon}`} />
                       )}
                       {` ${confirmText}`}
-                    </OrangeButton>
+                    </RedButton>
                   </div>
                 )}
               </div>
