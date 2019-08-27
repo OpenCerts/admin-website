@@ -47,7 +47,7 @@ export function* verifyCertificateValidity({ payload }) {
     yield put({
       type: appTypes.IS_NOT_VERIFYING
     });
-    console.error(e);
+    error("verifyCertificateValidity:", e);
   }
 }
 
