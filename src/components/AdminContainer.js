@@ -144,7 +144,7 @@ class AdminContainer extends Component {
       <React.Fragment>
         {adminAddress ? (
           <React.Fragment>
-            <nav className="dt pa3 pl6-l pr6-l w-100 border-box ph5-ns bg-white shadow-1-ns items-center flex-l flex-row-l">
+            <nav className="dt pa2 pl6-l pr6-l w-100 border-box ph5-ns bg-white shadow-1-ns items-center flex-l flex-row-l">
               <a href="/" title="Home">
                 <img
                   src={"../../static/images/logo.svg"}
@@ -154,7 +154,7 @@ class AdminContainer extends Component {
                 />
               </a>
               <div className="w-80-ns flex-l flex-row-l justify-end">
-                <div className="w-100-s pl2-l pr2-l">
+                <div className="w-100-s pl3-l pr3-l">
                   <h3 className="ma0">
                     Current Account{" "}
                     <div
@@ -175,17 +175,17 @@ class AdminContainer extends Component {
                     )}
                   </div>
                 </div>
-                <div className="w-100-s pl2-l pr2-l">
+                <div className="w-100-s pl3-l pr3-l">
                   <h3 className="ma0">Account Balance</h3>
                   <div className="pa2 pl0">
-                    {accountBalance >= 0 ? (
+                    {Number.parseInt(accountBalance, 10) >= 0 ? (
                       <div>{accountBalance} ETH</div>
                     ) : (
                       <div className="red">Unable to load account balance.</div>
                     )}
                   </div>
                 </div>
-                <div className="w-100-s pl2-l">
+                <div className="w-100-s pl3-l">
                   <h3 className="ma0">Wallet Provider</h3>
                   <div className="pa1">
                     <NetworkSelectorContainer />
