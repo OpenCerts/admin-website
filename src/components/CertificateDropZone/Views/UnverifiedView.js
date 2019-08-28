@@ -13,7 +13,7 @@ import {
   invalidColor,
   black
 } from "../../../styles/variables";
-import { OrangeOutlineButton, RedButton } from "../../UI/Button";
+import { RedButton } from "../../UI/Button";
 
 const View = ({
   storeStatus,
