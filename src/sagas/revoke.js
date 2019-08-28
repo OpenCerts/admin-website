@@ -6,9 +6,13 @@ import DocumentStoreDefinition from "../services/contracts/DocumentStore.json";
 import { sendTxWrapper } from "./admin";
 import {
   types as applicationTypes,
-  getTransactionReceipt
+  getTransactionReceipt,
+  getNetworkId
 } from "../reducers/application";
-import { API_URL } from "../config";
+import {
+  MAINNET_CERT_VERIFY_API_URL,
+  ROPSTEN_CERT_VERIFY_API_URL
+} from "../config";
 import { getLogger } from "../logger";
 
 const { error } = getLogger("revoke.js:");
@@ -68,8 +72,8 @@ export function* setNotVerifyingRevokeCertificate() {
   });
 }
 
-async function verifyCertificateApi(payload) {
-  const certificateValidity = await fetch(`${API_URL}/verify`, {
+async function verifyCertificateApi(payload, certVerifyUrl) {
+  const certificateValidity = await fetch(`${certVerifyUrl}/verify`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
@@ -84,9 +88,18 @@ async function verifyCertificateApi(payload) {
 export function* verifyCertificateValidity({ payload }) {
   try {
     yield put({
+      type: types.UPDATE_REVOKE_CERTIFICATE_HASH,
+      payload: ""
+    });
+    yield put({
       type: types.VERIFYING_REVOKE_CERTIFICATE
     });
-    const validity = yield call(verifyCertificateApi, payload);
+
+    const certVerifyUrl = yield select(getNetworkId) === 1
+      ? MAINNET_CERT_VERIFY_API_URL
+      : ROPSTEN_CERT_VERIFY_API_URL;
+    const validity = yield call(verifyCertificateApi, payload, certVerifyUrl);
+
     yield put({
       type: types.VALIDATE_CERTIFICATE_SUCCESS,
       payload: validity

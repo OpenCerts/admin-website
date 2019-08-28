@@ -13,7 +13,7 @@ import {
   invalidColor,
   black
 } from "../../../styles/variables";
-import { OrangeOutlineButton } from "../../UI/Button";
+import { OrangeOutlineButton, RedButton } from "../../UI/Button";
 
 const View = ({
   storeStatus,
@@ -226,9 +226,7 @@ const View = ({
 
         <div className="secondary-links">
           <span>
-            <OrangeOutlineButton variant="pill">
-              Try Another
-            </OrangeOutlineButton>
+            <RedButton variant="pill">Try Another</RedButton>
           </span>
           {isWarning ? (
             <span
