@@ -178,7 +178,7 @@ class AdminContainer extends Component {
                 <div className="w-100-s pl2-l pr2-l">
                   <h3 className="ma0">Account Balance</h3>
                   <div className="pa2 pl0">
-                    {accountBalance ? (
+                    {accountBalance >= 0 ? (
                       <div>{accountBalance} ETH</div>
                     ) : (
                       <div className="red">Unable to load account balance.</div>
