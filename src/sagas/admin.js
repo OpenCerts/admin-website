@@ -75,10 +75,12 @@ function sendTxWrapper({ txObject, gasPrice, gasLimit, fromAddress, message }) {
       (err, res) => {
         // callback passed into eth.contract.send() to get the txhash
         if (err) {
-          if (
-            err.message.includes("User denied transaction signature.") ||
-            err.message.includes("denied by the user")
-          ) {
+          const userRejectedMetamask = err.message.includes(
+            "User denied transaction signature."
+          );
+          const userRejectedLedger = err.message.includes("denied by the user");
+
+          if (userRejectedMetamask || userRejectedLedger) {
             toast.error("Transaction was rejected.");
           }
           return reject(err);
