@@ -9,6 +9,11 @@ import * as adminSaga from "../sagas/admin";
 export default function* rootSaga() {
   yield all([
     takeEvery(adminType.LOADING_ADMIN_ADDRESS, adminSaga.loadAdminAddress),
+    takeEvery(
+      adminType.LOADING_ADMIN_ADDRESS_SUCCESS,
+      adminSaga.loadAccountBalance
+    ),
+    takeEvery(adminType.LOADING_ACCOUNT_BALANCE, adminSaga.loadAccountBalance),
     takeEvery(applicationType.UPDATE_WEB3, applicationSaga.updateNetworkId),
     takeEvery(
       applicationType.UPDATE_NETWORK_ID,
@@ -38,6 +43,7 @@ export default function* rootSaga() {
       applicationType.NEW_BLOCK,
       applicationSaga.checkNewBlockForTxPollList
     ),
+    takeEvery(applicationType.NEW_BLOCK, adminSaga.loadAccountBalance),
     takeEvery(
       applicationType.TRANSACTION_MINED,
       applicationSaga.removeTxHashFromPolling

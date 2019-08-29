@@ -25,12 +25,11 @@ class StoreIssueBlock extends Component {
   }
 
   onIssueClick() {
-    const { adminAddress, storeAddress, handleCertificateIssue } = this.props;
+    const { storeAddress, handleCertificateIssue } = this.props;
     const { certificateHash } = this.state;
     if (isValidCertificateHash(certificateHash)) {
       handleCertificateIssue({
         storeAddress,
-        fromAddress: adminAddress,
         certificateHash
       });
     } else {
@@ -91,7 +90,6 @@ StoreIssueBlock.propTypes = {
   issuingCertificate: PropTypes.bool,
   issuedTx: PropTypes.string,
   storeAddress: PropTypes.string,
-  adminAddress: PropTypes.string,
   handleCertificateIssue: PropTypes.func,
   networkId: PropTypes.number
 };

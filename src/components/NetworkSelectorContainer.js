@@ -15,11 +15,14 @@ import { white } from "./../styles/variables";
 const divBase = css`
   border-radius: 50px;
   padding: 0.2em 0.5em;
+  width: 13em;
 `;
 
 const selectorBase = css`
+  width: 100%;
   background: ${white};
   border: none;
+  font-size: 15px;
   :focus {
     outline: 0;
   }
@@ -41,13 +44,13 @@ class AdminContainer extends Component {
 
   render() {
     const { INJECTED, LEDGER_MAIN, LEDGER_ROPSTEN } = NETWORK_TYPES;
-
+    const { network, style } = this.props;
     return (
-      <div className="fr ba" css={css(divBase)}>
+      <div className="ba" style={style} css={css(divBase)}>
         <select
           css={css(selectorBase)}
           className="pa2 provider-selector"
-          value={this.props.network}
+          value={network}
           onChange={this.handleNetworkChange}
         >
           <option value={INJECTED}>Metamask</option>
@@ -75,6 +78,7 @@ export default connect(
 )(AdminContainer);
 
 AdminContainer.propTypes = {
+  style: PropTypes.object,
   network: PropTypes.string,
   customRpc: PropTypes.string,
   updateWeb3: PropTypes.func,
