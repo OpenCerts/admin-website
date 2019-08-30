@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Alert component shows alert text 1`] = `
+<div
+  className="css-1d2iil2-Alert"
+>
+  Test Alert
+</div>
+`;
