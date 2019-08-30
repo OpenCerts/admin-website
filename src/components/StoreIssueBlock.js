@@ -48,27 +48,29 @@ class StoreIssueBlock extends Component {
 
     return (
       <div>
-        <div>
+        <div className="flex flex-column mb4">
           Issue certificates with the Merkle Root Hash
-          <HashColorInput
-            className="mt2"
-            variant="pill"
-            type="hash"
-            hashee={certificateHash}
-            onChange={this.onHashChange}
-            value={certificateHash}
-            message={certificateHashMessage}
-            placeholder="0x…"
-          />
+          <div className="flex flex-row">
+            <HashColorInput
+              className="mt2 self-start w-100"
+              variant="rounded"
+              type="hash"
+              hashee={certificateHash}
+              onChange={this.onHashChange}
+              value={certificateHash}
+              message={certificateHashMessage}
+              placeholder="0x…"
+            />
+            <OrangeButton
+              className="self-end w-20"
+              variant="rounded"
+              onClick={this.onIssueClick}
+              disabled={issuingCertificate}
+            >
+              {issuingCertificate ? "Issuing…" : "Issue"}
+            </OrangeButton>
+          </div>
         </div>
-        <OrangeButton
-          variant="pill"
-          className="mt4"
-          onClick={this.onIssueClick}
-          disabled={issuingCertificate}
-        >
-          {issuingCertificate ? "Issuing…" : "Issue"}
-        </OrangeButton>
 
         {issuedTx && !issuingCertificate ? (
           <div className="mt5">
