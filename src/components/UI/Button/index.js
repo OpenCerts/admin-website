@@ -17,14 +17,16 @@ const base = css`
   outline: none;
   cursor: pointer;
   border: none;
-  padding: 1rem 2rem;
+  padding: 0.5rem 1rem;
   user-select: none;
   text-decoration: none;
   color: ${white};
   border: 1px solid ${black};
   background: ${black};
-  min-width: 10rem;
+  min-width: 8rem;
+  height: 36px;
   margin: 8px;
+  margin-bottom: auto;
 
   :disabled,
   [disabled] {
