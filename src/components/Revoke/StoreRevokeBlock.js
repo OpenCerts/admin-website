@@ -189,11 +189,11 @@ class StoreRevokeBlock extends Component {
             </div>
           </React.Fragment>
         )}
-
         {page === "confirmation" && (
           <StoreRevokeConfirmationBlock
             isInputActive={isInputActive}
             certificate={certificate}
+            inputCertificateHash={inputCertificateHash}
             revokingCertificate={revokingCertificate}
             handleBack={this.handleBack}
             handleRevoke={this.onRevokeClick}

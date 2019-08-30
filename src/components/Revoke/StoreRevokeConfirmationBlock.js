@@ -5,6 +5,7 @@ import { OrangeOutlineButton, RedButton } from "../UI/Button";
 
 const StoreRevokeConfirmationBlock = ({
   isInputActive,
+  inputCertificateHash,
   certificate,
   revokingCertificate,
   handleBack,
@@ -18,6 +19,10 @@ const StoreRevokeConfirmationBlock = ({
     {isInputActive ? (
       <div className="mv5 tc">
         Are you sure you want to revoke this certificate/certificate batch?
+        <div className="mt3">
+          <b>Certificate Hash:</b>
+        </div>
+        <div className="ma0 f6">{inputCertificateHash}</div>
       </div>
     ) : (
       <div className="tc mv4">
@@ -30,7 +35,7 @@ const StoreRevokeConfirmationBlock = ({
         <div className="mt3">
           <b>Certificate Hash:</b>
         </div>
-        <div className="ma0">{`0x${certificate.signature.targetHash}`}</div>
+        <div className="ma0 f6">{`0x${certificate.signature.targetHash}`}</div>
       </div>
     )}
     <div className="flex-wrap flex-row tc">
@@ -53,6 +58,7 @@ export default StoreRevokeConfirmationBlock;
 StoreRevokeConfirmationBlock.propTypes = {
   isInputActive: PropTypes.bool,
   revokingCertificate: PropTypes.bool,
+  inputCertificateHash: PropTypes.string,
   certificate: PropTypes.object,
   handleBack: PropTypes.func,
   handleRevoke: PropTypes.func
