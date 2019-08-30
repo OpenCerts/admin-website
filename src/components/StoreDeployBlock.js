@@ -44,14 +44,13 @@ class StoreDeployBlock extends Component {
     const inputMessage = issuerIsValid ? "Issuer name cannot be empty." : "";
 
     return (
-      <div className="w-100">
-        <div className="mb4">
-          <div>
-            Issuer Name
-            <br />
+      <React.Fragment>
+        <div className="flex flex-column mb4">
+          Issuer Name
+          <div className="flex flex-row">
             <Input
-              className="mt2"
-              variant="pill"
+              className="mt2 self-start w-100"
+              variant="rounded"
               type="text"
               placeholder="Name of organization"
               onChange={this.onNameChange}
@@ -60,16 +59,16 @@ class StoreDeployBlock extends Component {
               size={50}
               required
             />
+            <OrangeButton
+              className="self-end w-20"
+              variant="rounded"
+              onClick={this.onDeployClick}
+              disabled={deploying}
+            >
+              {deploying ? "Deploying…" : "Deploy"}
+            </OrangeButton>
           </div>
         </div>
-
-        <OrangeButton
-          variant="pill"
-          onClick={this.onDeployClick}
-          disabled={deploying}
-        >
-          {deploying ? "Deploying…" : "Deploy"}
-        </OrangeButton>
 
         {deployedTx ? (
           <div className="mt5">
@@ -83,7 +82,7 @@ class StoreDeployBlock extends Component {
             </div>
           </div>
         ) : null}
-      </div>
+      </React.Fragment>
     );
   }
 }
