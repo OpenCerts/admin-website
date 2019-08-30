@@ -28,9 +28,10 @@ const StoreRevokeConfirmationBlock = ({
       <div className="tc mv4">
         Are you sure you want to revoke <br />
         <b>
-          {certificate.data.recipient.name.split(":")[2]}'s{" "}
-          {certificate.data.name.split(":")[2]}{" "}
-        </b>
+          {`${certificate.data.recipient.name.split(":")[2]}'s ${
+            certificate.data.name.split(":")[2]
+          }`}
+        </b>{" "}
         Certificate?
         <div className="mt3">
           <b>Certificate Hash:</b>
