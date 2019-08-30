@@ -33,7 +33,7 @@ import {
 import { updateNetworkId, getNetworkId } from "../reducers/application";
 import StoreDeployBlock from "./StoreDeployBlock";
 import StoreIssueBlock from "./StoreIssueBlock";
-import StoreRevokeBlock from "./StoreRevokeBlock";
+import StoreRevokeBlock from "./Revoke/StoreRevokeBlock";
 import HashColor from "./UI/HashColor";
 import HashColorInput from "./UI/HashColorInput";
 import Panel from "./UI/Panel";
