@@ -1,4 +1,3 @@
-import React from "react";
 import PropTypes from "prop-types";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
@@ -28,7 +27,7 @@ const Input = ({
   message,
   ...rest
 }) => (
-  <React.Fragment>
+  <div className="flex flex-column">
     <input
       css={css(
         base,
@@ -45,7 +44,7 @@ const Input = ({
       {...rest}
     />
     {message && <small style={{ color: invalidColor }}>{message}</small>}
-  </React.Fragment>
+  </div>
 );
 
 export default Input;

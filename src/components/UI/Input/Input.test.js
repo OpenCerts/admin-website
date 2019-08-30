@@ -22,13 +22,13 @@ describe("Input component", () => {
   it("shows pill Input type", () => {
     const input = renderer.create(<Input variant="pill">Test Input</Input>);
     const tree = input.toJSON();
-    expect(tree).toHaveStyleRule("border-radius", "50px");
+    expect(tree.children[0]).toHaveStyleRule("border-radius", "50px");
   });
 
   it("shows rounded Input type", () => {
     const input = renderer.create(<Input variant="rounded">Test Input</Input>);
     const tree = input.toJSON();
-    expect(tree).toHaveStyleRule("border-radius", "5px");
+    expect(tree.children[0]).toHaveStyleRule("border-radius", "5px");
   });
 
   it("should call mock function when Input is changed", () => {
