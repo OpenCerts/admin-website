@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 /** @jsx jsx */
-import { css, jsx } from "@emotion/core";
+import { jsx, css } from "@emotion/core";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import HashColorInput from "../UI/HashColorInput";
@@ -8,9 +8,9 @@ import { isValidCertificateHash } from "../utils";
 import Divider from "../UI/Divider";
 import CertificateDropZone from "../CertificateDropZone";
 import {
-  getVerifyingRevokeCertificate,
   getRevokeCertificateHash,
   getRevokeCertificateValidity,
+  getVerifyingRevokeCertificate,
   updateRevokeCertificateHash,
   verifyRevokeCertificateValidity
 } from "../../reducers/revoke";
@@ -38,16 +38,18 @@ class StoreRevokeBlock extends Component {
     this.handleCertificateSelected = this.handleCertificateSelected.bind(this);
     this.handleConfirmation = this.handleConfirmation.bind(this);
     this.handleBack = this.handleBack.bind(this);
+    this.handleRevokeAnotherCertificate = this.handleRevokeAnotherCertificate.bind(
+      this
+    );
   }
 
   getCertificateStatus(type) {
     const typeStatus = this.props.revokeCertificateValidity[type];
-    const status = {
+    return {
       verified: typeStatus ? typeStatus.valid : true,
       verifying: false,
       error: ""
     };
-    return status;
   }
 
   onHashChange(event) {
@@ -121,7 +123,8 @@ class StoreRevokeBlock extends Component {
 
   handleBack() {
     this.setState({
-      page: "revoke"
+      page: "revoke",
+      inputCertificateHash: ""
     });
   }
 

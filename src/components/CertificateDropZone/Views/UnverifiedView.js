@@ -1,11 +1,10 @@
 import React from "react";
-import { Global, css } from "@emotion/core";
+/** @jsx jsx */
+import { jsx, css } from "@emotion/core";
 import PropTypes from "prop-types";
 import Link from "next/link";
 import {
-  faintBlue,
   brandBlue,
-  faintGreen,
   warningBackground,
   warningColor,
   white,
@@ -15,17 +14,17 @@ import {
 } from "../../../styles/variables";
 import { RedButton } from "../../UI/Button";
 
-const View = ({
+export const UnverifiedView = ({
   storeStatus,
   hashStatus,
   issuedStatus,
   issuerIdentityStatus,
   notRevokedStatus
 }) => {
-  /* Array of error messages with priority of error messages determined by a stack. 
+  /* Array of error messages with priority of error messages determined by a stack.
   Error messages are first placed into the stack and the error message with the highest priority is popped off the stack
   and displayed.
-  
+
   The priority of error messages are as follows:
   1. Invalid store
   2. Tampered
@@ -75,72 +74,62 @@ const View = ({
     issuerIdentityStatus.verified;
   return (
     <React.Fragment>
-      <Global
-        styles={css`
-          .viewer-container {
-            text-align: center !important;
-            padding: 1.5rem;
-            height: 100%;
-            justify-content: center !important;
-            flex-direction: column !important;
-            display: flex !important;
-            border-radius: 10px;
+      <div
+        className={`viewer-container ${isWarning ? "warning" : "invalid"}`}
+        style={{
+          backgroundColor: isWarning ? "#fbf6e9" : "#fbeae9"
+        }}
+        css={css`
+          text-align: center !important;
+          padding: 1.5rem;
+          height: 100%;
+          justify-content: center !important;
+          flex-direction: column !important;
+          display: flex !important;
+          border-radius: 10px;
 
-            &.default {
-              background-color: ${faintBlue};
-              border: 2px dashed ${brandBlue};
-              box-shadow: 0 0 0px 10px ${faintBlue};
-            }
+          &.warning {
+            background-color: ${warningBackground};
+            border: 2px dashed ${warningColor};
+            box-shadow: 0 0 0px 10px ${warningBackground};
+            color: ${warningColor};
 
-            &.accept {
-              background-color: ${faintGreen};
-              border: 2px dashed ${brandBlue};
-              box-shadow: 0 0 0px 10px ${faintGreen};
-            }
-
-            &.warning {
-              background-color: ${warningBackground};
-              border: 2px dashed ${warningColor};
-              box-shadow: 0 0 0px 10px ${warningBackground};
-              color: ${warningColor};
-
-              .unverified-btn {
-                @include btn(
-                  ${warningColor},
-                  lighten(${warningColor}, 5%),
-                  ${white}
-                );
-              }
-            }
-
-            &.invalid {
-              background-color: ${invalidBackground};
-              border: 2px dashed ${invalidColor};
-              box-shadow: 0 0 0px 10px ${invalidBackground};
-              color: ${invalidColor};
-
-              .unverified-btn {
-                @include btn(
-                  ${invalidColor},
-                  lighten(${invalidColor}, 5%),
-                  ${white}
-                );
-              }
+            .unverified-btn {
+              @include btn(
+                ${warningColor},
+                lighten(${warningColor}, 5%),
+                ${white}
+              );
             }
           }
 
-          .unverified-btn {
+          &.invalid {
+            background-color: ${invalidBackground};
+            border: 2px dashed ${invalidColor};
+            box-shadow: 0 0 0px 10px ${invalidBackground};
+            color: ${invalidColor};
+
+            .unverified-btn {
+              @include btn(
+                ${invalidColor},
+                lighten(${invalidColor}, 5%),
+                ${white}
+              );
+            }
+          }
+
+          & .unverified-btn {
             margin: auto;
           }
 
-          .image-container {
+          & .image-container {
             margin-bottom: 1rem;
             img {
               height: 110px;
             }
           }
 
-          .message-container {
+          & .message-container {
             margin-top: 1.5rem;
             margin-bottom: 0.5rem;
             color: ${black};
@@ -155,7 +144,7 @@ const View = ({
             }
           }
 
-          .verifications {
+          & .verifications {
             margin-bottom: 2rem;
 
             .messages {
@@ -165,13 +154,13 @@ const View = ({
             }
           }
 
-          .btn {
+          & .btn {
             @include btn(${brandBlue});
             background-color: ${white};
             margin: 0 auto;
           }
 
-          .secondary-links {
+          & .secondary-links {
             width: 50%;
             display: flex;
             margin: 1rem auto 0 auto;
@@ -184,7 +173,7 @@ const View = ({
             }
           }
 
-          .text-link {
+          & .text-link {
             color: #787878 !important;
             text-decoration: underline !important;
             &:hover {
@@ -192,12 +181,6 @@ const View = ({
             }
           }
         `}
-      />
-      <div
-        className={`viewer-container ${isWarning ? "warning" : "invalid"}`}
-        style={{
-          backgroundColor: isWarning ? "#fbf6e9" : "#fbeae9"
-        }}
       >
         <span className="message-container">
           {isWarning ? (
@@ -251,7 +234,7 @@ const View = ({
   );
 };
 
-View.propTypes = {
+UnverifiedView.propTypes = {
   handleRenderOverwrite: PropTypes.func,
   document: PropTypes.object,
 
@@ -261,5 +244,3 @@ View.propTypes = {
   issuerIdentityStatus: PropTypes.object,
   storeStatus: PropTypes.object
 };
-
-export default View;

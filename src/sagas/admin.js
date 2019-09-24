@@ -64,7 +64,13 @@ export function* loadAccountBalance() {
   }
 }
 
-export function sendTxWrapper({ txObject, gasPrice, gasLimit, fromAddress }) {
+export function sendTxWrapper({
+  txObject,
+  gasPrice,
+  gasLimit,
+  fromAddress,
+  message
+}) {
   return new Promise((resolve, reject) => {
     txObject.send(
       {

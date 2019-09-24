@@ -2,9 +2,13 @@ import React from "react";
 import Dropzone from "react-dropzone";
 import PropTypes from "prop-types";
 
-import DefaultView from "./Views/DefaultView";
-import VerifyingView from "./Views/VerifyingView";
-import UnverifiedView from "./Views/UnverifiedView";
+import {
+  DefaultView,
+  InvalidFileView,
+  DraggingView
+} from "./Views/DefaultView";
+import { VerifyingView } from "./Views/VerifyingView";
+import { UnverifiedView } from "./Views/UnverifiedView";
 
 const renderDropzoneContent = props => {
   const {
@@ -22,13 +26,13 @@ const renderDropzoneContent = props => {
     storeStatus
   } = props;
   // isDragReject is checking for mimetype (but we skipped it)
-  // fileError is when the file is not in JSON format and threw when deserilising
+  // fileError is when the file is not in JSON format and threw when deserialising
   // valid JSON files will be handled by handleCertificateChange()
   if (isDragReject || fileError) {
-    return <DefaultView hover={true} accept={false} />;
+    return <InvalidFileView />;
   }
   if (isDragAccept) {
-    return <DefaultView hover={true} accept={true} />;
+    return <DraggingView />;
   }
   if (verifying) {
     return <VerifyingView verificationStatus={verificationStatus} />;
@@ -52,7 +56,7 @@ const renderDropzoneContent = props => {
       />
     );
   }
-  return <DefaultView hover={false} accept={true} />;
+  return <DefaultView />;
 };
 
 // Injects additional props on top of isDragReject, isDragActive, acceptedFiles & rejectedFiles

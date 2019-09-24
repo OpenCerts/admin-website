@@ -34,12 +34,6 @@
   },
   "rules": {
     "no-console": "error",
-    "no-unused-vars": [
-      "error",
-      {
-        "argsIgnorePattern": "^_"
-      }
-    ],
     "func-names": ["error", "as-needed"],
     "react/react-in-jsx-scope": "off",
     "prettier/prettier": "error",
@@ -51,6 +45,7 @@
     ],
     "chai-expect/no-inner-compare": "error",
     "chai-expect/missing-assertion": "error",
-    "chai-expect/terminating-properties": "error"
+    "chai-expect/terminating-properties": "error",
+    "import/prefer-default-export": "off"
   }
 }

@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { ToastContainer } from "react-toastify";
 /** @jsx jsx */
-import { Global, css, jsx } from "@emotion/core";
+import { css, jsx } from "@emotion/core";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import {
   lightGrey,
@@ -40,41 +40,37 @@ import Panel from "./UI/Panel";
 import NetworkSelectorContainer from "./NetworkSelectorContainer";
 import ErrorPage from "./ErrorPage";
 
-const baseStyle = (
-  <Global
-    styles={css`
-      .click-to-refresh {
-        transform: rotateZ(0deg);
-        transition: transform 1.5s ease-in;
-      }
-      .click-to-refresh:hover {
-        color: ${brandDarkOrange};
-      }
-      .click-to-refresh:active {
-        transform: rotateZ(-360deg);
-        transition: transform 0s;
-      }
-      .click-to-refresh:focus {
-        outline: none;
-      }
+const baseStyle = css`
+  .click-to-refresh {
+    transform: rotateZ(0deg);
+    transition: transform 1.5s ease-in;
+  }
+  .click-to-refresh:hover {
+    color: ${brandDarkOrange};
+  }
+  .click-to-refresh:active {
+    transform: rotateZ(-360deg);
+    transition: transform 0s;
+  }
+  .click-to-refresh:focus {
+    outline: none;
+  }
 
-      .tab {
-        cursor: pointer;
-        border: solid 1px ${lightGrey};
-      }
+  .tab {
+    cursor: pointer;
+    border: solid 1px ${lightGrey};
+  }
 
-      .tab:hover {
-        background-color: ${faintOrange};
-      }
+  .tab:hover {
+    background-color: ${faintOrange};
+  }
 
-      .tab[aria-selected="true"] {
-        border-left: solid 4px ${brandOrange};
-        color: ${brandOrange};
-        border-right: 0;
-      }
-    `}
-  />
-);
+  .tab[aria-selected="true"] {
+    border-left: solid 4px ${brandOrange};
+    color: ${brandOrange};
+    border-right: 0;
+  }
+`;
 
 class AdminContainer extends Component {
   constructor(props) {
@@ -196,8 +192,7 @@ class AdminContainer extends Component {
               </div>
             </nav>
             <ToastContainer autoClose={4000} />
-            <Panel style={{ maxWidth: "900px" }}>
-              {baseStyle}
+            <Panel style={{ maxWidth: "900px" }} css={baseStyle}>
               <div className="flex">
                 <div className="w-100 w-50-ns">
                   <h1 className="mt0">Admin</h1>
@@ -263,6 +258,7 @@ class AdminContainer extends Component {
                         revokingCertificate={revokingCertificate}
                         revokedTx={revokedTx}
                         storeAddress={storeAddress}
+                        adminAddress={adminAddress}
                         handleCertificateRevoke={this.handleCertificateRevoke}
                       />
                     ) : (
