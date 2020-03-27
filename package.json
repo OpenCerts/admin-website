@@ -30,7 +30,7 @@
     "eslint-plugin-react": "^7.7.0",
     "jest-mock": "^24.8.0",
     "lodash": "^4.17.13",
-    "next": "^8.0.0",
+    "next": "^9.3.2",
     "next-redux-wrapper": "^2.0.0",
     "prop-types": "^15.6.1",
     "react": "^16.2.0",
