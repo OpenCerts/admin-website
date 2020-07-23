@@ -23,7 +23,7 @@
     "@babel/polyfill": "^7.4.0",
     "@emotion/core": "^10.0.10",
     "@ledgerhq/hw-transport-u2f": "4.48.0",
-    "@ledgerhq/web3-subprovider": "4.48.0",
+    "@ledgerhq/web3-subprovider": "4.78.0",
     "debug": "^4.1.1",
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.14.0",
