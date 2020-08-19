@@ -47,9 +47,8 @@ async function loadWeb3Injected() {
     typeof window.ethereum !== "undefined" || // new metamask api EIP-1102
     typeof window.web3 !== "undefined" // old metamask api
   ) {
-    trace(`Metamask provider found: ${window.web3}`);
-
     const provider = window.ethereum || window.web3.currentProvider;
+    trace(`Metamask provider found: ${provider}`);
     web3 = new Web3(provider);
     // Request for account access if required
     await window.ethereum.enable();
