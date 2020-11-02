@@ -41,30 +41,17 @@ async function loadWeb3Ledger(mainnet = true) {
  */
 async function loadWeb3Injected() {
   trace(`Loading injected web3`);
-  let { web3 } = window;
 
   if (
-    typeof window.ethereum !== "undefined" || // new metamask api EIP-1102
-    typeof window.web3 !== "undefined" // old metamask api
+    typeof window.ethereum !== "undefined" // new metamask api EIP-1102
   ) {
-    const provider = window.ethereum || window.web3.currentProvider;
+    const provider = window.ethereum;
     trace(`Metamask provider found: ${provider}`);
-    web3 = new Web3(provider);
     // Request for account access if required
     await window.ethereum.enable();
-  } else {
-    throw new Error("Metamask cannot be found");
+    return new Web3(provider);
   }
-  return web3;
-}
-
-async function loadWeb3CustomRpc(rpc = "http://localhost:8545") {
-  let { web3 } = window;
-
-  const provider = new Web3.providers.HttpProvider(rpc);
-  web3 = new Web3(provider);
-
-  return web3;
+  throw new Error("Metamask cannot be found");
 }
 
 async function loadWeb3Mock() {
@@ -76,12 +63,7 @@ async function loadWeb3Mock() {
   };
 }
 
-async function resolveWeb3(
-  resolve,
-  reject,
-  t = NETWORK_TYPES.INJECTED,
-  config
-) {
+async function resolveWeb3(resolve, reject, t = NETWORK_TYPES.INJECTED) {
   try {
     switch (t) {
       case NETWORK_TYPES.INJECTED:
@@ -92,9 +74,6 @@ async function resolveWeb3(
         break;
       case NETWORK_TYPES.LEDGER_ROPSTEN:
         web3Instance = await loadWeb3Ledger(false);
-        break;
-      case NETWORK_TYPES.CUSTOM:
-        web3Instance = await loadWeb3CustomRpc(config);
         break;
       case NETWORK_TYPES.MOCK:
         web3Instance = await loadWeb3Mock();
@@ -110,8 +89,8 @@ async function resolveWeb3(
   }
 }
 
-export function setNewWeb3(t, config) {
-  trace(`Setting new Web3: ${t}, ${config}`);
+export function setNewWeb3(t) {
+  trace(`Setting new Web3: ${t}`);
   if (
     web3InstanceType === NETWORK_TYPES.LEDGER_MAIN ||
     web3InstanceType === NETWORK_TYPES.LEDGER_ROPSTEN
@@ -124,21 +103,21 @@ export function setNewWeb3(t, config) {
     // Server-side rendering fails when trying to access window
     if (typeof window !== "undefined") {
       window.addEventListener(`load`, () => {
-        resolveWeb3(resolve, reject, t, config);
+        resolveWeb3(resolve, reject, t);
       });
       // If document has loaded already, try to get Web3 immediately.
       if (document.readyState === `complete`) {
-        resolveWeb3(resolve, reject, t, config);
+        resolveWeb3(resolve, reject, t);
       }
     }
   });
 }
 
-export function getCurrentWeb3(t, config) {
+export function getCurrentWeb3(t) {
   if (web3Instance) {
     return new Promise(resolve => {
       resolve(web3Instance);
     });
   }
-  return setNewWeb3(t, config);
+  return setNewWeb3(t);
 }
