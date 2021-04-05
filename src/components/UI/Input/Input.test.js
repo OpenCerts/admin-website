@@ -16,7 +16,10 @@ describe("Input component", () => {
 
   it("shows Input text", () => {
     const input = renderer.create(<Input>Test Input</Input>);
-    expect(input.toJSON()).toMatchSnapshot();
+    expect(input.toJSON().children[0]).toMatch("Test Input");
+    expect(input.toJSON().props.className).toMatch(
+      RegExp("((?=css-)*(?<=-Input))")
+    );
   });
 
   it("shows pill Input type", () => {
