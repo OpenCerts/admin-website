@@ -301,10 +301,7 @@ const mapDispatchToProps = dispatch => ({
   updateStoreAddress: payload => dispatch(updateStoreAddress(payload))
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(AdminContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(AdminContainer);
 
 AdminContainer.propTypes = {
   deploying: PropTypes.bool,

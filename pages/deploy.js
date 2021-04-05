@@ -21,10 +21,7 @@ const mapDispatchToProps = dispatch => ({
   getIsLoading: payload => dispatch(getIsLoading(payload))
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(AdminPage);
+export default connect(mapStateToProps, mapDispatchToProps)(AdminPage);
 
 AdminPage.propTypes = {
   isLoading: PropTypes.bool

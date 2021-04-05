@@ -72,10 +72,7 @@ const mapDispatchToProps = dispatch => ({
   setIsLoading: () => dispatch(setIsLoading())
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(AdminContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(AdminContainer);
 
 AdminContainer.propTypes = {
   style: PropTypes.object,

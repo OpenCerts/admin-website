@@ -113,10 +113,7 @@ const mapDispatchToProps = dispatch => ({
   setIsLoading: () => dispatch(setIsLoading())
 });
 
-export default connect(
-  null,
-  mapDispatchToProps
-)(WalletProviderSelector);
+export default connect(null, mapDispatchToProps)(WalletProviderSelector);
 
 WalletProviderSelector.propTypes = {
   id: PropTypes.string,
