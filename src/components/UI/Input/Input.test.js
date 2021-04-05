@@ -14,14 +14,6 @@ describe("Input component", () => {
     expect(Input).toBeDefined();
   });
 
-  it("shows Input text", () => {
-    const input = renderer.create(<Input>Test Input</Input>);
-    expect(input.toJSON().children[0]).toMatch("Test Input");
-    expect(input.toJSON().props.className).toMatch(
-      RegExp("((?=css-)*(?<=-Input))")
-    );
-  });
-
   it("shows pill Input type", () => {
     const input = renderer.create(<Input variant="pill">Test Input</Input>);
     const tree = input.toJSON();
