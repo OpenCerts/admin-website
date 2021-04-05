@@ -10,5 +10,14 @@
       "presets": [["next/babel", { "preset-env": { "modules": "commonjs" } }]],
       "plugins": ["transform-es2015-modules-commonjs"]
     }
-  }
+  },
+  // plugin-transform-runtime is required to fix regeneratorRuntime issue for ledgerhq u2f
+  // see: https://github.com/LedgerHQ/ledgerjs/issues/218, https://github.com/babel/babel/issues/9849
+  "plugins": [
+    ["@babel/plugin-transform-runtime",
+      {
+        "regenerator": true
+      }
+    ]
+  ]
 }

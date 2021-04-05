@@ -1,5 +1,4 @@
 import React from "react";
-import "@babel/polyfill";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import WalletProviderSelectorPage from "../src/components/WalletProviderSelectorPage";

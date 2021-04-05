@@ -1,7 +1,4 @@
-// polyfill is required to fix regeneratorRuntime issue for ledgerhq u2f
-// see: https://github.com/LedgerHQ/ledgerjs/issues/218
 import React from "react";
-import "@babel/polyfill";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { getIsLoading } from "../src/reducers/application";
