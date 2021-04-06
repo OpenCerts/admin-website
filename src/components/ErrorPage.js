@@ -83,10 +83,7 @@ const mapDispatchToProps = dispatch => ({
   loadAdminAddress: payload => dispatch(loadAdminAddress(payload))
 });
 
-export default connect(
-  null,
-  mapDispatchToProps
-)(ErrorPage);
+export default connect(null, mapDispatchToProps)(ErrorPage);
 
 ErrorPage.propTypes = {
   children: PropTypes.oneOfType([

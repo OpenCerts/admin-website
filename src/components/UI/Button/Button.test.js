@@ -16,11 +16,6 @@ describe("Button component", () => {
     expect(Button).toBeDefined();
   });
 
-  it("shows button text", () => {
-    const button = renderer.create(<Button>Test Button</Button>);
-    expect(button.toJSON()).toMatchSnapshot();
-  });
-
   it("shows pill button variant", () => {
     const button = renderer.create(<Button variant="pill">Test Button</Button>);
     const tree = button.toJSON();

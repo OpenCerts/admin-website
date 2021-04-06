@@ -1,5 +1,4 @@
 import React from "react";
-import "@babel/polyfill";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import WalletProviderSelectorPage from "../src/components/WalletProviderSelectorPage";
@@ -26,10 +25,7 @@ const mapDispatchToProps = dispatch => ({
   getIsLoading: payload => dispatch(getIsLoading(payload))
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(DefaultPage);
+export default connect(mapStateToProps, mapDispatchToProps)(DefaultPage);
 
 DefaultPage.propTypes = {
   isLoading: PropTypes.bool

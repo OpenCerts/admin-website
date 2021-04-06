@@ -14,11 +14,6 @@ describe("Input component", () => {
     expect(Input).toBeDefined();
   });
 
-  it("shows Input text", () => {
-    const input = renderer.create(<Input>Test Input</Input>);
-    expect(input.toJSON()).toMatchSnapshot();
-  });
-
   it("shows pill Input type", () => {
     const input = renderer.create(<Input variant="pill">Test Input</Input>);
     const tree = input.toJSON();
