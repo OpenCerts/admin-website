@@ -48,7 +48,7 @@ class ErrorPage extends Component {
             <div>
               <p>
                 Please click{" "}
-                <a href="https://docs.opencerts.io/appendix_test_accounts.html">
+                <a href="https://docs.opencerts.io/v1/appendix_test_accounts.html">
                   here
                 </a>{" "}
                 and follow the instructions to install a test wallet.
