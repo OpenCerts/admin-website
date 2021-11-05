@@ -15,6 +15,7 @@ const bannerStyle = css`
   padding: 5px 0px;
   background: #ff9933;
   text-align: center;
+  font-weight: bold;
 `;
 
 const DefaultPage = (props) => (
