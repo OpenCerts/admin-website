@@ -43,8 +43,6 @@ jobs:
         run: |
           aws s3 sync ./out s3://${{ secrets.S3_BUCKET }} \
             --delete \
-            --acl public-read \
-            --cache-control max-age=300
 
       - name: Invalidate CloudFront (optional)
         env:
