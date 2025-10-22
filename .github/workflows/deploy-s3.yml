@@ -1,8 +1,6 @@
 name: Build and Deploy to S3
 
 on:
-  push:
-    branches: [imda]
   workflow_dispatch:
 
 jobs:
