@@ -1,0 +1,65 @@
+name: Build and Deploy to S3 (Production)
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirmation:
+        description: 'Type "DEPLOY_TO_PRODUCTION" to confirm deployment'
+        required: true
+        default: ''
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    environment: production
+
+    steps:
+      - name: Verify production deployment confirmation
+        if: ${{ github.event.inputs.confirmation != 'DEPLOY_TO_PRODUCTION' }}
+        run: |
+          echo "❌ Production deployment cancelled: confirmation input required"
+          echo "Please enter 'DEPLOY_TO_PRODUCTION' in the confirmation field"
+          exit 1
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Use Node.js 10.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: "10.x"
+
+      - name: Cache npm
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-10-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-10-
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build static export
+        run: npm run deploy
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Deploy to S3 (Production)
+        run: |
+          aws s3 sync ./out s3://${{ secrets.S3_BUCKET }} \
+            --delete \
+
+      - name: Invalidate CloudFront (Production)
+        env:
+          CLOUDFRONT_DISTRIBUTION_ID: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID_PROD }}
+        if: ${{ env.CLOUDFRONT_DISTRIBUTION_ID != '' }}
+        run: |
+          aws cloudfront create-invalidation \
+            --distribution-id "${{ env.CLOUDFRONT_DISTRIBUTION_ID }}" \
+            --paths "/*"
