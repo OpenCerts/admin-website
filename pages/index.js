@@ -9,8 +9,6 @@ import PageLoader from "../src/components/UI/PageLoader";
 import { brandOrange } from "../src/styles/variables";
 
 const bannerStyle = css`
-  position: absolute;
-  top: 0;
   width: 100%;
   padding: 5px 0px;
   background: #ff9933;

@@ -5,6 +5,7 @@ import Router from "next/router";
 import { Provider } from "react-redux";
 import initStore from "../src/store";
 import Meta from "../src/components/Meta";
+import MigrationBanner from "../src/components/MigrationBanner";
 
 class MyApp extends App {
   static async getInitialProps({ Component, ctx }) {
@@ -22,6 +23,7 @@ class MyApp extends App {
     return (
       <React.Fragment>
         <Meta />
+        <MigrationBanner />
         <Container>
           <Provider store={store}>
             <Component {...pageProps} />
