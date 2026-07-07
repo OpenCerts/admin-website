@@ -3,9 +3,8 @@ import React from "react";
 import { css, jsx } from "@emotion/core";
 import { brandOrange } from "../styles/variables";
 
-// TODO: replace with the real migration guide URL
 const MIGRATION_GUIDE_URL =
-  "https://docs.tradetrust.io/docs/migration-guide/trustvc";
+  "https://docs.opencerts.io/docs/migrations/oa_to_trustvc";
 
 const bannerStyle = css`
   width: 100%;
