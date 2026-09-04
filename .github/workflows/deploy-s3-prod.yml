@@ -42,6 +42,8 @@ jobs:
 
       - name: Build static export
         run: npm run deploy
+        env:
+          GTM_CONTAINER_ID: ${{ secrets.GTM_CONTAINER_ID }}
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4

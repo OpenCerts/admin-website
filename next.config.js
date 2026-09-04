@@ -5,5 +5,8 @@ module.exports = {
       "/deploy": { page: "/deploy" }
     };
   },
-  assetPrefix: ""
+  assetPrefix: "",
+  env: {
+    GTM_CONTAINER_ID: process.env.GTM_CONTAINER_ID
+  }
 };
